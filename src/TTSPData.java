@@ -1,6 +1,4 @@
-import java.util.Vector;
-
-final public class TTSPData{
+public class TTSPData{
     private String name;
     private Double domains;
     private Double level;
@@ -8,15 +6,12 @@ final public class TTSPData{
     private Double interv;
     private Double abandon;
 
-    private Double number_I;
     private Double[] time;
-    private Double[] preds;
+    private Double[][] preds;
     private Double[] prio;
     private Double[] cost;
     private Matrix r;
 
-    private Double number_T;
-    private Vector s;
+    private Matrix s;
     private Double[] dispo;
-    
 }
