@@ -1,39 +1,20 @@
-import java.io.*;
-import java.util.Scanner;
+import java.io.FileReader;
+import java.io.BufferedReader;
+import java.io.IOException;
 
 public class instanceReader {
-
-  public static void readFromFile(String f) throws FileNotFoundException {
-    File file = new File(f);
-    Scanner scanner = new Scanner(new FileReader(file));
-    try{
-      while (scanner.hasNextLine()){
-        processLine(scanner.nextLine());
-      }
+	public static void main (String[] args) throws IOException {
+    try {
+      BufferedReader in = new BufferedReader(new FileReader(args[0]));
+      String line=in.readLine();
+		  //while ((line = in.readLine()) != null) {
+        //data=line;
+		  //}
+      in.close();
+      System.out.println(line);
     }
-    finally{
-      scanner.close();
+    catch(Exception e) {
+      e.printStackTrace();
     }
-  }
-
-  public static void processLine(String line) {
-    Scanner scanner = new Scanner(line);
-    scanner.useDelimiter(" ");
-    if (scanner.hasNext()) {
-      TTSPData instance=new TTSPData();
-      instance.setName(scanner.next());
-      instance.setDomains(Integer.parseInt(scanner.next()));
-      instance.setLevel(Integer.parseInt(scanner.next()));
-      instance.setTech(Integer.parseInt(scanner.next()));
-      instance.setInterv(Integer.parseInt(scanner.next()));
-      instance.setAbandon(Integer.parseInt(scanner.next()));
-    }
-    else{
-      System.out.println("Empty or invalid line. Unable to process.");
-    }
-  }
-
-  public static void main(String[] args) throws FileNotFoundException {
-    readFromFile(args[0]);
   }
 }
