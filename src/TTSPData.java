@@ -1,76 +1,13 @@
 package src;
 
 public class TTSPData{
-    private String name;
-    private double domains;
-    private double level;
-    private double techs;
-    private double interv;
-    private double abandon;
+    Instance instance;
+    IntervList interv_list;
+    TechList tech_list;
 
-    private double[] time;
-    private double[][] preds;
-    private double[] prio;
-    private double[] cost;
-    private Matrix r;
-
-    private Matrix s;
-    private double[] dispo;
-
-    public TTSPData() {
-        this.name="";
-        this.domains=0;
-        this.level=0;
-        this.techs=0;
-        this.interv=0;
-        this.abandon=0;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public double getDomains() {
-        return this.domains;
-    }
-
-    public void setDomains(double domains) {
-        this.domains = domains;
-    }
-
-    public double getLevel() {
-        return this.level;
-    }
-
-    public void setLevel(double level) {
-        this.level = level;
-    }
-
-    public double getTechs() {
-        return this.techs;
-    }
-
-    public void setTechs(double techs) {
-        this.techs = techs;
-    }
-
-    public double getInterv() {
-        return this.interv;
-    }
-
-    public void setInterv(double interv) {
-        this.interv = interv;
-    }
-
-    public double getAbandon() {
-        return this.abandon;
-    }
-
-    public void setAbandon(double abandon) {
-        this.abandon = abandon;
+    public TTSPData(Instance instance, IntervList interv_list, TechList tech_list) {
+        this.instance=instance;
+        this.interv_list=interv_list;
+        this.tech_list=tech_list;
     }
 }

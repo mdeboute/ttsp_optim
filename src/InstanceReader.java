@@ -7,13 +7,11 @@ public class InstanceReader {
   private static int counter = 0;
   private static TTSPData[] instance;
 
-  public static void readFromFile(char f) throws FileNotFoundException {
-    File file = new File(f);
-    Scanner scanner = new Scanner(new FileReader(file));
+  public static void readFromFile(char file) throws FileNotFoundException {
+    Scanner scanner = new Scanner(new File(file));
     try {
-      while (scanner.hasNextLine()){
-        processLine(scanner.nextLine());
-      }
+      scanner.useDelimiter(" ");
+      String all = scanner.next();
     } finally {
         scanner.close();
     }
