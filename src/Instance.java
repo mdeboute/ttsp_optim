@@ -1,14 +1,14 @@
 package src;
 
 public class Instance {
-    private char name;
+    private String name;
     private double domains;
     private double level;
     private double techs;
     private double interv;
     private double abandon;
 
-    public Instance(char name, double domains, double level, double techs, double interv, double abandon) {
+    public Instance(String name, double domains, double level, double techs, double interv, double abandon) {
         this.name=name;
         this.domains=domains;
         this.level=level;
@@ -17,11 +17,11 @@ public class Instance {
         this.abandon=abandon;
     }
 
-    public char getName() {
+    public String getName() {
         return this.name;
     }
 
-    public void setName(char name) {
+    public void setName(String name) {
         this.name = name;
     }
 

@@ -20,7 +20,7 @@ public class TechTeams {
         this.team = team;
     }
 
-    public TechTeams(double[] day, double[] team){
+    public TechTeams(double[] day, double[][] team){
         this.day = day;
         this.team = team;
     }
