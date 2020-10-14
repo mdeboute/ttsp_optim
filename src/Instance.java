@@ -8,15 +8,6 @@ public class Instance {
     private double interv;
     private double abandon;
 
-    public Instance(String name, double domains, double level, double techs, double interv, double abandon) {
-        this.name=name;
-        this.domains=domains;
-        this.level=level;
-        this.techs=techs;
-        this.interv=interv;
-        this.abandon=abandon;
-    }
-
     public String getName() {
         return this.name;
     }
