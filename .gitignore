@@ -1,0 +1,11 @@
+# Ignore Mac system files
+.DS_store
+
+# Ignore IDE system files
+.vscode
+.idea
+.atom
+
+# Ignore Idea project folders/files
+out/
+tistp_optim.iml
