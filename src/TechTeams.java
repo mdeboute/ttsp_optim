@@ -1,10 +1,26 @@
 package src;
 
 public class TechTeams {
-    private double day;
-    private Matrix team;
+    private double[] day;
+    private double[][] team;
 
-    public TechTeams(double day, Matrix team){
+    public double[] getDay() {
+        return this.day;
+    }
+
+    public void setDay(double[] day) {
+        this.day = day;
+    }
+
+    public double[][] getTeam() {
+        return this.team;
+    }
+
+    public void setTeam(double[][] team) {
+        this.team = team;
+    }
+
+    public TechTeams(double[] day, double[] team){
         this.day = day;
         this.team = team;
     }

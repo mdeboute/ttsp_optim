@@ -1,14 +1,14 @@
 package src;
 
 public class IntervList {
-    private double number;
-    private double time;
-    private double[] preds;
-    private double prio;
-    private double cost;
-    private Matrix d;
+    private double[] number;
+    private double[] time;
+    private double[][] preds;
+    private double[] prio;
+    private double[] cost;
+    private double[][] d;
 
-    public IntervList(double number, double time, double[] preds, double prio, double cost, Matrix d) {
+    public IntervList(double[] number, double[] time, double[][] preds, double[] prio, double[] cost, double[][] d) {
         this.number=number;
         this.time=time;
         this.preds=preds;
@@ -17,52 +17,51 @@ public class IntervList {
         this.d=d;
     }
 
-    public double getNumber() {
-        return this.number;
+    public double[] getNumber() {
+        return number;
     }
 
-    public void setNumber(double number) {
+    public void setNumber(double[] number) {
         this.number = number;
     }
 
-    public double getTime() {
-        return this.time;
+    public double[] getTime() {
+        return time;
     }
 
-    public void setTime(double time) {
+    public void setTime(double[] time) {
         this.time = time;
     }
 
-    public double[] getPreds() {
-        return this.preds;
+    public double[][] getPreds() {
+        return preds;
     }
 
-    public void setPreds(double[] preds) {
+    public void setPreds(double[][] preds) {
         this.preds = preds;
     }
 
-    public double getPrio() {
-        return this.prio;
+    public double[] getPrio() {
+        return prio;
     }
 
-    public void setPrio(double prio) {
+    public void setPrio(double[] prio) {
         this.prio = prio;
     }
 
-    public double getCost() {
-        return this.cost;
+    public double[] getCost() {
+        return cost;
     }
 
-    public void setCost(double cost) {
+    public void setCost(double[] cost) {
         this.cost = cost;
     }
 
-    public Matrix getD() {
-        return this.d;
+    public double[][] getD() {
+        return d;
     }
 
-    public void setD(Matrix d) {
+    public void setD(double[][] d) {
         this.d = d;
     }
-
 }
