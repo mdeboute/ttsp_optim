@@ -1,8 +1,10 @@
+package src;
+
 public class TTSPData{
     private String name;
     private double domains;
     private double level;
-    private double tech;
+    private double techs;
     private double interv;
     private double abandon;
 
@@ -15,7 +17,14 @@ public class TTSPData{
     private Matrix s;
     private double[] dispo;
 
-    public TTSPData(){ }
+    public TTSPData() {
+        this.name="";
+        this.domains=0;
+        this.level=0;
+        this.techs=0;
+        this.interv=0;
+        this.abandon=0;
+    }
 
     public String getName() {
         return this.name;
@@ -41,12 +50,12 @@ public class TTSPData{
         this.level = level;
     }
 
-    public double getTech() {
-        return this.tech;
+    public double getTechs() {
+        return this.techs;
     }
 
-    public void setTech(double tech) {
-        this.tech = tech;
+    public void setTechs(double techs) {
+        this.techs = techs;
     }
 
     public double getInterv() {
@@ -64,5 +73,4 @@ public class TTSPData{
     public void setAbandon(double abandon) {
         this.abandon = abandon;
     }
-    
 }

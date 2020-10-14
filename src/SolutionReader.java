@@ -1,6 +1,8 @@
+package src;
+
 import java.io.*;
 
-public class solutionReader {
+public class SolutionReader {
     public static void main(String[] args) throws IOException {
       // Le fichier d'entrée
       File file = new File("file.txt");
