@@ -45,9 +45,7 @@ public class Evaluator {
         return result;
     }
     public static void main(String[] args) {
-        // SolutionReader('/./solutions/sol_A_2_#3')
-        // TTSPData ttspData=new TTSPData();
-        // TTSPSolution ttspSolution=new TTSPSolution();
+        // TTSPSolution ttspSolution = SolutionReader("./solutions/sol_A_3_#2");
         // double[] sol = evaluator(ttspData, ttspSolution);
         double[] sol = {1200, 300, 600};
         System.out.print("----------------------------\n");
