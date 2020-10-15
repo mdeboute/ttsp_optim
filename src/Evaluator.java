@@ -1,7 +1,4 @@
 package src;
-import java.util.*;
-
-import org.graalvm.compiler.nodes.graphbuilderconf.GeneratedInvocationPlugin;
 
 public class Evaluator {
     public double[] evaluator(TTSPData ttspdata, TTSPSolution ttspsolution) {
@@ -44,18 +41,9 @@ public class Evaluator {
         double[] result = {sum1, sum2, sum3};
         return result;
     }
+
     public static void main(String[] args) {
-        // TTSPSolution ttspSolution = SolutionReader("./solutions/sol_A_3_#2");
-        // double[] sol = evaluator(ttspData, ttspSolution);
-        double[] sol = {1200, 300, 600};
-        System.out.print("----------------------------\n");
-        System.out.print("------- COMPUTE COST -------\n");
-        System.out.print("----------------------------\n");
-        System.out.print("----------------------------\n");
-        System.out.print("Cost for intervention of priority 1 = " + sol[0] + "\n");
-        System.out.print("Cost for intervention of priority 2 = " + sol[1] + "\n");
-        System.out.print("Cost for intervention of priority 3 = " + sol[2] + "\n");
-        System.out.print("-> TOTAL COST = " + sol[0]+sol[1]+sol[2] + "\n");
+        return;
     }
 }
 
