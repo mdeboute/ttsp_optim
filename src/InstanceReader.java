@@ -4,8 +4,24 @@ import java.io.*;
 import java.util.Scanner;
 
 public class InstanceReader {
-  public static TTSPData ttspData;
+  private static TTSPData ttspData;
 
+  public static TTSPData getTtspData() {
+    return ttspData;
+  }
+
+  public static void listDir(String dir) {
+    File directory = new File(dir);
+    String list[] = directory.list();
+
+    if (list != null) {
+      for (int i = 0; i < list.length; i++) {
+        System.out.println(list[i]);
+      }
+    } else {
+      System.err.println("Invalid directory name");
+    }
+  }
 
   public static void readFromFile(String file) throws FileNotFoundException {
     try (Scanner scanner = new Scanner(new File(file))) {
@@ -35,6 +51,7 @@ public class InstanceReader {
   }
 
   public static void main(String[] args) throws FileNotFoundException {
-    readFromFile(args[0]);
+    listDir("./data/datasetA/");
+    //readFromFile(args[0]);
   }
 }
