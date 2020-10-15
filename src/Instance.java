@@ -56,4 +56,12 @@ public class Instance {
         this.abandon = abandon;
     }
 
+    public String toString(){
+        return "///////////// Instance "+this.name+" ////////////\n" +
+                "#Interventions = "+this.interv+"\n" +
+                "#Technicians = "+this.techs+"\n" +
+                "#Domains / #Levels = "+this.domains+" / "+this.level +"\n" +
+                "Outsourcing budget = "+this.abandon+"\n" +
+                "----------------------------------\n";
+    }
 }

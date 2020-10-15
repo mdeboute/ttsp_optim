@@ -10,29 +10,26 @@ public class InstanceReader {
     return ttspData;
   }
 
-  public static void listDir(String dir) {
+  public static String[] listDir(String dir) {
     File directory = new File(dir);
-    String list[] = directory.list();
+    String[] list = directory.list();
 
-    if (list != null) {
-      for (int i = 0; i < list.length; i++) {
-        System.out.println(list[i]);
-      }
-    } else {
+    if (list == null) {
       System.err.println("Invalid directory name");
     }
+    return list;
   }
 
   public static void readFromFile(String file) throws FileNotFoundException {
     try (Scanner scanner = new Scanner(new File(file))) {
       scanner.nextLine();
-      while(scanner.hasNextLine()){
-        processLine(scanner.nextLine());
+      while (scanner.hasNextLine()) {
+          processInstance(scanner.nextLine());
       }
     }
   }
 
-  public static void processLine(String line){
+  public static void processInstance(String line){
     Scanner scanner = new Scanner(line);
     scanner.useDelimiter(" ");
     if (scanner.hasNext()) {
@@ -51,7 +48,7 @@ public class InstanceReader {
   }
 
   public static void main(String[] args) throws FileNotFoundException {
-    listDir("./data/datasetA/");
-    //readFromFile(args[0]);
+    readFromFile("./data/datasetA/data1/instance");
+    System.out.println(ttspData.instance.toString());
   }
 }
