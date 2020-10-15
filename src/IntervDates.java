@@ -38,10 +38,4 @@ public class IntervDates {
         this.team = team;
     }
 
-    public IntervDates(double[] interv, double[] day, double[] time, double[] team){
-        this.interv = interv;
-        this.day = day;
-        this.time = time;
-        this.team = team;
-    }
 }

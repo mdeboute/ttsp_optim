@@ -8,15 +8,6 @@ public class IntervList {
     private double[] cost;
     private double[][] d;
 
-    public IntervList(double[] number, double[] time, double[][] preds, double[] prio, double[] cost, double[][] d) {
-        this.number=number;
-        this.time=time;
-        this.preds=preds;
-        this.prio=prio;
-        this.cost=cost;
-        this.d=d;
-    }
-
     public double[] getNumber() {
         return number;
     }

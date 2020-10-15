@@ -5,12 +5,6 @@ public class TechList {
     private double[][] d;
     private double[][] dispo;
 
-    public TechList(double[] tech, double[][] d, double[][] dispo) {
-        this.tech=tech;
-        this.d=d;
-        this.dispo=dispo;
-    }
-
     public double[] getTech() {
         return tech;
     }
