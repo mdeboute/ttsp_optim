@@ -1,14 +1,14 @@
 package src;
 
 public class TechTeams {
-    private double[] day;
+    private double day;
     private double[][] team;
 
-    public double[] getDay() {
+    public double getDay() {
         return this.day;
     }
 
-    public void setDay(double[] day) {
+    public void setDay(double day) {
         this.day = day;
     }
 
@@ -20,8 +20,4 @@ public class TechTeams {
         this.team = team;
     }
 
-    public TechTeams(double[] day, double[][] team){
-        this.day = day;
-        this.team = team;
-    }
 }

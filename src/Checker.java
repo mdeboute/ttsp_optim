@@ -12,15 +12,15 @@ public class Checker {
         }
         return 1;
     }
-    public static void main(String[] args) throws FileNotFoundException {
-        // TTSPSolution ttspSolution = SolutionReader("./solutions/sol_A_3_#2");
-        // TTSPData ttspsolution = InstanceReader("./solutions/sol_A_3_#2");
-        // int result = checker(ttspData, ttspSolution);
-        System.out.print("----------------------------\n");
-        System.out.print("----- CHECK CONSTRAINTS ----\n");
-        System.out.print("----------------------------\n");
-        System.out.print("----------------------------\n");
-        //int result = checker(ttspData, ttspSolution);
-        System.out.print("-> FEASIBLE =" + result + "(0=false/1=true)");
-      }
+//    public static void main(String[] args) throws FileNotFoundException {
+//        // TTSPSolution ttspSolution = SolutionReader("./solutions/sol_A_3_#2");
+//        // TTSPData ttspsolution = InstanceReader("./solutions/sol_A_3_#2");
+//        // int result = checker(ttspData, ttspSolution);
+//        System.out.print("----------------------------\n");
+//        System.out.print("----- CHECK CONSTRAINTS ----\n");
+//        System.out.print("----------------------------\n");
+//        System.out.print("----------------------------\n");
+//        //int result = checker(ttspData, ttspSolution);
+//        System.out.print("-> FEASIBLE =" + result + "(0=false/1=true)");
+//    }
 }
