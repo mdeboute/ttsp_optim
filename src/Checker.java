@@ -10,10 +10,10 @@ public class Checker {
             System.out.print("[Issue] The solution is not the one for this instance");
             return 0;
         }
-        int nb_tech=data.instance.techs; //number of technician
-        int nb_interv=data.instance.interv; // number of intervention
-        int nb_domain=data.instance.domains; //number of domains
-        int nb_level=data.instance.level-1; //equal to the max level
+        int nb_tech=data.instance.getTechs(); //number of technician
+        int nb_interv=data.instance.getInterv(); // number of intervention
+        int nb_domain=data.instance.getDomains(); //number of domains
+        int nb_level=data.instance.getLevel()-1; //equal to the max level
         int nb_days=solution.tech_teams.lenght; //lenght of tech-teams= number of days
 
         // Checks on technicians ///////////////////////////////////////////////////////////////
@@ -22,13 +22,13 @@ public class Checker {
                 
                 //We check that the technician i unavailable on day j is assigned to team 0 /////////////////////
                 int check= 0;
-                for(int k=0 ; k<solution.tech_list.dispo.lenght ; k++){ // browsing the list of days where technician i is unavailaible
-                    if(solution.tech_list[i].dispo[k]==j){ 
+                for(int k=0 ; k<solution.tech_list.getDispoLength() ; k++){ // browsing the list of days where technician i is unavailaible
+                    if(solution.tech_list[i].getDispo(k)==j){ 
                         check=i;
                     }
                 }
-                for(int l=0 ; l<solution.tech_teams[j].team[0].lenght ; l++){
-                    if(solution.tech_teams[j].team[0][l]==check){ 
+                for(int l=0 ; l<solution.tech_teams[j].getTeamLength(0) ; l++){
+                    if(solution.tech_teams[j].getTeam(0,l)==check){ 
                         check=-1;
                     }
                 }
@@ -39,12 +39,12 @@ public class Checker {
 
                 // We check that technician i is assigned to a team on day j /////////////////////
                 int check2=0;
-                for(int l=1; l<solution.tech_teams[j].team.lenght ; l++){ //browsing the list of team except team 0
-                    for(int k=0 ; k<solution.tech_teams[j].team[l].lenght-1 ; k++){ //browsing the list of technicians of each team
-                        if (solution.tech_teams[j].team[l][k].lenght==0){
+                for(int l=1; l<solution.tech_teams[j].tgetTeamLength() ; l++){ //browsing the list of team except team 0
+                    for(int k=0 ; k<solution.tech_teams[j].getTeamLength(l)-1 ; k++){ //browsing the list of technicians of eachteam
+                        if (solution.tech_teams[j].getTeamLength(l)==0){
                             System.out.print("[Issue] Team " + l + " is empty on day "+ j);
                         }
-                        if(solution.tech_teams[j].team[l][k]==i){ // 
+                        if(solution.tech_teams[j].getTeam(l,k)==i){ // 
                             check2=-1;
                         }
                     }
@@ -59,11 +59,11 @@ public class Checker {
         // a revoir puisque ne prend pas en compte que certaines interventions sont sous-traités
         // Check if the total duration of the e team's interventions on day d is less than 120 //////////////////////////////////////////////////////////////
         for(int d=0; d<nb_days ; d++){ // browsing the list of days
-            for(int e=0 ; e<solution.tech_teams[d].team.lenght ; e++){ // browsing the list of teams
+            for(int e=0 ; e<solution.tech_teams[d].getTeamLength() ; e++){ // browsing the list of teams
                 int cpt=0; // to count the total working time of a day
                 for(int i=0 ; i<nb_interv ; i++){ // browsing the list of interventions
-                    if(solution.interv_dates[i].day==d && solution.interv_dates[i].team==e){
-                        cpt=cpt+solution.interv_list[i].time;
+                    if(solution.interv_dates[i].getDay()==d && solution.interv_dates[i].getTeam()==e){
+                        cpt=cpt+solution.interv_list[i].getTime();
                     }
                 }
                 if(cpt>120){
@@ -80,19 +80,19 @@ public class Checker {
             //}
 
 
-            int start_i = solution.interv_dates[i].day*120 + solution.interv_dates[i].time;
-            int end_i = start_i+solution.interv_list[i].time;
+            int start_i = solution.interv_dates[i].getDay()*120 + solution.interv_dates[i].getTime();
+            int end_i = start_i+solution.interv_list[i].getTime();
 
             // An intervention that has been started must be finished on the same day.
             if(end_i>120){
-                System.out.print("[Issue] Intervention" + i + " begin to late in day " + solution.interv_dates[i].day + " to be finish the same day");
+                System.out.print("[Issue] Intervention" + i + " begin to late in day " + solution.interv_dates[i].getDay() + " to be finish the same day");
             }
 
             //  The intervention p belonging to Pred(i) ends before i begins ///
-            for(int p=0 ; p<solution.interv_list[i].preds.lenght ; p++){
-                int pred= solution.interv_list[i].preds[p];
-                int start_pred=solution.interv_dates[pred].day*120 + solution.interv_dates[pred].time;
-                if(solution.interv_list[pred].time+start_pred> start_i){
+            for(int p=0 ; p<solution.interv_list[i].getPredsLength() ; p++){
+                int pred= solution.interv_list[i].getPreds(p);
+                int start_pred=solution.interv_dates[pred].getDay()*120 + solution.interv_dates[pred].getTime();
+                if(solution.interv_list[pred].getTime()+start_pred> start_i){
                     System.out.print("[Issue] Intervention " + pred + " is an intervention that precedes " + i + " and ends after i is started.");
                 }
             }
