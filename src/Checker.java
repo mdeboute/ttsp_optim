@@ -6,6 +6,7 @@ import java.util.Scanner;
 public class Checker {
 
     public static int checker(TTSPData data, TTSPSolution solution){
+        int feasible=1;
         if (data.instance != solution.instance){
             System.out.print("[Issue] The solution is not the one for this instance");
             return 0;
@@ -34,6 +35,7 @@ public class Checker {
                 }
                 if(check!=-1){ 
                     System.out.print("[Issue] The technician " + i + " is assigned to a team the day " + j + " while he is not available this day");
+                    feasible=0;
                     break; // if the technician is not in the right team there is no point in making the following checks
                 }
 
@@ -43,6 +45,7 @@ public class Checker {
                     for(int k=0 ; k<solution.tech_teams[j].getTeamLength(l)-1 ; k++){ //browsing the list of technicians of eachteam
                         if (solution.tech_teams[j].getTeamLength(l)==0){
                             System.out.print("[Issue] Team " + l + " is empty on day "+ j);
+                            feasible=0;
                         }
                         if(solution.tech_teams[j].getTeam(l,k)==i){ // 
                             check2=-1;
@@ -51,13 +54,14 @@ public class Checker {
                 }
                 if(check2!=-1){
                     System.out.print("[Issue] Technician " + i + " is not assigned to any team on day "+ j);
+                    feasible=0;
                     //break; // if the technician is not assigned there is no point in carrying out the following checks
                 }
             }
         }
 
         // a revoir puisque ne prend pas en compte que certaines interventions sont sous-traités
-        // Check if the total duration of the e team's interventions on day d is less than 120 //////////////////////////////////////////////////////////////
+        // Check if the total duration of the e team's interventions on day d is less than 120 /////////////////////////////////////
         for(int d=0; d<nb_days ; d++){ // browsing the list of days
             for(int e=0 ; e<solution.tech_teams[d].getTeamLength() ; e++){ // browsing the list of teams
                 int cpt=0; // to count the total working time of a day
@@ -68,6 +72,7 @@ public class Checker {
                 }
                 if(cpt>120){
                     System.out.print("[Issue] The total duration of the " + e + " team's interventions on day " + d + "is too long (>120).");
+                    feasible=0;
                 }
             }
         }
@@ -86,6 +91,7 @@ public class Checker {
             // An intervention that has been started must be finished on the same day.
             if(end_i>120){
                 System.out.print("[Issue] Intervention" + i + " begin to late in day " + solution.interv_dates[i].getDay() + " to be finish the same day");
+                feasible=0;
             }
 
             //  The intervention p belonging to Pred(i) ends before i begins ///
@@ -94,13 +100,14 @@ public class Checker {
                 int start_pred=solution.interv_dates[pred].getDay()*120 + solution.interv_dates[pred].getTime();
                 if(solution.interv_list[pred].getTime()+start_pred> start_i){
                     System.out.print("[Issue] Intervention " + pred + " is an intervention that precedes " + i + " and ends after i is started.");
+                    feasible=0;
                 }
             }
         }
 
 
 
-        return 1;
+        return feasible;
     }
     
     public static void main(String[] args) throws FileNotFoundException {

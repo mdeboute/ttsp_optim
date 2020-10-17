@@ -28,6 +28,10 @@ public class IntervList {
         return preds[l];
     }
 
+    public int getPredsLength(){
+        return preds.length;
+    }
+
     public void setPreds(int[] preds) {
         this.preds = preds;
     }
