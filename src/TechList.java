@@ -17,12 +17,20 @@ public class TechList {
         return d[l];
     }
 
+    public int getDLenght(){
+        return d.length;
+    }
+
     public void setD(int[] d) {
         this.d = d;
     }
 
     public int getDispo(int l) {
         return dispo[l];
+    }
+
+    public int getDispoLenght(){
+        return dispo.length;
     }
 
     public void setDispo(int[] dispo) {
