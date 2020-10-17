@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class InstanceReader {
   private static TTSPData ttspData;
-  private static int noOfLines=0;
+  private static int count=0;
 
   public static TTSPData getTtspData() {
     return ttspData;
@@ -21,22 +21,22 @@ public class InstanceReader {
     return list;
   }
 
-  public static void readFromFile(String filename) throws FileNotFoundException {
-    if(filename.equals("instance")){
-      try (Scanner scanner = new Scanner(new FileReader(filename))) {
-        scanner.nextLine();
-        while (scanner.hasNextLine()) {
-          processInstance(scanner.nextLine());
-        }
+  public static Integer noOfLines(String filename) throws FileNotFoundException{
+    int n=0;
+
+    try (Scanner scanner = new Scanner(new FileReader(filename))) {
+      while (scanner.hasNextLine()) {
+        n++;
       }
     }
-    if(filename.equals("interv_list")) {
-      try (Scanner scanner = new Scanner(new FileReader(filename))) {
-        scanner.nextLine();
-        while (scanner.hasNextLine()) {
-          noOfLines++;
-          processInterL(scanner.nextLine());
-        }
+    return n;
+  }
+
+  public static void readInstance(String filename) throws FileNotFoundException {
+    try (Scanner scanner = new Scanner(new FileReader(filename))) {
+      scanner.nextLine();
+      while (scanner.hasNextLine()) {
+        processInstance(scanner.nextLine());
       }
     }
   }
@@ -44,6 +44,7 @@ public class InstanceReader {
   public static void processInstance(String line){
     Scanner scanner = new Scanner(line);
     scanner.useDelimiter(" ");
+
     if (scanner.hasNext()) {
       ttspData=new TTSPData();
       ttspData.instance=new Instance();
@@ -59,22 +60,36 @@ public class InstanceReader {
     }
   }
 
- public static void processInterL(String line){
-   Scanner scanner = new Scanner(line);
-   scanner.useDelimiter(" ");
-   if (scanner.hasNext()) {
-     ttspData=new TTSPData();
-     ttspData.interv_list=new IntervList[noOfLines];
-   }
-   else {
-     System.out.println("Empty or invalid line. Unable to process.");
-   }
- }
+  public static void readIntervL(String filename) throws FileNotFoundException {
+    try (Scanner scanner = new Scanner(new FileReader(filename))) {
+      scanner.nextLine();
+      while (scanner.hasNextLine()) {
+        processIntervL(scanner.nextLine());
+      }
+    }
+  }
 
+  public static void processIntervL(String line){
+    Scanner scanner = new Scanner(line);
+    scanner.useDelimiter(" ");
+
+    if (scanner.hasNext()) {
+      ttspData=new TTSPData();
+      ttspData.interv_list[count]=new IntervList();
+      ttspData.interv_list[count].setNumber(Integer.parseInt(scanner.next()));
+      count++;
+      System.out.println("I'm here");
+    }
+    else {
+      System.out.println("Empty or invalid line. Unable to process.");
+    }
+  }
 
   public static void main(String[] args) throws IOException {
     String[] list_files=listFiles("./data/datasetA/data1/");
-    readFromFile("./data/datasetA/data1/"+list_files[1]);
+    readInstance("./data/datasetA/data1/"+list_files[1]);
+    readIntervL("./data/datasetA/data1/"+list_files[2]);
     System.out.println(getTtspData().instance.toString());
+    System.out.println(getTtspData().interv_list[0].getNumber());
   }
 }

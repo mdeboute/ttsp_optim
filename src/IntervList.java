@@ -56,7 +56,4 @@ public class IntervList {
         this.d = d;
     }
 
-    public String toString(){
-        return ""+this.number;
-    }
 }
