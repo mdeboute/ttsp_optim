@@ -2,7 +2,7 @@ package src;
 
 public class TechTeams {
     private int day;
-    private int team;
+    private int[][] team;
 
     public int getDay() {
         return this.day;
@@ -12,11 +12,11 @@ public class TechTeams {
         this.day = day;
     }
 
-    public int getTeam() {
+    public int[][] getTeam() {
         return this.team;
     }
 
-    public void setTeam(int team) {
+    public void setTeam(int[][] team) {
         this.team = team;
     }
 

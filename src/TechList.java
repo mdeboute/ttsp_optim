@@ -2,8 +2,8 @@ package src;
 
 public class TechList {
     private int tech;
-    private int d;
-    private int dispo;
+    private int[] d;
+    private int[] dispo;
 
     public int getTech() {
         return tech;
@@ -13,19 +13,19 @@ public class TechList {
         this.tech = tech;
     }
 
-    public int getD() {
+    public int[] getD() {
         return d;
     }
 
-    public void setD(int d) {
+    public void setD(int[] d) {
         this.d = d;
     }
 
-    public int getDispo() {
+    public int[] getDispo() {
         return dispo;
     }
 
-    public void setDispo(int dispo) {
+    public void setDispo(int[] dispo) {
         this.dispo = dispo;
     }
 }
