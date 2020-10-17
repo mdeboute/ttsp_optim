@@ -1,31 +1,31 @@
 package src;
 
 public class TechList {
-    private double tech;
-    private double[] d;
-    private double[] dispo;
+    private int tech;
+    private int d;
+    private int dispo;
 
-    public double getTech() {
+    public int getTech() {
         return tech;
     }
 
-    public void setTech(double tech) {
+    public void setTech(int tech) {
         this.tech = tech;
     }
 
-    public double[] getD() {
+    public int getD() {
         return d;
     }
 
-    public void setD(double[] d) {
+    public void setD(int d) {
         this.d = d;
     }
 
-    public double[] getDispo() {
+    public int getDispo() {
         return dispo;
     }
 
-    public void setDispo(double[] dispo) {
+    public void setDispo(int dispo) {
         this.dispo = dispo;
     }
 }

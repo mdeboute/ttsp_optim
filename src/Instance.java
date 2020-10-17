@@ -2,11 +2,11 @@ package src;
 
 public class Instance {
     private String name;
-    private double domains;
-    private double level;
-    private double techs;
-    private double interv;
-    private double abandon;
+    private int domains;
+    private int level;
+    private int techs;
+    private int interv;
+    private int abandon;
 
     public String getName() {
         return this.name;
@@ -16,43 +16,43 @@ public class Instance {
         this.name = name;
     }
 
-    public double getDomains() {
+    public int getDomains() {
         return this.domains;
     }
 
-    public void setDomains(double domains) {
+    public void setDomains(int domains) {
         this.domains = domains;
     }
 
-    public double getLevel() {
+    public int getLevel() {
         return this.level;
     }
 
-    public void setLevel(double level) {
+    public void setLevel(int level) {
         this.level = level;
     }
 
-    public double getTechs() {
+    public int getTechs() {
         return this.techs;
     }
 
-    public void setTechs(double techs) {
+    public void setTechs(int techs) {
         this.techs = techs;
     }
 
-    public double getInterv() {
+    public int getInterv() {
         return this.interv;
     }
 
-    public void setInterv(double interv) {
+    public void setInterv(int interv) {
         this.interv = interv;
     }
 
-    public double getAbandon() {
+    public int getAbandon() {
         return this.abandon;
     }
 
-    public void setAbandon(double abandon) {
+    public void setAbandon(int abandon) {
         this.abandon = abandon;
     }
 

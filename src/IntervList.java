@@ -1,58 +1,62 @@
 package src;
 
 public class IntervList {
-    private double number;
-    private double time;
-    private double[] preds;
-    private double prio;
-    private double cost;
-    private double[] d;
+    private int number;
+    private int time;
+    private int[] preds;
+    private int prio;
+    private int cost;
+    private int[] d;
 
-    public double getNumber() {
+    public int getNumber() {
         return number;
     }
 
-    public void setNumber(double number) {
+    public void setNumber(int number) {
         this.number = number;
     }
 
-    public double getTime() {
+    public int getTime() {
         return time;
     }
 
-    public void setTime(double time) {
+    public void setTime(int time) {
         this.time = time;
     }
 
-    public double[] getPreds() {
+    public int[] getPreds() {
         return preds;
     }
 
-    public void setPreds(double[] preds) {
+    public void setPreds(int[] preds) {
         this.preds = preds;
     }
 
-    public double getPrio() {
+    public int getPrio() {
         return prio;
     }
 
-    public void setPrio(double prio) {
+    public void setPrio(int prio) {
         this.prio = prio;
     }
 
-    public double getCost() {
+    public int getCost() {
         return cost;
     }
 
-    public void setCost(double cost) {
+    public void setCost(int cost) {
         this.cost = cost;
     }
 
-    public double[] getD() {
+    public int[] getD() {
         return d;
     }
 
-    public void setD(double[] d) {
+    public void setD(int[] d) {
         this.d = d;
+    }
+
+    public String toString(){
+        return ""+this.number;
     }
 }

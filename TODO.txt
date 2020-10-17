@@ -1,4 +1,0 @@
-InstanceReader : Martin
-SolutionReader : Martin/Paul
-Evaluator : Paul
-Checker : Gonzague

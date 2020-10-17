@@ -1,40 +1,40 @@
 package src;
 
 public class IntervDates {
-    private double interv;
-    private double day;
-    private double time;
-    private double team;
+    private int interv;
+    private int day;
+    private int time;
+    private int team;
 
-    public double getInterv() {
+    public int getInterv() {
         return this.interv;
     }
 
-    public void setInterv(double interv) {
+    public void setInterv(int interv) {
         this.interv = interv;
     }
 
-    public double getDay() {
+    public int getDay() {
         return this.day;
     }
 
-    public void setDay(double day) {
+    public void setDay(int day) {
         this.day = day;
     }
 
-    public double getTime() {
+    public int getTime() {
         return this.time;
     }
 
-    public void setTime(double time) {
+    public void setTime(int time) {
         this.time = time;
     }
 
-    public double getTeam() {
+    public int getTeam() {
         return this.team;
     }
 
-    public void setTeam(double team) {
+    public void setTeam(int team) {
         this.team = team;
     }
 

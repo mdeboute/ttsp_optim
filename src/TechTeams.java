@@ -1,22 +1,22 @@
 package src;
 
 public class TechTeams {
-    private double day;
-    private double[][] team;
+    private int day;
+    private int team;
 
-    public double getDay() {
+    public int getDay() {
         return this.day;
     }
 
-    public void setDay(double day) {
+    public void setDay(int day) {
         this.day = day;
     }
 
-    public double[][] getTeam() {
+    public int getTeam() {
         return this.team;
     }
 
-    public void setTeam(double[][] team) {
+    public void setTeam(int team) {
         this.team = team;
     }
 
