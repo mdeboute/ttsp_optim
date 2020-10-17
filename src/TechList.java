@@ -17,7 +17,7 @@ public class TechList {
         return d[l];
     }
 
-    public int getDLenght(){
+    public int getDLength(){
         return d.length;
     }
 
@@ -29,7 +29,7 @@ public class TechList {
         return dispo[l];
     }
 
-    public int getDispoLenght(){
+    public int getDispoLength(){
         return dispo.length;
     }
 
