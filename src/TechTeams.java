@@ -16,6 +16,10 @@ public class TechTeams {
         return this.team[l][m];
     }
 
+    public int[][] getTeam(){
+        return team;
+    }
+
     public int getTeamLength(){
         return team.length;
     }
