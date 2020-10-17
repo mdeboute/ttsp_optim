@@ -57,11 +57,11 @@ public class Instance {
     }
 
     public String toString(){
-        return "///////////// Instance "+this.name+" ////////////\n" +
-                "#Interventions = "+this.interv+"\n" +
-                "#Technicians = "+this.techs+"\n" +
-                "#Domains / #Levels = "+this.domains+" / "+this.level +"\n" +
-                "Outsourcing budget = "+this.abandon+"\n" +
+        return "///////////// Instance "+name+" ////////////\n" +
+                "#Interventions = "+interv+"\n" +
+                "#Technicians = "+techs+"\n" +
+                "#Domains / #Levels = "+domains+" / "+level +"\n" +
+                "Outsourcing budget = "+abandon+"\n" +
                 "----------------------------------\n";
     }
 }
