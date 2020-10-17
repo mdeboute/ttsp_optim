@@ -20,7 +20,7 @@ public class TechTeams {
         return team.length;
     }
 
-    public int getTealLenght(int l){
+    public int getTeamLenght(int l){
         return team[l].length;
     }
 
