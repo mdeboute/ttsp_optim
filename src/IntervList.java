@@ -24,8 +24,8 @@ public class IntervList {
         this.time = time;
     }
 
-    public int[] getPreds() {
-        return preds;
+    public int getPreds(int l) {
+        return preds[l];
     }
 
     public void setPreds(int[] preds) {
@@ -48,8 +48,8 @@ public class IntervList {
         this.cost = cost;
     }
 
-    public int[] getD() {
-        return d;
+    public int getD(int l) {
+        return d[l];
     }
 
     public void setD(int[] d) {

@@ -13,16 +13,16 @@ public class TechList {
         this.tech = tech;
     }
 
-    public int[] getD() {
-        return d;
+    public int getD(int l) {
+        return d[l];
     }
 
     public void setD(int[] d) {
         this.d = d;
     }
 
-    public int[] getDispo() {
-        return dispo;
+    public int getDispo(int l) {
+        return dispo[l];
     }
 
     public void setDispo(int[] dispo) {

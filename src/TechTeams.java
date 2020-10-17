@@ -12,8 +12,8 @@ public class TechTeams {
         this.day = day;
     }
 
-    public int[][] getTeam() {
-        return this.team;
+    public int getTeam(int l, int m) {
+        return this.team[l][m];
     }
 
     public void setTeam(int[][] team) {
