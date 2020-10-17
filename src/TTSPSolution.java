@@ -47,4 +47,24 @@ public class TTSPSolution {
         this.tech_teams = tech_teams;
     }
 
+    public String toString(){
+        System.out.print("///////////// Solution ////////////\n" + 
+        "----------------------------------\n" + 
+        "----- INTERVENTION SCHEDULE ------\n" + 
+        "----------------------------------\n" );
+        for (int i = 0; i < this.instance.getInterv(); i++){
+            System.out.print("#" + this.interv_dates[i] + " : day" + this.interv_dates[i].getDay() + " -> starts at time " + this.interv_dates[i].getTime() + " / executed by team #" + this.interv_dates[i].getTeam() + "\n");
+        }
+        System.out.print("----------------------------------\n" + 
+        "------- TECHNICIAN TEAMS ---------\n" + 
+        "----------------------------------\n");
+        for (int i = 0; i < this.tech_teams.length; i++){
+            System.out.print("Teams of day " + i + "\n");
+            for (int j = 0; j < this.tech_teams[i].getTeam()[i].length; j++){
+                System.out.print("#" + j + " -> " + this.tech_teams[i].getTeam()[i] + "\n");
+            }
+        }
+        System.out.print("//////////////////////////////////");
+    }
+
 }
