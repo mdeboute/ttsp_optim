@@ -21,11 +21,11 @@ public class TechTeams {
     }
 
     public int getTeamLength(){
-        return team.length;
+        return team.length();
     }
 
     public int getTeamLength(int l){
-        return team[l].length;
+        return team[l].length();
     }
 
     public void setTeam(int[][] team) {
