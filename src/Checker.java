@@ -8,7 +8,7 @@ public class Checker {
     public static int checker(TTSPData data, TTSPSolution solution){
         int feasible=1;
         if (data.instance != solution.instance){
-            System.out.print("[Issue] The solution is not the one for this instance");
+            System.out.print("[Issue] The solution is not the one for this instance.\n");
             return 0;
         }
         int nb_tech=data.instance.getTechs(); //number of technician
@@ -34,7 +34,7 @@ public class Checker {
                     }
                 }
                 if(check!=-1){ 
-                    System.out.print("[Issue] The technician " + i + " is assigned to a team the day " + j + " while he is not available this day");
+                    System.out.print("[Issue] The technician " + i + " is assigned to a team the day " + j + " while he is not available this day.\n");
                     feasible=0;
                     break; // if the technician is not in the right team there is no point in making the following checks
                 }
@@ -44,7 +44,7 @@ public class Checker {
                 for(int l=1; l<solution.tech_teams[j].getTeamLength() ; l++){ //browsing the list of team except team 0
                     for(int k=0 ; k<solution.tech_teams[j].getTeamLength(l)-1 ; k++){ //browsing the list of technicians of eachteam
                         if (solution.tech_teams[j].getTeamLength(l)==0){
-                            System.out.print("[Issue] Team " + l + " is empty on day "+ j);
+                            System.out.print("[Issue] Team " + l + " is empty on day "+ j + ".\n");
                             feasible=0;
                         }
                         if(solution.tech_teams[j].getTeam(l,k)==i){ // 
@@ -53,7 +53,7 @@ public class Checker {
                     }
                 }
                 if(check2!=-1){
-                    System.out.print("[Issue] Technician " + i + " is not assigned to any team on day "+ j);
+                    System.out.print("[Issue] Technician " + i + " is not assigned to any team on day "+ j = ".\n");
                     feasible=0;
                     //break; // if the technician is not assigned there is no point in carrying out the following checks
                 }
@@ -71,7 +71,7 @@ public class Checker {
                     }
                 }
                 if(cpt>120){
-                    System.out.print("[Issue] The total duration of the " + e + " team's interventions on day " + d + "is too long (>120).");
+                    System.out.print("[Issue] The total duration of the " + e + " team's interventions on day " + d + "is too long (>120).\n");
                     feasible=0;
                 }
             }
@@ -87,7 +87,7 @@ public class Checker {
 
             // An intervention that has been started must be finished on the same day.
             if(end_i>120){
-                System.out.print("[Issue] Intervention" + i + " begin to late in day " + solution.interv_dates[i].getDay() + " to be finish the same day");
+                System.out.print("[Issue] Intervention" + i + " begin to late in day " + solution.interv_dates[i].getDay() + " to be finish the same day.\n");
                 feasible=0;
             }
 
@@ -96,7 +96,7 @@ public class Checker {
                 int pred= solution.interv_list[i].getPreds(p);
                 int start_pred=solution.interv_dates[pred].getDay()*120 + solution.interv_dates[pred].getTime();
                 if(solution.interv_list[pred].getTime()+start_pred> start_i){
-                    System.out.print("[Issue] Intervention " + pred + " is an intervention that precedes " + i + " and ends after i is started.");
+                    System.out.print("[Issue] Intervention " + pred + " is an intervention that precedes " + i + " and ends after i is started.\n");
                     feasible=0;
                 }
             }
@@ -120,7 +120,7 @@ public class Checker {
             cost=cost+solution.interv_list[i].getCost(); //cost total of outsourced interventions
         }
         if(cost>solution.instance.getAbandon()){
-            System.out.print("[Issue] There is to many outsourced interventions, the total cost is higher than the budget");
+            System.out.print("[Issue] There is to many outsourced interventions, the total cost is higher than the budget.\n");
             feasible=0;
         }
 
@@ -134,7 +134,7 @@ public class Checker {
                 int check1=0;
                 if(check(solution.interv_list[i].getPreds(),ST)){ //check if outsourced intervention j belongs to pred(i)
                     if(!check(interv_ST, solution.interv_list[i].getNumber())){ //check if intervention i is outsourced
-                        System.out.print("[Issue] the intervention " + i + "is not outsourced while his predecessor " + ST + " is outsourced");
+                        System.out.print("[Issue] the intervention " + i + "is not outsourced while his predecessor " + ST + " is outsourced.\n");
                         feasible=0;
                     }
                 }
@@ -167,10 +167,11 @@ public class Checker {
                     }
                 }
             }
+            //comparison of the 2 tables to check that the team is sufficiently competent
             for(int j=0 ; j<nb_domain ; j++){
                 for(int k=0; k<nb_level ; k++){
                     if(dom_interv[j][k]>dom_team[j][k]){
-                        System.out.print("[Issue] The team " + team + " of the day " + day + " is not competent enough in the domain " + j + "to do the intervention " + num);
+                        System.out.print("[Issue] The team " + team + " of the day " + day + " is not competent enough in the domain " + j + "to do the intervention " + num + ".\n");
                         feasible=0;
                     }
                 }
@@ -183,7 +184,6 @@ public class Checker {
 
         return feasible;
     }
-
 
     // method to check if an integer is present in an array
     public static boolean check(int[] tab, int val) {
@@ -206,6 +206,6 @@ public class Checker {
         System.out.print("----------------------------\n");
         System.out.print("----------------------------\n");
         //int result = checker(ttspData, ttspSolution);
-        //System.out.print("-> FEASIBLE =" + result + "(0=false/1=true)");
+        //System.out.print("-> FEASIBLE =" + result + "(0=false/1=true)\n");
     }
 }
