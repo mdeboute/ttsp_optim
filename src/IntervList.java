@@ -28,6 +28,10 @@ public class IntervList {
         return preds[l];
     }
 
+    public int[] getPreds() {
+        return preds;
+    }
+
     public int getPredsLength(){
         return preds.length;
     }

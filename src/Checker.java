@@ -60,7 +60,6 @@ public class Checker {
             }
         }
 
-        // a revoir puisque ne prend pas en compte que certaines interventions sont sous-traités
         // Check if the total duration of the e team's interventions on day d is less than 120 /////////////////////////////////////
         for(int d=0; d<nb_days ; d++){ // browsing the list of days
             for(int e=0 ; e<solution.tech_teams[d].getTeamLength() ; e++){ // browsing the list of teams
@@ -78,7 +77,7 @@ public class Checker {
             }
         }
 
-        ////////////////////////////////////////////////////////////
+        //////////////////////////
         for(int i=0 ; i<nb_interv ; i++){
             if(solution.inter_dates[i].getInterv()!=i+1){ 
                 break; //the outsourced interventions are not in Interv_dates, therefore avoids a shift with interv_list
@@ -114,17 +113,49 @@ public class Checker {
                 cpt++;
             }
         }
+
+         //////we check if cost is below or equal to the budget
         int cost=0;
-        for(int i=0 ; i<nb_ST ; i++){
-            cost=cost+solution.interv_list[i].getCost();
+        for(int i=0 ; i<nb_ST ; i++){ 
+            cost=cost+solution.interv_list[i].getCost(); //cost total of outsourced interventions
         }
         if(cost>solution.instance.getAbandon()){
             System.out.print("[Issue] There is to many outsourced interventions, the total cost is higher than the budget");
             feasible=0;
         }
 
+        /////// Check if the successors of an outsourced intervention are also outsourced
+        for (int i=0; i<nb_interv ; i++){
+            for(int j=0; j<nb_ST ; j++){
+                int ST=interv_ST[j];
+                if(solution.interv_list[i].getNumber()==ST){
+                    break; //we check that we do not compare the outsourced intervention i with itself
+                }
+                int check1=0;
+                if(check(solution.interv_list[i].getPreds(),ST)){ //check if outsourced intervention j belongs to pred(i)
+                    if(!check(interv_ST, solution.interv_list[i].getNumber())){ //check if intervention i is outsourced
+                        System.out.print("[Issue] the intervention " + i + "is not outsourced while his predecessor " + ST + " is outsourced");
+                        feasible=0;
+                    }
+                }
+            }
+        }
+
 
         return feasible;
+    }
+
+    // method to check if an integer is present in an array
+    public static boolean check(int[] tab, int val) {
+        boolean b = false;
+    
+        for(int i : tab){
+            if(i == val){
+                b = true;
+                break;
+            }
+        }
+        return b;
     }
     
     public static void main(String[] args) throws FileNotFoundException {
