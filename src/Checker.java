@@ -67,7 +67,8 @@ public class Checker {
                 int cpt=0; // to count the total working time of a day
                 for(int i=0 ; i<nb_interv ; i++){ // browsing the list of interventions
                     if(solution.interv_dates[i].getDay()==d && solution.interv_dates[i].getTeam()==e){
-                        cpt=cpt+solution.interv_list[i].getTime();
+                        int ST=solution.interv_dates[i].getInterv(); // 
+                        cpt=cpt+solution.interv_list[ST].getTime();
                     }
                 }
                 if(cpt>120){
@@ -78,13 +79,10 @@ public class Checker {
         }
 
         ////////////////////////////////////////////////////////////
-        int interv_ST=0;
         for(int i=0 ; i<nb_interv ; i++){
-            //(if solution.interv_dates[i].interv!=i+1){
-            //    interv_ST=interv_ST+solution.interv_list[i]
-            //}
-
-
+            if(solution.inter_dates[i].getInterv()!=i+1){ 
+                break; //the outsourced interventions are not in Interv_dates, therefore avoids a shift with interv_list
+            }
             int start_i = solution.interv_dates[i].getDay()*120 + solution.interv_dates[i].getTime();
             int end_i = start_i+solution.interv_list[i].getTime();
 
@@ -105,6 +103,25 @@ public class Checker {
             }
         }
 
+        ////////////////////// Check on outsourced interventions
+        int nb_ST= solution.interv_list.length-solution.interv_dates.length;
+        int[] interv_ST = new int[nb_ST];
+        int cpt=0;
+        for(int i=0 ; i<nb_interv ; i++){ //creation of a table of subcontracted interventions
+            if(solution.interv_dates[cpt].getInterv()!=solution.interv_list[i].getNumber()){
+                interv_ST[i]=solution.interv_list[i].getNumber();
+            }else{
+                cpt++;
+            }
+        }
+        int cost=0;
+        for(int i=0 ; i<nb_ST ; i++){
+            cost=cost+solution.interv_list[i].getCost();
+        }
+        if(cost>solution.instance.getAbandon()){
+            System.out.print("[Issue] There is to many outsourced interventions, the total cost is higher than the budget");
+            feasible=0;
+        }
 
 
         return feasible;
