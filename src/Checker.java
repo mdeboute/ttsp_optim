@@ -15,7 +15,7 @@ public class Checker {
         int nb_interv=data.instance.getInterv(); // number of intervention
         int nb_domain=data.instance.getDomains(); //number of domains
         int nb_level=data.instance.getLevel()-1; //equal to the max level
-        int nb_days=solution.tech_teams.lenght; //lenght of tech-teams= number of days
+        int nb_days=solution.tech_teams.length; //lenght of tech-teams= number of days
 
         // Checks on technicians ///////////////////////////////////////////////////////////////
         for(int i=0 ; i<nb_tech ; i++){ //browsing the list of technicians
@@ -41,7 +41,7 @@ public class Checker {
 
                 // We check that technician i is assigned to a team on day j /////////////////////
                 int check2=0;
-                for(int l=1; l<solution.tech_teams[j].tgetTeamLength() ; l++){ //browsing the list of team except team 0
+                for(int l=1; l<solution.tech_teams[j].getTeamLength() ; l++){ //browsing the list of team except team 0
                     for(int k=0 ; k<solution.tech_teams[j].getTeamLength(l)-1 ; k++){ //browsing the list of technicians of eachteam
                         if (solution.tech_teams[j].getTeamLength(l)==0){
                             System.out.print("[Issue] Team " + l + " is empty on day "+ j);
@@ -140,10 +140,50 @@ public class Checker {
                 }
             }
         }
+        
+        //////////we check that the team carrying out the intervention i has the skills in the different domains
+        for(int i=0 ; i<solution.interv_dates.length ; i++){
+            int[][] dom_interv= new int[nb_domain][nb_level]; // array of domains and competences of intervention i
+            int[][] dom_team= new int[nb_domain][nb_level]; // aray of domains and competences of team that makes i
+            int num=solution.inter_dates[i].getInterv(); 
+            int day=solution.interv_dates[i].getDay();
+            int team=solution.interv_dates[i].getTeam();
+            int cpt1=0;
+            //We fill in the array of domains and competences of intervention i
+            for(int j=0 ; j<nb_domain ; j++){
+                for(int k=0; k<nb_level ; k++){
+                    dom_interv[j][k]=solution.interv_list[num-1].getD(cpt1); 
+                    dom_team[j][k]=0;
+                    cpt1++;
+                }
+            }
+            //We fill in the array of domains and competences of team that makes i
+            for(int m=0 ; m<solution.tech_teams[day-1].getTeamLength(team) ; m++){
+                int tech=solution.tech_team[day-1].getTeam(team,m);
+                for(int j=0 ; j<nb_domain ; j++){ 
+                    int level=solution.tech_list[tech-1].getD(j);
+                    for(int k=0 ; k<level ; k++){
+                        dom_team[j][k]=dom_team[j][k]+1;
+                    }
+                }
+            }
+            for(int j=0 ; j<nb_domain ; j++){
+                for(int k=0; k<nb_level ; k++){
+                    if(dom_interv[j][k]>dom_team[j][k]){
+                        System.out.print("[Issue] The team " + team + " of the day " + day + " is not competent enough in the domain " + j + "to do the intervention " + num);
+                        feasible=0;
+                    }
+                }
+            }
+        }
+
+        
+
 
 
         return feasible;
     }
+
 
     // method to check if an integer is present in an array
     public static boolean check(int[] tab, int val) {
