@@ -44,7 +44,7 @@ public class Checker {
                 for(int l=1; l<solution.tech_teams[j].getTeamLength() ; l++){ //browsing the list of team except team 0
                     for(int k=0 ; k<solution.tech_teams[j].getTeamLength(l)-1 ; k++){ //browsing the list of technicians of eachteam
                         if (solution.tech_teams[j].getTeamLength(l)==0){
-                            System.out.print("[Issue] Team " + l + " is empty on day "+ j + ".\n");
+                            System.out.print("[Issue] Team " + l + " is empty on day " + j + ".\n");
                             feasible=0;
                         }
                         if(solution.tech_teams[j].getTeam(l,k)==i){ // 
@@ -53,7 +53,7 @@ public class Checker {
                     }
                 }
                 if(check2!=-1){
-                    System.out.print("[Issue] Technician " + i + " is not assigned to any team on day "+ j = ".\n");
+                    System.out.print("[Issue] Technician " + i + " is not assigned to any team on day " + j + ".\n");
                     feasible=0;
                     //break; // if the technician is not assigned there is no point in carrying out the following checks
                 }
