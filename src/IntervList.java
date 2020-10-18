@@ -33,7 +33,7 @@ public class IntervList {
     }
 
     public int getPredsLength(){
-        return preds.length();
+        return preds.length;
     }
 
     public void setPreds(int[] preds) {
