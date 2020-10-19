@@ -2,17 +2,17 @@ package src;
 
 public class Evaluator extends InstanceReader{
    public static double[] evaluator(TTSPData ttspdata, TTSPSolution ttspsolution) {
-       //Listes des interventions qui sont sous-traite
+       //List of outsourcings interventions with the lenght of the array in the first element
        double[] IntST = {1};
-       // la somme des cout des interventions sous-traite {1,2,3}
+       //Sum of the cost for outsourcing intervention of priority {1,2,3} 
        double sum1 = 0;
        double sum2 = 0;
        double sum3 = 0;
-       // the latest completion time for intervention of priority {1,2,3}
+       //Latest completion time for intervention of priority {1,2,3}
        double LCT1 = 0;
        double LCT2 = 0;
        double LCT3 = 0;
-       // creation of an array with all the intervention
+       //Creation of an array with all the intervention
        for (int i = 0; i < ttspdata.instance.getInterv(); i++){
            double[] IntST_ = new double[((int)IntST[0])+1];
            System.arraycopy(IntST, 0, IntST_, 0, IntST.length);
@@ -20,11 +20,11 @@ public class Evaluator extends InstanceReader{
            IntST[IntST.length-1] = ttspdata.interv_list[i].getNumber();
            IntST[0] = IntST[0] + 1;
        }
-       // put all the intervention which are not outsources to 0
+       //Put all the intervention which are not outsources to 0
        for (int i = 0; i < ttspsolution.interv_dates.length; i++){
            IntST[ttspsolution.interv_dates[i].getInterv()-1] = 0;
        }
-       // put the lenght of the array to 0
+       //Put the lenght of the array to 0
        IntST[0] = 0;
        //For all outsources interventions put the cost of the intervention into the right sum
        for (double v : IntST) {
@@ -39,7 +39,7 @@ public class Evaluator extends InstanceReader{
                }
            }
        }
-       // put the latest completion time in the rescpectiv LCT
+       //Put the latest completion time in the rescpectiv LCT
        for (int i = 0; i < ttspsolution.interv_dates.length; i++){
             double num = ttspsolution.interv_dates[i].getInterv();
             if (ttspdata.interv_list[(int)num - 1].getPrio() == 1 && LCT1 < (120 * ttspsolution.interv_dates[i].getDay() + ttspsolution.interv_dates[i].getTime())){
@@ -53,10 +53,6 @@ public class Evaluator extends InstanceReader{
             }
        }
        return new double[]{sum1, LCT1, sum2, LCT2, sum3, LCT3};
-   }
-
-   public void name() {
-       
    }
 
     public static void main(String[] args) {
