@@ -1,7 +1,7 @@
 package src;
 
 import java.io.*;
-import java.util.Scanner;
+import java.util.*;
 
 public class InstanceReader {
   private static TTSPData ttspData;
@@ -64,21 +64,37 @@ public class InstanceReader {
     try (Scanner scanner = new Scanner(new FileReader(filename))) {
       scanner.nextLine();
       while (scanner.hasNextLine()) {
-        processIntervL(scanner.nextLine());
+        processIntervL(scanner.nextLine(), filename);
       }
     }
   }
 
-  public static void processIntervL(String line){
+  public static void processIntervL(String line, String filename) throws FileNotFoundException{
     Scanner scanner = new Scanner(line);
     scanner.useDelimiter(" ");
 
     if (scanner.hasNext()) {
       ttspData=new TTSPData();
-      ttspData.interv_list[count]=new IntervList();
+      ttspData.interv_list=new IntervList[noOfLines(filename)-1];
       ttspData.interv_list[count].setNumber(Integer.parseInt(scanner.next()));
+      ttspData.interv_list[count].setTime(Integer.parseInt(scanner.next()));
+      if (scanner.next().equals("[")){
+        ArrayList list=new ArrayList();
+        while(!scanner.next().equals("]")){
+          list.add(Integer.parseInt(scanner.next()));
+        }
+        Object[] preds=list.toArray();
+        ttspData.interv_list[count].setPreds(preds);
+      }
+      ttspData.interv_list[count].setPrio(Integer.parseInt(scanner.next()));
+      ttspData.interv_list[count].setCost(Integer.parseInt(scanner.next()));
+      ArrayList list=new ArrayList();
+      while(scanner.hasNext()){
+        list.add(Integer.parseInt(scanner.next()));
+      }
+      Object[] d=list.toArray();
+      ttspData.interv_list[count].setD(d);
       count++;
-      System.out.println("I'm here");
     }
     else {
       System.out.println("Empty or invalid line. Unable to process.");

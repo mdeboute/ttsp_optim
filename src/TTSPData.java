@@ -29,7 +29,4 @@ public class TTSPData{
         this.tech_list = tech_list;
     }
 
-    public String toString() {
-        return "";
-    }
 }
