@@ -4,7 +4,8 @@ import java.io.*;
 import java.util.Scanner;
 
 public class Checker {
-
+    // as a last resort,  for the parser Martin tried a method that required arrays of objects and not integers, 
+    //so I have to redo the checker by converting before each getter
     public static int checker(TTSPData data, TTSPSolution solution){
         int feasible=1;
         if (data.instance != solution.instance){
@@ -23,7 +24,7 @@ public class Checker {
                 
                 //We check that the technician i unavailable on day j is assigned to team 0 /////////////////////
                 int check= 0;
-                for(int k=0 ; k<solution.tech_list.getDispoLength() ; k++){ // browsing the list of days where technician i is unavailaible
+                for(int k=0 ; k<solution.tech_list.length() ; k++){ // browsing the list of days where technician i is unavailaible
                     if(solution.tech_list[i].getDispo(k)==j){ 
                         check=i;
                     }
@@ -55,7 +56,7 @@ public class Checker {
                 if(check2!=-1){
                     System.out.print("[Issue] Technician " + i + " is not assigned to any team on day " + j + ".\n");
                     feasible=0;
-                    //break; // if the technician is not assigned there is no point in carrying out the following checks
+                    //break; 
                 }
             }
         }
@@ -79,7 +80,7 @@ public class Checker {
 
         //////////////////////////
         for(int i=0 ; i<nb_interv ; i++){
-            if(solution.inter_dates[i].getInterv()!=i+1){ 
+            if(solution.interv_dates[i].getInterv()!=i+1){ 
                 break; //the outsourced interventions are not in Interv_dates, therefore avoids a shift with interv_list
             }
             int start_i = solution.interv_dates[i].getDay()*120 + solution.interv_dates[i].getTime();
@@ -145,9 +146,9 @@ public class Checker {
         for(int i=0 ; i<solution.interv_dates.length ; i++){
             int[][] dom_interv= new int[nb_domain][nb_level]; // array of domains and competences of intervention i
             int[][] dom_team= new int[nb_domain][nb_level]; // aray of domains and competences of team that makes i
-            int num=solution.inter_dates[i].getInterv(); 
-            int day=solution.interv_dates[i].getDay();
-            int team=solution.interv_dates[i].getTeam();
+            int num=solution.inter_dates[i].getInterv(); //number of the intervention i
+            int day=solution.interv_dates[i].getDay(); // day where intervention i is made
+            int team=solution.interv_dates[i].getTeam(); // team of the intervention i
             int cpt1=0;
             //We fill in the array of domains and competences of intervention i
             for(int j=0 ; j<nb_domain ; j++){
