@@ -15,9 +15,7 @@ public class Evaluator extends InstanceReader{
        // creation of an array with all the intervention
        for (int i = 0; i < ttspdata.instance.getInterv(); i++){
            double[] IntST_ = new double[((int)IntST[0])+1];
-           for (int j = 0; j < IntST.length; j++) {
-               IntST_[j] = IntST[j];
-           }
+           System.arraycopy(IntST, 0, IntST_, 0, IntST.length);
            IntST = IntST_;
            IntST[IntST.length-1] = ttspdata.interv_list[i].getNumber();
            IntST[0] = IntST[0] + 1;
@@ -29,16 +27,15 @@ public class Evaluator extends InstanceReader{
        // put the lenght of the array to 0
        IntST[0] = 0;
        //For all outsources interventions put the cost of the intervention into the right sum
-       for (int i = 0; i < IntST.length; i++){
-           if (IntST[i] != 0){
-               if (ttspdata.interv_list[(int)IntST[i]].getPrio() == 1){
-                   sum1 = sum1 + ttspdata.interv_list[(int)IntST[i]].getCost();
+       for (double v : IntST) {
+           if (v != 0) {
+               if (ttspdata.interv_list[(int) v].getPrio() == 1) {
+                   sum1 = sum1 + ttspdata.interv_list[(int) v].getCost();
                }
-               if (ttspdata.interv_list[(int)IntST[i]].getPrio() == 2){
-                   sum2 = sum2 + ttspdata.interv_list[(int)IntST[i]].getCost();
-            }
-               else{
-                   sum3 = sum3 + ttspdata.interv_list[(int)IntST[i]].getCost();
+               if (ttspdata.interv_list[(int) v].getPrio() == 2) {
+                   sum2 = sum2 + ttspdata.interv_list[(int) v].getCost();
+               } else {
+                   sum3 = sum3 + ttspdata.interv_list[(int) v].getCost();
                }
            }
        }
@@ -55,8 +52,7 @@ public class Evaluator extends InstanceReader{
                 LCT3 = 120 * ttspsolution.interv_dates[i].getDay() + ttspsolution.interv_dates[i].getTime();
             }
        }
-       double[] result = {sum1, LCT1, sum2, LCT2, sum3, LCT3};
-       return result;
+       return new double[]{sum1, LCT1, sum2, LCT2, sum3, LCT3};
    }
 
    public void name() {
@@ -74,7 +70,7 @@ public class Evaluator extends InstanceReader{
         if (result[5] > Scost){
             Scost = result[5];
         }
-        double Sum = Scost + result[0] + result[2] + result[4]
+        double Sum = Scost + result[0] + result[2] + result[4];
         System.out.print("----------------------------------\n" +
         "--------- COMPUTE COST ----------\n" +
         "----------------------------------\n" +
@@ -83,7 +79,6 @@ public class Evaluator extends InstanceReader{
         "Cost for interventions of priority 3 = " + result[4] + " (latest completion time = " + result[5] + ")\n" + 
         "Schedule cost = " + Scost + " (latest completion time = " + Scost + ")\n" + 
         "-> TOTAL COST = " + Sum);
-        return;
     }
 }
 
