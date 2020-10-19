@@ -1,7 +1,7 @@
 package src;
 
 import java.io.*;
-import java.util.Scanner;
+import java.util.*;
 
 public class Checker {
 
@@ -79,7 +79,7 @@ public class Checker {
 
         //////////////////////////
         for(int i=0 ; i<nb_interv ; i++){
-            if(solution.inter_dates[i].getInterv()!=i+1){ 
+            if(solution.interv_dates[i].getInterv()!=i+1){
                 break; //the outsourced interventions are not in Interv_dates, therefore avoids a shift with interv_list
             }
             int start_i = solution.interv_dates[i].getDay()*120 + solution.interv_dates[i].getTime();
@@ -93,7 +93,7 @@ public class Checker {
 
             //  The intervention p belonging to Pred(i) ends before i begins ///
             for(int p=0 ; p<solution.interv_list[i].getPredsLength() ; p++){
-                int pred= solution.interv_list[i].getPreds(p);
+                int pred= solution.interv_list[i].getPreds();
                 int start_pred=solution.interv_dates[pred].getDay()*120 + solution.interv_dates[pred].getTime();
                 if(solution.interv_list[pred].getTime()+start_pred> start_i){
                     System.out.print("[Issue] Intervention " + pred + " is an intervention that precedes " + i + " and ends after i is started.\n");
@@ -145,7 +145,7 @@ public class Checker {
         for(int i=0 ; i<solution.interv_dates.length ; i++){
             int[][] dom_interv= new int[nb_domain][nb_level]; // array of domains and competences of intervention i
             int[][] dom_team= new int[nb_domain][nb_level]; // aray of domains and competences of team that makes i
-            int num=solution.inter_dates[i].getInterv(); 
+            int num=solution.interv_dates[i].getInterv();
             int day=solution.interv_dates[i].getDay();
             int team=solution.interv_dates[i].getTeam();
             int cpt1=0;
@@ -159,7 +159,7 @@ public class Checker {
             }
             //We fill in the array of domains and competences of team that makes i
             for(int m=0 ; m<solution.tech_teams[day-1].getTeamLength(team) ; m++){
-                int tech=solution.tech_team[day-1].getTeam(team,m);
+                int tech=solution.tech_teams[day-1].getTeam(team,m);
                 for(int j=0 ; j<nb_domain ; j++){ 
                     int level=solution.tech_list[tech-1].getD(j);
                     for(int k=0 ; k<level ; k++){

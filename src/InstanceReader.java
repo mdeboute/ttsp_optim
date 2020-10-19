@@ -30,7 +30,7 @@ public class InstanceReader {
       }
     }
     return n;
-  }
+  } //useful function
 
   public static void readInstance(String filename) throws FileNotFoundException {
     try (Scanner scanner = new Scanner(new FileReader(filename))) {
@@ -41,7 +41,7 @@ public class InstanceReader {
     }
   }
 
-  public static void processInstance(String line){
+  public static void processInstance(String line){ //process line function to create the object
     Scanner scanner = new Scanner(line);
     scanner.useDelimiter(" ");
 
@@ -69,7 +69,7 @@ public class InstanceReader {
     }
   }
 
-  public static void processIntervL(String line, String filename) throws FileNotFoundException {
+  public static void processIntervL(String line, String filename) throws FileNotFoundException { //does not work ??
     Scanner scanner = new Scanner(line);
     scanner.useDelimiter(" ");
 
@@ -106,6 +106,6 @@ public class InstanceReader {
     readInstance("./data/datasetA/data1/"+list_files[1]);
     System.out.println(getTtspData().instance.toString());
     readIntervL("./data/datasetA/data1/"+list_files[2]);
-    System.out.println(getTtspData().interv_list[1].getNumber());
+    System.out.println(getTtspData().interv_list[1].getNumber()); //test
   }
 }
