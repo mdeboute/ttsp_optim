@@ -75,7 +75,7 @@ public class InstanceReader {
 
     if (scanner.hasNext()) {
       ttspData=new TTSPData();
-      ttspData.interv_list=new IntervList[noOfLines(filename)];
+      ttspData.interv_list=new IntervList[noOfLines(filename)-1];
       ttspData.interv_list[count].setNumber(Integer.parseInt(scanner.next()));
       ttspData.interv_list[count].setTime(Integer.parseInt(scanner.next()));
       if (scanner.next().equals("[")){
