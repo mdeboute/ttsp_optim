@@ -69,13 +69,13 @@ public class InstanceReader {
     }
   }
 
-  public static void processIntervL(String line, String filename) throws FileNotFoundException{
+  public static void processIntervL(String line, String filename) throws FileNotFoundException {
     Scanner scanner = new Scanner(line);
     scanner.useDelimiter(" ");
 
     if (scanner.hasNext()) {
       ttspData=new TTSPData();
-      ttspData.interv_list=new IntervList[noOfLines(filename)-1];
+      ttspData.interv_list=new IntervList[noOfLines(filename)];
       ttspData.interv_list[count].setNumber(Integer.parseInt(scanner.next()));
       ttspData.interv_list[count].setTime(Integer.parseInt(scanner.next()));
       if (scanner.next().equals("[")){
@@ -104,8 +104,8 @@ public class InstanceReader {
   public static void main(String[] args) throws IOException {
     String[] list_files=listFiles("./data/datasetA/data1/");
     readInstance("./data/datasetA/data1/"+list_files[1]);
-    readIntervL("./data/datasetA/data1/"+list_files[2]);
     System.out.println(getTtspData().instance.toString());
-    System.out.println(getTtspData().interv_list[0].getNumber());
+    readIntervL("./data/datasetA/data1/"+list_files[2]);
+    System.out.println(getTtspData().interv_list[1].getNumber());
   }
 }
