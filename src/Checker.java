@@ -7,10 +7,10 @@ public class Checker {
 
     public static int checker(TTSPData data, TTSPSolution solution){
         int feasible=1;
-        if (data.instance != solution.instance){
-            System.out.print("[Issue] The solution is not the one for this instance.\n");
-            return 0;
-        }
+        //if (data.instance != solution.instance){
+        //    System.out.print("[Issue] The solution is not the one for this instance.\n");
+        //    return 0;
+        //}
         int nb_tech=data.instance.getTechs(); //number of technician
         int nb_interv=data.instance.getInterv(); // number of intervention
         int nb_domain=data.instance.getDomains(); //number of domains
@@ -23,8 +23,8 @@ public class Checker {
                 
                 //We check that the technician i unavailable on day j is assigned to team 0 /////////////////////
                 int check= 0;
-                for(int k=0 ; k<solution.tech_list.getDispoLength() ; k++){ // browsing the list of days where technician i is unavailaible
-                    if(solution.tech_list[i].getDispo(k)==j){ 
+                for(int k=0 ; k<data.technician[i].getDispoLength() ; k++){ // browsing the list of days where technician i is unavailaible
+                    if(data.technician[i].getDispo(k)==j){ 
                         check=i;
                     }
                 }
@@ -67,7 +67,7 @@ public class Checker {
                 for(int i=0 ; i<nb_interv ; i++){ // browsing the list of interventions
                     if(solution.interv_dates[i].getDay()==d && solution.interv_dates[i].getTeam()==e){
                         int ST=solution.interv_dates[i].getInterv(); // 
-                        cpt=cpt+solution.interv_list[ST].getTime();
+                        cpt=cpt+data.intervention[ST].getTime();
                     }
                 }
                 if(cpt>120){
@@ -83,7 +83,7 @@ public class Checker {
                 break; //the outsourced interventions are not in Interv_dates, therefore avoids a shift with interv_list
             }
             int start_i = solution.interv_dates[i].getDay()*120 + solution.interv_dates[i].getTime();
-            int end_i = start_i+solution.interv_list[i].getTime();
+            int end_i = start_i+data.intervention[i].getTime();
 
             // An intervention that has been started must be finished on the same day.
             if(end_i>120){
@@ -92,10 +92,10 @@ public class Checker {
             }
 
             //  The intervention p belonging to Pred(i) ends before i begins ///
-            for(int p=0 ; p<solution.interv_list[i].getPredsLength() ; p++){
-                int pred= solution.interv_list[i].getPreds();
+            for(int p=0 ; p<data.intervention[i].getPredsLength() ; p++){
+                int pred= data.intervention[i].getPreds(p);
                 int start_pred=solution.interv_dates[pred].getDay()*120 + solution.interv_dates[pred].getTime();
-                if(solution.interv_list[pred].getTime()+start_pred> start_i){
+                if(data.intervention[pred].getTime()+start_pred> start_i){
                     System.out.print("[Issue] Intervention " + pred + " is an intervention that precedes " + i + " and ends after i is started.\n");
                     feasible=0;
                 }
@@ -103,12 +103,12 @@ public class Checker {
         }
 
         ////////////////////// Check on outsourced interventions
-        int nb_ST= solution.interv_list.length-solution.interv_dates.length;
+        int nb_ST= data.intervention.length-solution.interv_dates.length;
         int[] interv_ST = new int[nb_ST];
         int cpt=0;
         for(int i=0 ; i<nb_interv ; i++){ //creation of a table of subcontracted interventions
-            if(solution.interv_dates[cpt].getInterv()!=solution.interv_list[i].getNumber()){
-                interv_ST[i]=solution.interv_list[i].getNumber();
+            if(solution.interv_dates[cpt].getInterv()!=data.intervention[i].getNumber()){
+                interv_ST[i]=data.intervention[i].getNumber();
             }else{
                 cpt++;
             }
@@ -117,9 +117,9 @@ public class Checker {
          //////we check if cost is below or equal to the budget
         int cost=0;
         for(int i=0 ; i<nb_ST ; i++){ 
-            cost=cost+solution.interv_list[i].getCost(); //cost total of outsourced interventions
+            cost=cost+data.intervention[i].getCost(); //cost total of outsourced interventions
         }
-        if(cost>solution.instance.getAbandon()){
+        if(cost>data.instance.getAbandon()){
             System.out.print("[Issue] There is to many outsourced interventions, the total cost is higher than the budget.\n");
             feasible=0;
         }
@@ -128,12 +128,12 @@ public class Checker {
         for (int i=0; i<nb_interv ; i++){
             for(int j=0; j<nb_ST ; j++){
                 int ST=interv_ST[j];
-                if(solution.interv_list[i].getNumber()==ST){
+                if(data.intervention[i].getNumber()==ST){
                     break; //we check that we do not compare the outsourced intervention i with itself
                 }
                 int check1=0;
-                if(check(solution.interv_list[i].getPreds(),ST)){ //check if outsourced intervention j belongs to pred(i)
-                    if(!check(interv_ST, solution.interv_list[i].getNumber())){ //check if intervention i is outsourced
+                if(check(data.intervention[i].getPreds(),ST)){ //check if outsourced intervention j belongs to pred(i)
+                    if(!check(interv_ST, data.intervention[i].getNumber())){ //check if intervention i is outsourced
                         System.out.print("[Issue] the intervention " + i + "is not outsourced while his predecessor " + ST + " is outsourced.\n");
                         feasible=0;
                     }
@@ -152,7 +152,7 @@ public class Checker {
             //We fill in the array of domains and competences of intervention i
             for(int j=0 ; j<nb_domain ; j++){
                 for(int k=0; k<nb_level ; k++){
-                    dom_interv[j][k]=solution.interv_list[num-1].getD(cpt1); 
+                    dom_interv[j][k]=data.intervention[num-1].getD(cpt1); 
                     dom_team[j][k]=0;
                     cpt1++;
                 }
@@ -161,7 +161,7 @@ public class Checker {
             for(int m=0 ; m<solution.tech_teams[day-1].getTeamLength(team) ; m++){
                 int tech=solution.tech_teams[day-1].getTeam(team,m);
                 for(int j=0 ; j<nb_domain ; j++){ 
-                    int level=solution.tech_list[tech-1].getD(j);
+                    int level=data.technician[tech-1].getD(j);
                     for(int k=0 ; k<level ; k++){
                         dom_team[j][k]=dom_team[j][k]+1;
                     }

@@ -17,7 +17,7 @@ public class Evaluator extends InstanceReader{
            double[] IntST_ = new double[((int)IntST[0])+1];
            System.arraycopy(IntST, 0, IntST_, 0, IntST.length);
            IntST = IntST_;
-           IntST[IntST.length-1] = ttspdata.interv_list[i].getNumber();
+           IntST[IntST.length-1] = ttspdata.intervention[i].getNumber();
            IntST[0] = IntST[0] + 1;
        }
        //Put all the intervention which are not outsources to 0
@@ -29,26 +29,26 @@ public class Evaluator extends InstanceReader{
        //For all outsources interventions put the cost of the intervention into the right sum
        for (double v : IntST) {
            if (v != 0) {
-               if (ttspdata.interv_list[(int) v].getPrio() == 1) {
-                   sum1 = sum1 + ttspdata.interv_list[(int) v].getCost();
+               if (ttspdata.intervention[(int) v].getPrio() == 1) {
+                   sum1 = sum1 + ttspdata.intervention[(int) v].getCost();
                }
-               if (ttspdata.interv_list[(int) v].getPrio() == 2) {
-                   sum2 = sum2 + ttspdata.interv_list[(int) v].getCost();
+               if (ttspdata.intervention[(int) v].getPrio() == 2) {
+                   sum2 = sum2 + ttspdata.intervention[(int) v].getCost();
                } else {
-                   sum3 = sum3 + ttspdata.interv_list[(int) v].getCost();
+                   sum3 = sum3 + ttspdata.intervention[(int) v].getCost();
                }
            }
        }
        //Put the latest completion time in the rescpectiv LCT
        for (int i = 0; i < ttspsolution.interv_dates.length; i++){
             double num = ttspsolution.interv_dates[i].getInterv();
-            if (ttspdata.interv_list[(int)num - 1].getPrio() == 1 && LCT1 < (120 * ttspsolution.interv_dates[i].getDay() + ttspsolution.interv_dates[i].getTime())){
+            if (ttspdata.intervention[(int)num - 1].getPrio() == 1 && LCT1 < (120 * ttspsolution.interv_dates[i].getDay() + ttspsolution.interv_dates[i].getTime())){
                 LCT1 = 120 * ttspsolution.interv_dates[i].getDay() + ttspsolution.interv_dates[i].getTime();
             }
-            if (ttspdata.interv_list[(int)num - 1].getPrio() == 2 && LCT2 < (120 * ttspsolution.interv_dates[i].getDay() + ttspsolution.interv_dates[i].getTime())){
+            if (ttspdata.intervention[(int)num - 1].getPrio() == 2 && LCT2 < (120 * ttspsolution.interv_dates[i].getDay() + ttspsolution.interv_dates[i].getTime())){
                 LCT2 = 120 * ttspsolution.interv_dates[i].getDay() + ttspsolution.interv_dates[i].getTime();
             }
-            if (ttspdata.interv_list[(int)num - 1].getPrio() == 3 && LCT3 < (120 * ttspsolution.interv_dates[i].getDay() + ttspsolution.interv_dates[i].getTime())){
+            if (ttspdata.intervention[(int)num - 1].getPrio() == 3 && LCT3 < (120 * ttspsolution.interv_dates[i].getDay() + ttspsolution.interv_dates[i].getTime())){
                 LCT3 = 120 * ttspsolution.interv_dates[i].getDay() + ttspsolution.interv_dates[i].getTime();
             }
        }

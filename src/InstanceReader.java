@@ -75,25 +75,25 @@ public class InstanceReader {
 
     if (scanner.hasNext()) {
       ttspData=new TTSPData();
-      ttspData.interv_list=new IntervList[noOfLines(filename)-1];
-      ttspData.interv_list[count].setNumber(Integer.parseInt(scanner.next()));
-      ttspData.interv_list[count].setTime(Integer.parseInt(scanner.next()));
+      ttspData.intervention=new IntervList[noOfLines(filename)-1];
+      ttspData.intervention[count].setNumber(Integer.parseInt(scanner.next()));
+      ttspData.intervention[count].setTime(Integer.parseInt(scanner.next()));
       if (scanner.next().equals("[")){
         ArrayList list=new ArrayList();
         while(!scanner.next().equals("]")){
           list.add(Integer.parseInt(scanner.next()));
         }
         Object[] preds=list.toArray();
-        ttspData.interv_list[count].setPreds(preds);
+        ttspData.intervention[count].setPreds(preds);
       }
-      ttspData.interv_list[count].setPrio(Integer.parseInt(scanner.next()));
-      ttspData.interv_list[count].setCost(Integer.parseInt(scanner.next()));
+      ttspData.intervention[count].setPrio(Integer.parseInt(scanner.next()));
+      ttspData.intervention[count].setCost(Integer.parseInt(scanner.next()));
       ArrayList list=new ArrayList();
       while(scanner.hasNext()){
         list.add(Integer.parseInt(scanner.next()));
       }
       Object[] d=list.toArray();
-      ttspData.interv_list[count].setD(d);
+      ttspData.intervention[count].setD(d);
       count++;
     }
     else {
@@ -106,6 +106,6 @@ public class InstanceReader {
     readInstance("./data/datasetA/data1/"+list_files[1]);
     System.out.println(getTtspData().instance.toString());
     readIntervL("./data/datasetA/data1/"+list_files[2]);
-    System.out.println(getTtspData().interv_list[1].getNumber()); //test
+    System.out.println(getTtspData().intervention[1].getNumber()); //test
   }
 }

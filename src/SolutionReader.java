@@ -54,13 +54,13 @@ public static void processIntervD(String line, String filename) throws FileNotFo
     TTSPData ttspData = InstanceReader(args[0]);
     ttspSolution = new TTSPSolution();
     ttspSolution.instance = ttspData.instance;
-    ttspSolution.interv_list = ttspData.interv_list;
-    ttspSolution.tech_list = ttspData.tech_list;
+    ttspSolution.interv_list = ttspData.intervention;
+    ttspSolution.tech_list = ttspData.technician;
     String[] list_files=listFiles("./data/datasetA/data1/");
     readInstance("./data/datasetA/data1/"+list_files[1]);
     System.out.println(getTtspData().instance.toString());
     readIntervL("./data/datasetA/data1/"+list_files[2]);
-    System.out.println(getTtspData().interv_list[1].getNumber());
+    System.out.println(getTtspData().intervention[1].getNumber());
   }
 }
 

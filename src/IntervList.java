@@ -3,10 +3,10 @@ package src;
 public class IntervList {
     private int number;
     private int time;
-    private Object[] preds;
+    private int[] preds;
     private int prio;
     private int cost;
-    private Object[] d;
+    private int[] d;
 
 
     public int getNumber() {
@@ -25,11 +25,19 @@ public class IntervList {
         this.time = time;
     }
 
-    public Object[] getPreds() {
+    public int[] getPreds() {
         return preds;
     }
+    
+    public int getPreds(int c) {
+        return preds[c];
+    }
+    
+    public int getPredsLength() {
+    	return preds.length;
+    }
 
-    public void setPreds(Object[] preds) {
+    public void setPreds(int[] preds) {
         this.preds = preds;
     }
 
@@ -49,11 +57,19 @@ public class IntervList {
         this.cost = cost;
     }
 
-    public Object[] getD() {
+    public int[] getD() {
         return d;
     }
-
-    public void setD(Object[] d) {
+    
+    public int getDLength() {
+    	return d.length;
+    }
+    
+    public int getD(int c) {
+        return d[c];
+    }
+    
+    public void setD(int[] d) {
         this.d = d;
     }
 

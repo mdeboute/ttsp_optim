@@ -2,8 +2,8 @@ package src;
 
 public class TTSPData{
     Instance instance;
-    IntervList[] interv_list;
-    TechList[] tech_list;
+    IntervList[] intervention;
+    TechList[] technician;
 
     public Instance getInstance() {
         return this.instance;
@@ -14,19 +14,19 @@ public class TTSPData{
     }
 
     public IntervList[] getInterv_list() {
-        return this.interv_list;
+        return this.intervention;
     }
 
     public void setInterv_list(IntervList[] interv_list) {
-        this.interv_list = interv_list;
+        this.intervention = interv_list;
     }
 
     public TechList[] getTech_list() {
-        return this.tech_list;
+        return this.technician;
     }
 
-    public void setTech_list(TechList[] tech_list) {
-        this.tech_list = tech_list;
+    public void setTechnician(TechList[] tech_list) {
+        this.technician = tech_list;
     }
 
 }
