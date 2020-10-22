@@ -3,42 +3,23 @@ package src;
 public class Evaluator extends InstanceReader{
    public static double[] evaluator(TTSPData ttspdata, TTSPSolution ttspsolution) {
        //List of outsourcings interventions with the lenght of the array in the first element
-       double[] IntST = {1};
+       double[] IntST = new double[ttspdata.instance.getInterv()];
+       
        //Sum of the cost for outsourcing intervention of priority {1,2,3} 
        double sum1 = 0;
        double sum2 = 0;
        double sum3 = 0;
+       
        //Latest completion time for intervention of priority {1,2,3}
        double LCT1 = 0;
        double LCT2 = 0;
        double LCT3 = 0;
-       //Creation of an array with all the intervention
-       for (int i = 0; i < ttspdata.instance.getInterv(); i++){
-           double[] IntST_ = new double[((int)IntST[0])+1];
-           System.arraycopy(IntST, 0, IntST_, 0, IntST.length);
-           IntST = IntST_;
-           IntST[IntST.length-1] = ttspdata.intervention[i].getNumber();
-           IntST[0] = IntST[0] + 1;
-       }
+       
        //Put all the intervention which are not outsources to 0
        for (int i = 0; i < ttspsolution.interv_dates.length; i++){
-           IntST[ttspsolution.interv_dates[i].getInterv()-1] = 0;
+           IntST[ttspsolution.interv_dates[i].getInterv()-1] = 1;
        }
-       //Put the lenght of the array to 0
-       IntST[0] = 0;
-       //For all outsources interventions put the cost of the intervention into the right sum
-       for (double v : IntST) {
-           if (v != 0) {
-               if (ttspdata.intervention[(int) v].getPrio() == 1) {
-                   sum1 = sum1 + ttspdata.intervention[(int) v].getCost();
-               }
-               if (ttspdata.intervention[(int) v].getPrio() == 2) {
-                   sum2 = sum2 + ttspdata.intervention[(int) v].getCost();
-               } else {
-                   sum3 = sum3 + ttspdata.intervention[(int) v].getCost();
-               }
-           }
-       }
+
        //Put the latest completion time in the rescpectiv LCT
        for (int i = 0; i < ttspsolution.interv_dates.length; i++){
             double num = ttspsolution.interv_dates[i].getInterv();
@@ -52,6 +33,11 @@ public class Evaluator extends InstanceReader{
                 LCT3 = 120 * ttspsolution.interv_dates[i].getDay() + ttspsolution.interv_dates[i].getTime();
             }
        }
+       
+       //Put the sum of the intervention into the right sum
+       sum1 = 28 * LCT1;
+       sum2 = 14 * LCT2;
+       sum3 = 4 * LCT3;
        return new double[]{sum1, LCT1, sum2, LCT2, sum3, LCT3};
    }
 
