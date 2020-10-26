@@ -1,9 +1,10 @@
 package src;
 
-public class TTSPData{
+public class TTSPData {
     Instance instance;
     IntervList[] intervention;
     TechList[] technician;
+
 
     public Instance getInstance() {
         return this.instance;

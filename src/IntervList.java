@@ -28,14 +28,6 @@ public class IntervList {
     public int[] getPreds() {
         return preds;
     }
-    
-    public int getPreds(int c) {
-        return preds[c];
-    }
-    
-    public int getPredsLength() {
-    	return preds.length;
-    }
 
     public void setPreds(int[] preds) {
         this.preds = preds;
@@ -60,18 +52,9 @@ public class IntervList {
     public int[] getD() {
         return d;
     }
-    
-    public int getDLength() {
-    	return d.length;
-    }
-    
-    public int getD(int c) {
-        return d[c];
-    }
-    
+
     public void setD(int[] d) {
         this.d = d;
     }
-
 
 }

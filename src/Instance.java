@@ -8,6 +8,7 @@ public class Instance {
     private int interv;
     private int abandon;
 
+
     public String getName() {
         return this.name;
     }
@@ -55,6 +56,7 @@ public class Instance {
     public void setAbandon(int abandon) {
         this.abandon = abandon;
     }
+
 
     public String toString(){
         return "///////////// Instance "+name+" ////////////\n" +

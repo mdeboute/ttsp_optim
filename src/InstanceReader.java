@@ -1,7 +1,11 @@
 package src;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class InstanceReader {
   private static TTSPData ttspData;
@@ -10,6 +14,7 @@ public class InstanceReader {
   public static TTSPData getTtspData() {
     return ttspData;
   }
+
 
   public static String[] listFiles(String INPUT_DIR_NAME) {
     File directory = new File(INPUT_DIR_NAME);

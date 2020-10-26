@@ -6,6 +6,7 @@ public class IntervDates {
     private int time;
     private int team;
 
+
     public int getInterv() {
         return this.interv;
     }
