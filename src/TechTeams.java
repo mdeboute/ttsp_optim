@@ -4,6 +4,11 @@ public class TechTeams {
     private int day;
     private int[][] team;
 
+    public TechTeams(int day, int[][] team) {
+        super();
+        this.day=day;
+        this.team=team;
+    }
 
     public int getDay() {
         return this.day;

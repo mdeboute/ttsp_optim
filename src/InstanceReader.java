@@ -1,116 +1,21 @@
 package src;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.io.*;
 
 public class InstanceReader {
-  private static TTSPData ttspData;
-  private static int count=0;
+  /**
+   * Parses the file given in parameter. Reads the file line by line.
+   *
+   * @param filePath the path to the file to read
+   * @return the data of a TTSP problem
+   */
 
-  public static TTSPData getTtspData() {
-    return ttspData;
+  public TTSPData parse(String filePath) {
+    // todo
   }
 
-
-  public static String[] listFiles(String INPUT_DIR_NAME) {
-    File directory = new File(INPUT_DIR_NAME);
-    String[] list = directory.list();
-
-    if (list == null) {
-      System.err.println("Invalid directory name");
-    }
-    return list;
-  }
-
-  public static Integer noOfLines(String filename) throws FileNotFoundException{
-    int n=0;
-
-    try (Scanner scanner = new Scanner(new FileReader(filename))) {
-      while (scanner.hasNextLine()) {
-        n++;
-      }
-    }
-    return n;
-  } //useful function
-
-  public static void readInstance(String filename) throws FileNotFoundException {
-    try (Scanner scanner = new Scanner(new FileReader(filename))) {
-      scanner.nextLine();
-      while (scanner.hasNextLine()) {
-        processInstance(scanner.nextLine());
-      }
-    }
-  }
-
-  public static void processInstance(String line){ //process line function to create the object
-    Scanner scanner = new Scanner(line);
-    scanner.useDelimiter(" ");
-
-    if (scanner.hasNext()) {
-      ttspData=new TTSPData();
-      ttspData.instance=new Instance();
-      ttspData.instance.setName((scanner.next()));
-      ttspData.instance.setDomains(Integer.parseInt((scanner.next())));
-      ttspData.instance.setLevel(Integer.parseInt((scanner.next())));
-      ttspData.instance.setTechs(Integer.parseInt((scanner.next())));
-      ttspData.instance.setInterv(Integer.parseInt((scanner.next())));
-      ttspData.instance.setAbandon(Integer.parseInt((scanner.next())));
-    }
-    else {
-      System.out.println("Empty or invalid line. Unable to process.");
-    }
-  }
-
-  public static void readIntervL(String filename) throws FileNotFoundException {
-    try (Scanner scanner = new Scanner(new FileReader(filename))) {
-      scanner.nextLine();
-      while (scanner.hasNextLine()) {
-        processIntervL(scanner.nextLine(), filename);
-      }
-    }
-  }
-
-  public static void processIntervL(String line, String filename) throws FileNotFoundException { //does not work ??
-    Scanner scanner = new Scanner(line);
-    scanner.useDelimiter(" ");
-
-    if (scanner.hasNext()) {
-      ttspData=new TTSPData();
-      ttspData.intervention=new IntervList[noOfLines(filename)-1];
-      ttspData.intervention[count].setNumber(Integer.parseInt(scanner.next()));
-      ttspData.intervention[count].setTime(Integer.parseInt(scanner.next()));
-      if (scanner.next().equals("[")){
-        ArrayList list=new ArrayList();
-        while(!scanner.next().equals("]")){
-          list.add(Integer.parseInt(scanner.next()));
-        }
-        Object[] preds=list.toArray();
-        ttspData.intervention[count].setPreds(preds);
-      }
-      ttspData.intervention[count].setPrio(Integer.parseInt(scanner.next()));
-      ttspData.intervention[count].setCost(Integer.parseInt(scanner.next()));
-      ArrayList list=new ArrayList();
-      while(scanner.hasNext()){
-        list.add(Integer.parseInt(scanner.next()));
-      }
-      Object[] d=list.toArray();
-      ttspData.intervention[count].setD(d);
-      count++;
-    }
-    else {
-      System.out.println("Empty or invalid line. Unable to process.");
-    }
-  }
 
   public static void main(String[] args) throws IOException {
-    String[] list_files=listFiles("./data/datasetA/data1/");
-    readInstance("./data/datasetA/data1/"+list_files[1]);
-    System.out.println(getTtspData().instance.toString());
-    readIntervL("./data/datasetA/data1/"+list_files[2]);
-    System.out.println(getTtspData().intervention[1].getNumber()); //test
+    return;
   }
 }

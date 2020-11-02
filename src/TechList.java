@@ -5,6 +5,12 @@ public class TechList {
     private int[] d;
     private int[] dispo;
 
+    public TechList(int tech, int[] d, int[] dispo) {
+        super();
+        this.tech=tech;
+        this.d=d;
+        this.dispo=dispo;
+    }
 
     public int[] getDispo() {
         return dispo;

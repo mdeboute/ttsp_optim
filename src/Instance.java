@@ -8,6 +8,15 @@ public class Instance {
     private int interv;
     private int abandon;
 
+    public Instance(String name, int domains, int level, int techs, int interv, int abandon) {
+        super();
+        this.name=name;
+        this.domains=domains;
+        this.level=level;
+        this.techs=techs;
+        this.interv=interv;
+        this.abandon=abandon;
+    }
 
     public String getName() {
         return this.name;
@@ -57,7 +66,7 @@ public class Instance {
         this.abandon = abandon;
     }
 
-
+    @Override
     public String toString(){
         return "///////////// Instance "+name+" ////////////\n" +
                 "#Interventions = "+interv+"\n" +

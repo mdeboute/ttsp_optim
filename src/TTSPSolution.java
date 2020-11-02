@@ -1,23 +1,29 @@
 package src;
 
-public class TTSPSolution {
-    IntervDates[] interv_dates;
-    TechTeams[] tech_teams;
-    
-    public IntervDates[] getInterv_dates() {
-        return this.interv_dates;
-    }
+import java.util.Arrays; // for the toString
 
-    public void setInterv_dates(IntervDates[] interv_dates) {
-        this.interv_dates = interv_dates;
+public class TTSPSolution {
+    private final IntervDates[] interv_dates;
+    private final TechTeams[] tech_teams;
+
+    public TTSPSolution(IntervDates[] interv_dates, TechTeams[] tech_teams) {
+        super();
+        this.interv_dates=interv_dates;
+        this.tech_teams=tech_teams;
     }
 
     public TechTeams[] getTech_teams() {
-        return this.tech_teams;
+        return tech_teams;
     }
 
-    public void setTech_teams(TechTeams[] tech_teams) {
-        this.tech_teams = tech_teams;
+    public IntervDates[] getInterv_dates() {
+        return interv_dates;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder s = new StringBuilder();
+        s.append("to do");
+        return s.toString();
+    }
 }
