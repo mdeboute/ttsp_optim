@@ -6,7 +6,7 @@ public class IntervList {
     private int[] preds;
     private int prio;
     private int cost;
-    private int[] d;
+    private int[] d; // [d1_1, d1_2, d1_3, d2_1, d2_2, d2_3, ...]
 
     public IntervList(int number, int time, int[] preds, int prio, int cost, int[] d) {
         super();
