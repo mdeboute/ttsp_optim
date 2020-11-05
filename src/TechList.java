@@ -2,7 +2,7 @@ package src;
 
 public class TechList {
     private int tech;
-    private int[] d;
+    private int[] d; // d[0]=0, puis d[1]=d1, ...
     private int[] dispo;
 
     public TechList(int tech, int[] d, int[] dispo) {
