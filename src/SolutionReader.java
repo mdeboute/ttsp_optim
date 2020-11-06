@@ -10,9 +10,9 @@ public class SolutionReader {
    * @return the solution of a TTSP problem
    */
 
-  public TTSPSolution parse(String filePath) {
-    // to do
-  }
+//  public TTSPSolution parse(String filePath) {
+//    // to do
+//  }
 
 
   public static void main(String[] args) throws IOException {
