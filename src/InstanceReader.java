@@ -81,11 +81,10 @@ public class InstanceReader {
 				  t.add(splitLine[cpt]);
 				  cpt++;
 			  }
-			  String[] obj = (String[]) t.toArray(); //the arraylist is converted into an array of Object
+			  Object[] obj = t.toArray(); //the arraylist is converted into an array of Object
 			  int[] preds = new int[obj.length];
 			  for(int j=0; j < preds.length; j++) {  // the array of object is converted into an array of int
-				  int pred = Integer.parseInt(obj[j]);
-				  preds[j]=pred;
+				  preds[j]=(int) obj[j];
 			  }
 			  cpt++;
 			  int prio=Integer.parseInt(splitLine[cpt]);
@@ -146,11 +145,10 @@ public class InstanceReader {
 				  t.add(splitLine[cpt]);
 				  cpt++;
 			  }
-			  String[] obj = (String[]) t.toArray(); //the arraylist is converted into an array of Object
+			  Object[] obj = t.toArray(); //the arraylist is converted into an array of Object
 			  int[] dispo = new int[obj.length];
 			  for(int j=0; j < dispo.length; j++) {  // the array of object is converted into an array of int
-				  int disp = Integer.parseInt(obj[j]);
-				  dispo[j]=disp;
+				  dispo[j]=(int) obj[j];
 			  }
 			  TechList tech_i = new TechList(tech,d,dispo);
 			  technicians[i]=tech_i;
@@ -337,3 +335,4 @@ public class InstanceReader {
         System.out.println(ttspdata.getInstance().toString());
     }
 }
+q
