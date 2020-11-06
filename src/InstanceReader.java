@@ -2,6 +2,7 @@ package src;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class InstanceReader {
     /**
@@ -13,7 +14,6 @@ public class InstanceReader {
 
     public static TTSPData parse(String filePath) {
         String instance = filePath + "/instance";
-        instance.toString();
         String interv_list = filePath + "/interv_list";
         String tech_list = filePath + "/tech_list";
         Instance inst = processInstance(instance);
@@ -40,8 +40,7 @@ public class InstanceReader {
             int techs = Integer.parseInt(splitLine[3]);
             int interv = Integer.parseInt(splitLine[4]);
             int abandon = Integer.parseInt(splitLine[5]);
-            Instance inst = new Instance(name, domains, level, techs, interv, abandon);
-            return inst;
+            return new Instance(name, domains, level, techs, interv, abandon);
         } catch (Exception e) {
             e.printStackTrace();
             throw new IllegalStateException(
@@ -74,7 +73,7 @@ public class InstanceReader {
                 String[] splitLine = lineFile.split(" ");
                 int number = Integer.parseInt(splitLine[0]);
                 int time = Integer.parseInt(splitLine[1]);
-                ArrayList t = new ArrayList();
+                ArrayList<String> t = new ArrayList<>();
                 int cpt = 3;
                 while (!splitLine[cpt].equals("]")) { //we retrieve the predecessors of intervention i in a arraylist
                     t.add(splitLine[cpt]);
@@ -83,7 +82,7 @@ public class InstanceReader {
                 //the arraylist is converted into an array of Object
                 String[] obj= new String[t.size()];
                 for(int j=0; j<t.size() ; j++){
-                    obj[j]=""+t.toArray();
+                    obj[j]=""+ Arrays.toString(t.toArray());
                 }
                 int[] preds = new int[obj.length];
 			    for(int j=0; j < preds.length; j++) {  // the array of object is converted into an array of int
@@ -142,7 +141,7 @@ public class InstanceReader {
                     d[j] = Integer.parseInt(splitLine[cpt]);
                     cpt++;
                 }
-                ArrayList t1 = new ArrayList();
+                ArrayList<String> t1 = new ArrayList<>();
                 cpt++;
                 String test=splitLine[cpt];
                 while (!splitLine[cpt].equals("]")) { //we retrieve the predecessors of intervention i in a arraylist
@@ -151,7 +150,7 @@ public class InstanceReader {
                 }
                 String[] obj2= new String[t1.size()];//the arraylist is converted into an array of Object
                 for(int j=0; j<t1.size() ; j++){
-                    obj2[j]=""+t1.toArray();
+                    obj2[j]=""+ Arrays.toString(t1.toArray());
                 }
 			    int[] dispos = new int[obj2.length];
 			    for(int j=0; j < dispos.length; j++) {  // the array of object is converted into an array of int
@@ -182,5 +181,7 @@ public class InstanceReader {
     public static void main(String[] args) {
         TTSPData ttspdata = parse("./data/datasetA/data1");
         System.out.println(ttspdata.getInstance().toString());
+        System.out.println(Arrays.toString(ttspdata.getIntervention()));
+        System.out.println(Arrays.toString(ttspdata.getTechnician()));
     }
 }

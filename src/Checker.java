@@ -196,14 +196,14 @@ public class Checker {
         return b;
     }
     
-    public static void main(String[] args) {
-        //TTSPSolution ttspSolution = SolutionReader("./solutions/sol_A_3_#2");
-        //TTSPData ttspsolution = InstanceReader("./solutions/sol_A_3_#2");
-        System.out.print("----------------------------\n");
-        System.out.print("----- CHECK CONSTRAINTS ----\n");
-        System.out.print("----------------------------\n");
-        System.out.print("----------------------------\n");
-        //int result = checker(ttspData, ttspSolution);
-        //System.out.print("-> FEASIBLE =" + result + "(0=false/1=true)\n");
-    }
+//    public static void main(String[] args) {
+//        //TTSPSolution ttspSolution = SolutionReader("./solutions/sol_A_3_#2");
+//        //TTSPData ttspsolution = InstanceReader("./solutions/sol_A_3_#2");
+//        System.out.print("----------------------------\n");
+//        System.out.print("----- CHECK CONSTRAINTS ----\n");
+//        System.out.print("----------------------------\n");
+//        System.out.print("----------------------------\n");
+//        //int result = checker(ttspData, ttspSolution);
+//        //System.out.print("-> FEASIBLE =" + result + "(0=false/1=true)\n");
+//    }
 }

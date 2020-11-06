@@ -41,26 +41,26 @@ public class Evaluator {
        return new double[]{sum1, LCT1, sum2, LCT2, sum3, LCT3};
    }
 
-    public static void main(String[] args) {
-        TTSPData ttspdata = new InstanceReader().parse(args[0]);
-        TTSPSolution ttspsolution = new SolutionReader().parse(args[1]);
-        double[] result = evaluator(ttspdata, ttspsolution);
-        double Scost = result[1];
-        if (result[3] > Scost){
-            Scost = result[3];
-        }
-        if (result[5] > Scost){
-            Scost = result[5];
-        }
-        double Sum = Scost + result[0] + result[2] + result[4];
-        System.out.print("----------------------------------\n" +
-        "--------- COMPUTE COST ----------\n" +
-        "----------------------------------\n" +
-        "Cost for interventions of priority 1 = " + result[0] + " (latest completion time = " + result[1] + ")\n" +
-        "Cost for interventions of priority 2 = " + result[2] + " (latest completion time = " + result[3] + ")\n" + 
-        "Cost for interventions of priority 3 = " + result[4] + " (latest completion time = " + result[5] + ")\n" + 
-        "Schedule cost = " + Scost + " (latest completion time = " + Scost + ")\n" + 
-        "-> TOTAL COST = " + Sum);
-    }
+//    public static void main(String[] args) {
+//        TTSPData ttspdata = new InstanceReader().parse(args[0]);
+//        TTSPSolution ttspsolution = new SolutionReader().parse(args[1]);
+//        double[] result = evaluator(ttspdata, ttspsolution);
+//        double Scost = result[1];
+//        if (result[3] > Scost){
+//            Scost = result[3];
+//        }
+//        if (result[5] > Scost){
+//            Scost = result[5];
+//        }
+//        double Sum = Scost + result[0] + result[2] + result[4];
+//        System.out.print("----------------------------------\n" +
+//        "--------- COMPUTE COST ----------\n" +
+//        "----------------------------------\n" +
+//        "Cost for interventions of priority 1 = " + result[0] + " (latest completion time = " + result[1] + ")\n" +
+//        "Cost for interventions of priority 2 = " + result[2] + " (latest completion time = " + result[3] + ")\n" +
+//        "Cost for interventions of priority 3 = " + result[4] + " (latest completion time = " + result[5] + ")\n" +
+//        "Schedule cost = " + Scost + " (latest completion time = " + Scost + ")\n" +
+//        "-> TOTAL COST = " + Sum);
+//    }
 }
 
