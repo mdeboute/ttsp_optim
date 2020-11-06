@@ -1,9 +1,20 @@
 package src;
 
+import java.util.Arrays;
+
 public class TechList {
     private int tech;
     private int[] d; // d[0]=0, puis d[1]=d1, ...
     private int[] dispo;
+
+    @Override
+    public String toString() {
+        return "TechList{" +
+                "tech=" + tech +
+                ", d=" + Arrays.toString(d) +
+                ", dispo=" + Arrays.toString(dispo) +
+                '}';
+    }
 
     public TechList(int tech, int[] d, int[] dispo) {
         super();

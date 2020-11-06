@@ -1,7 +1,18 @@
 package src;
 
+import java.util.Arrays;
+
 public class TechTeams {
     private int day;
+
+    @Override
+    public String toString() {
+        return "TechTeams{" +
+                "day=" + day +
+                ", team=" + Arrays.toString(team) +
+                '}';
+    }
+
     private int[][] team;
 
     public TechTeams(int day, int[][] team) {

@@ -5,6 +5,19 @@ public class Instance {
     private int domains;
     private int level;
     private int techs;
+
+    @Override
+    public String toString() {
+        return "Instance{" +
+                "name='" + name + '\'' +
+                ", domains=" + domains +
+                ", level=" + level +
+                ", techs=" + techs +
+                ", interv=" + interv +
+                ", abandon=" + abandon +
+                '}';
+    }
+
     private int interv;
     private int abandon;
 
@@ -66,13 +79,4 @@ public class Instance {
         this.abandon = abandon;
     }
 
-    @Override
-    public String toString(){
-        return "///////////// Instance "+name+" ////////////\n" +
-                "#Interventions = "+interv+"\n" +
-                "#Technicians = "+techs+"\n" +
-                "#Domains / #Levels = "+domains+" / "+level +"\n" +
-                "Outsourcing budget = "+abandon+"\n" +
-                "----------------------------------\n";
-    }
 }

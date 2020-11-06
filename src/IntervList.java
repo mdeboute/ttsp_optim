@@ -1,5 +1,7 @@
 package src;
 
+import java.util.Arrays;
+
 public class IntervList {
     private int number;
     private int time;
@@ -16,6 +18,18 @@ public class IntervList {
         this.prio=prio;
         this.cost=cost;
         this.d=d;
+    }
+
+    @Override
+    public String toString() {
+        return "IntervList{" +
+                "number=" + number +
+                ", time=" + time +
+                ", preds=" + Arrays.toString(preds) +
+                ", prio=" + prio +
+                ", cost=" + cost +
+                ", d=" + Arrays.toString(d) +
+                '}';
     }
 
     public int getNumber() {

@@ -14,6 +14,16 @@ public class IntervDates {
         this.team=team;
     }
 
+    @Override
+    public String toString() {
+        return "IntervDates{" +
+                "interv=" + interv +
+                ", day=" + day +
+                ", time=" + time +
+                ", team=" + team +
+                '}';
+    }
+
     public int getInterv() {
         return this.interv;
     }

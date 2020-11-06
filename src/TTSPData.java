@@ -28,8 +28,10 @@ public class TTSPData {
 
     @Override
     public String toString() {
-        StringBuilder s = new StringBuilder();
-        s.append("to do");
-        return s.toString();
+        return "TTSPData{" +
+                "instance=" + instance +
+                ", intervention=" + Arrays.toString(intervention) +
+                ", technician=" + Arrays.toString(technician) +
+                '}';
     }
 }

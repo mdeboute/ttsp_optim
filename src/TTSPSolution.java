@@ -22,8 +22,9 @@ public class TTSPSolution {
 
     @Override
     public String toString() {
-        StringBuilder s = new StringBuilder();
-        s.append("to do");
-        return s.toString();
+        return "TTSPSolution{" +
+                "interv_dates=" + Arrays.toString(interv_dates) +
+                ", tech_teams=" + Arrays.toString(tech_teams) +
+                '}';
     }
 }
