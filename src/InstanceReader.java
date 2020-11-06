@@ -13,6 +13,7 @@ public class InstanceReader {
 
     public static TTSPData parse(String filePath) {
         String instance = filePath + "/instance";
+        instance.toString();
         String interv_list = filePath + "/interv_list";
         String tech_list = filePath + "/tech_list";
         Instance inst = processInstance(instance);
@@ -79,8 +80,12 @@ public class InstanceReader {
                     t.add(splitLine[cpt]);
                     cpt++;
                 }
-			    String[] obj = (String[]) t.toArray(); //the arraylist is converted into an array of Object
-			    int[] preds = new int[obj.length];
+                //the arraylist is converted into an array of Object
+                String[] obj= new String[t.size()];
+                for(int j=0; j<t.size() ; j++){
+                    obj[j]=""+t.toArray();
+                }
+                int[] preds = new int[obj.length];
 			    for(int j=0; j < preds.length; j++) {  // the array of object is converted into an array of int
 				    int pred = Integer.parseInt(obj[j]);
 				    preds[j]=pred;
@@ -137,20 +142,23 @@ public class InstanceReader {
                     d[j] = Integer.parseInt(splitLine[cpt]);
                     cpt++;
                 }
-                splitLine[cpt].equals("]"); //
-                ArrayList t = new ArrayList();
+                ArrayList t1 = new ArrayList();
                 cpt++;
+                String test=splitLine[cpt];
                 while (!splitLine[cpt].equals("]")) { //we retrieve the predecessors of intervention i in a arraylist
-                    t.add(splitLine[cpt]);
+                    t1.add(splitLine[cpt]);
                     cpt++;
                 }
-			    String[] obj = (String[]) t.toArray(); //the arraylist is converted into an array of Object
-			    int[] dispo = new int[obj.length];
-			    for(int j=0; j < dispo.length; j++) {  // the array of object is converted into an array of int
-				    int pred = Integer.parseInt(obj[j]);
-				    dispo[j]=pred;
+                String[] obj2= new String[t1.size()];//the arraylist is converted into an array of Object
+                for(int j=0; j<t1.size() ; j++){
+                    obj2[j]=""+t1.toArray();
+                }
+			    int[] dispos = new int[obj2.length];
+			    for(int j=0; j < dispos.length; j++) {  // the array of object is converted into an array of int
+				    int dispo = Integer.parseInt(obj2[j]);
+				    dispos[j]=dispo;
 			    }
-                TechList tech_i = new TechList(tech, d, dispo);
+                TechList tech_i = new TechList(tech, d, dispos);
                 technicians[i] = tech_i;
                 lineNumber++;
             }
