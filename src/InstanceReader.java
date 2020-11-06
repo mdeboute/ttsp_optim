@@ -145,10 +145,10 @@ public class InstanceReader {
                     cpt++;
                 }
 			    String[] obj = (String[]) t.toArray(); //the arraylist is converted into an array of Object
-			    int[] preds = new int[obj.length];
-			    for(int j=0; j < preds.length; j++) {  // the array of object is converted into an array of int
+			    int[] dispo = new int[obj.length];
+			    for(int j=0; j < dispo.length; j++) {  // the array of object is converted into an array of int
 				    int pred = Integer.parseInt(obj[j]);
-				    preds[j]=pred;
+				    dispo[j]=pred;
 			    }
                 TechList tech_i = new TechList(tech, d, dispo);
                 technicians[i] = tech_i;
