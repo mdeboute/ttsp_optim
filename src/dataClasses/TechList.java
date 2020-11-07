@@ -18,9 +18,9 @@ public class TechList {
 
     public TechList(int tech, int[] d, int[] dispo) {
         super();
-        this.tech=tech;
-        this.d=d;
-        this.dispo=dispo;
+        this.tech = tech;
+        this.d = d;
+        this.dispo = dispo;
     }
 
     public int[] getDispo() {

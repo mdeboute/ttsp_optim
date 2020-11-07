@@ -12,12 +12,12 @@ public class IntervList {
 
     public IntervList(int number, int time, int[] preds, int prio, int cost, int[] d) {
         super();
-        this.number=number;
-        this.time=time;
-        this.preds=preds;
-        this.prio=prio;
-        this.cost=cost;
-        this.d=d;
+        this.number = number;
+        this.time = time;
+        this.preds = preds;
+        this.prio = prio;
+        this.cost = cost;
+        this.d = d;
     }
 
     @Override

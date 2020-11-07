@@ -8,10 +8,10 @@ public class IntervDates {
 
     public IntervDates(int interv, int day, int time, int team) {
         super();
-        this.interv=interv;
-        this.day=day;
-        this.time=time;
-        this.team=team;
+        this.interv = interv;
+        this.day = day;
+        this.time = time;
+        this.team = team;
     }
 
     @Override

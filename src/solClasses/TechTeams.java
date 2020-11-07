@@ -17,8 +17,8 @@ public class TechTeams {
 
     public TechTeams(int day, int[][] team) {
         super();
-        this.day=day;
-        this.team=team;
+        this.day = day;
+        this.team = team;
     }
 
     public int getDay() {
@@ -29,7 +29,7 @@ public class TechTeams {
         this.day = day;
     }
 
-    public int[][] getTeam(){
+    public int[][] getTeam() {
         return team;
     }
 

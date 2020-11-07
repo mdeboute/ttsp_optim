@@ -23,7 +23,7 @@ public class Checker {
                         check = i;
                     }
                 }
-                for (int l = 1 ; l <= solution.getTech_teams()[j].getTeam().length; l++) {
+                for (int l = 1; l <= solution.getTech_teams()[j].getTeam().length; l++) {
                     if (solution.getTech_teams()[j].getTeam()[0][l] == check) {
                         check = -1;
                     }
@@ -36,7 +36,7 @@ public class Checker {
 
                 // We check that technician i is assigned to a team on day j /////////////////////
                 int check2 = 0;
-                for (int l = 1 ; l < solution.getTech_teams()[j].getTeam().length; l++) { //browsing the list of team except team 0
+                for (int l = 1; l < solution.getTech_teams()[j].getTeam().length; l++) { //browsing the list of team except team 0
                     for (int k = 0; k < solution.getTech_teams()[j].getTeam()[l].length - 1; k++) { //browsing the list of technicians of eachteam
                         if (solution.getTech_teams()[j].getTeam()[l].length == 0) {
                             System.out.print("[Issue] Team " + l + " is empty on day " + j + ".\n");
@@ -88,13 +88,13 @@ public class Checker {
             }
 
             //  The intervention p belonging to Pred(i) ends before i begins ///
-            for (int p = 0; p < data.getIntervention()[i+1].getPreds().length; p++) {
-                int pred = data.getIntervention()[i+1].getPreds()[p];
-                boolean stop=true;
-                for(int l=0 ; stop && i<solution.getInterv_dates().length ; i++){
-                    if(solution.getInterv_dates()[i].getInterv()==pred){
-                        pred=l;
-                        stop=false;
+            for (int p = 0; p < data.getIntervention()[i + 1].getPreds().length; p++) {
+                int pred = data.getIntervention()[i + 1].getPreds()[p];
+                boolean stop = true;
+                for (int l = 0; stop && i < solution.getInterv_dates().length; i++) {
+                    if (solution.getInterv_dates()[i].getInterv() == pred) {
+                        pred = l;
+                        stop = false;
                     }
                 }
                 int start_pred = solution.getInterv_dates()[pred].getDay() * 120 + solution.getInterv_dates()[pred].getTime();
@@ -110,8 +110,8 @@ public class Checker {
         int[] interv_ST = new int[nb_ST];
         int cpt = 0;
         for (int i = 0; i < nb_interv; i++) { //creation of a table of outsourced interventions
-            if (solution.getInterv_dates()[cpt].getInterv() != data.getIntervention()[i+1].getNumber()) {
-                interv_ST[i] = data.getIntervention()[i+1].getNumber();
+            if (solution.getInterv_dates()[cpt].getInterv() != data.getIntervention()[i + 1].getNumber()) {
+                interv_ST[i] = data.getIntervention()[i + 1].getNumber();
             } else {
                 cpt++;
             }

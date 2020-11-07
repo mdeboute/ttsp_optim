@@ -9,9 +9,9 @@ public class TTSPData {
 
     public TTSPData(Instance instance, IntervList[] intervention, TechList[] technician) {
         super();
-        this.instance=instance;
-        this.intervention=intervention;
-        this.technician=technician;
+        this.instance = instance;
+        this.intervention = intervention;
+        this.technician = technician;
     }
 
     public TechList[] getTechnician() {

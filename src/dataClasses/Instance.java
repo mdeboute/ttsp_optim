@@ -23,12 +23,12 @@ public class Instance {
 
     public Instance(String name, int domains, int level, int techs, int interv, int abandon) {
         super();
-        this.name=name;
-        this.domains=domains;
-        this.level=level;
-        this.techs=techs;
-        this.interv=interv;
-        this.abandon=abandon;
+        this.name = name;
+        this.domains = domains;
+        this.level = level;
+        this.techs = techs;
+        this.interv = interv;
+        this.abandon = abandon;
     }
 
     public String getName() {

@@ -8,8 +8,8 @@ public class TTSPSolution {
 
     public TTSPSolution(IntervDates[] interv_dates, TechTeams[] tech_teams) {
         super();
-        this.interv_dates=interv_dates;
-        this.tech_teams=tech_teams;
+        this.interv_dates = interv_dates;
+        this.tech_teams = tech_teams;
     }
 
     public TechTeams[] getTech_teams() {
