@@ -19,18 +19,19 @@ public class InstanceReader {
         Instance inst = processInstance(instance);
         IntervList[] intervs = processInterv(interv_list, inst);
         TechList[] techs = processTech(tech_list, inst);
-		return new TTSPData(inst, intervs, techs);
+        return new TTSPData(inst, intervs, techs);
     }
 
     public static Instance processInstance(String instance) {
         BufferedReader br = null;
-        FileReader fr = null;
+        FileReader fr;
         int lineNumber = 1;
         try {
             fr = new FileReader(instance);
             br = new BufferedReader(fr);
             // Reads the first line and puts everything in the String lineFile
-            String lineFile = br.readLine();
+            br.readLine();
+            String lineFile;
             lineFile = br.readLine();
             // Splits lineFile in several Strings using the space separator
             String[] splitLine = lineFile.split(" ");
@@ -58,13 +59,14 @@ public class InstanceReader {
 
     public static IntervList[] processInterv(String interv_list, Instance inst) {
         BufferedReader br = null;
-        FileReader fr = null;
+        FileReader fr;
         int lineNumber = 1;
         try {
             fr = new FileReader(interv_list);
             br = new BufferedReader(fr);
             // Reads the first line and puts everything in the String lineFile
-            String lineFile = br.readLine();
+            br.readLine();
+            String lineFile;
             IntervList[] interventions = new IntervList[inst.getInterv() + 1];
             for (int i = 1; i < interventions.length; i++) {
                 lineFile = br.readLine();
@@ -83,12 +85,12 @@ public class InstanceReader {
                 for(int j=0; j<t.size() ; j++){
                     obj[j]=""+ Arrays.toString(t.toArray());
                 }*/
-                String[] obj = t.toArray(new String[t.size()]);
+                String[] obj = t.toArray(new String[0]);
                 int[] preds = new int[obj.length];
-			    for(int j=0; j < preds.length; j++) {  // the array of object is converted into an array of int
-				    int pred = Integer.parseInt(obj[j]);
-				    preds[j]=pred;
-			    }
+                for (int j = 0; j < preds.length; j++) {  // the array of object is converted into an array of int
+                    int pred = Integer.parseInt(obj[j]);
+                    preds[j] = pred;
+                }
                 cpt++;
                 int prio = Integer.parseInt(splitLine[cpt]);
                 cpt++;
@@ -121,13 +123,14 @@ public class InstanceReader {
 
     public static TechList[] processTech(String tech_list, Instance inst) {
         BufferedReader br = null;
-        FileReader fr = null;
+        FileReader fr;
         int lineNumber = 1;
         try {
             fr = new FileReader(tech_list);
             br = new BufferedReader(fr);
             // Reads the first line and puts everything in the String lineFile
-            String lineFile = br.readLine();
+            br.readLine();
+            String lineFile;
             TechList[] technicians = new TechList[inst.getTechs() + 1];
             for (int i = 1; i < technicians.length; i++) {
                 lineFile = br.readLine();
@@ -150,12 +153,12 @@ public class InstanceReader {
                 for(int j=0; j<u.size() ; j++){
                     obj2[j]=""+ Arrays.toString(u.toArray());
                 }*/
-                String[] obj2 = u.toArray(new String[u.size()]);
-			    int[] dispos = new int[obj2.length];
-			    for(int j=0; j < dispos.length; j++) {  // the array of object is converted into an array of int
-				    int dispo = Integer.parseInt(obj2[j]);
-				    dispos[j]=dispo;
-			    }
+                String[] obj2 = u.toArray(new String[0]);
+                int[] dispos = new int[obj2.length];
+                for (int j = 0; j < dispos.length; j++) {  // the array of object is converted into an array of int
+                    int dispo = Integer.parseInt(obj2[j]);
+                    dispos[j] = dispo;
+                }
                 TechList tech_i = new TechList(tech, d, dispos);
                 technicians[i] = tech_i;
                 lineNumber++;
