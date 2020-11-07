@@ -68,7 +68,6 @@ public class InstanceReader {
             IntervList[] interventions = new IntervList[inst.getInterv() + 1];
             for (int i = 1; i < interventions.length; i++) {
                 lineFile = br.readLine();
-                lineNumber++;
                 // Splits lineFile in several Strings using the space separator
                 String[] splitLine = lineFile.split(" ");
                 int number = Integer.parseInt(splitLine[0]);
@@ -80,10 +79,11 @@ public class InstanceReader {
                     cpt++;
                 }
                 //the arraylist is converted into an array of Object
-                String[] obj= new String[t.size()];
+                /*String[] obj= new String[t.size()];
                 for(int j=0; j<t.size() ; j++){
                     obj[j]=""+ Arrays.toString(t.toArray());
-                }
+                }*/
+                String[] obj = t.toArray(new String[t.size()]);
                 int[] preds = new int[obj.length];
 			    for(int j=0; j < preds.length; j++) {  // the array of object is converted into an array of int
 				    int pred = Integer.parseInt(obj[j]);
@@ -103,7 +103,7 @@ public class InstanceReader {
                 interventions[i] = interv_i;
                 lineNumber++;
             }
-            return null;
+            return interventions;
         } catch (Exception e) {
             e.printStackTrace();
             throw new IllegalStateException(
@@ -131,7 +131,6 @@ public class InstanceReader {
             TechList[] technicians = new TechList[inst.getTechs() + 1];
             for (int i = 1; i < technicians.length; i++) {
                 lineFile = br.readLine();
-                lineNumber++;
                 // Splits lineFile in several Strings using the space separator
                 String[] splitLine = lineFile.split(" ");
                 int tech = Integer.parseInt(splitLine[0]);
@@ -141,17 +140,17 @@ public class InstanceReader {
                     d[j] = Integer.parseInt(splitLine[cpt]);
                     cpt++;
                 }
-                ArrayList<String> t1 = new ArrayList<>();
+                ArrayList<String> u = new ArrayList<>();
                 cpt++;
-                String test=splitLine[cpt];
                 while (!splitLine[cpt].equals("]")) { //we retrieve the predecessors of intervention i in a arraylist
-                    t1.add(splitLine[cpt]);
+                    u.add(splitLine[cpt]);
                     cpt++;
                 }
-                String[] obj2= new String[t1.size()];//the arraylist is converted into an array of Object
-                for(int j=0; j<t1.size() ; j++){
-                    obj2[j]=""+ Arrays.toString(t1.toArray());
-                }
+                /*String[] obj2= new String[u.size()];//the arraylist is converted into an array of Object
+                for(int j=0; j<u.size() ; j++){
+                    obj2[j]=""+ Arrays.toString(u.toArray());
+                }*/
+                String[] obj2 = u.toArray(new String[u.size()]);
 			    int[] dispos = new int[obj2.length];
 			    for(int j=0; j < dispos.length; j++) {  // the array of object is converted into an array of int
 				    int dispo = Integer.parseInt(obj2[j]);
@@ -161,7 +160,7 @@ public class InstanceReader {
                 technicians[i] = tech_i;
                 lineNumber++;
             }
-            return null;
+            return technicians;
         } catch (Exception e) {
             e.printStackTrace();
             throw new IllegalStateException(
