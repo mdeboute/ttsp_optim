@@ -2,6 +2,9 @@ package src;
 
 import gurobi.*;
 
+import src.dataClasses.*;
+import src.readers.*;
+
 public class Solver {
     public static void solver(String filePath, double time) throws GRBException {
         TTSPData data = InstanceReader.parse(filePath);

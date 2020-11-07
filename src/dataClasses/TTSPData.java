@@ -1,4 +1,4 @@
-package src;
+package src.dataClasses;
 
 import java.util.Arrays; // for the toString
 

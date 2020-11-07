@@ -1,4 +1,6 @@
-package src;
+package src.readers;
+
+import src.dataClasses.*;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -181,7 +183,7 @@ public class InstanceReader {
 
 
     public static void main(String[] args) {
-        TTSPData ttspdata = parse("./data/datasetA/data1");
+        TTSPData ttspdata = parse("./datas/datasetA/data1");
         System.out.println(ttspdata.getInstance().toString());
         System.out.println(Arrays.toString(ttspdata.getIntervention()));
         System.out.println(Arrays.toString(ttspdata.getTechnician()));

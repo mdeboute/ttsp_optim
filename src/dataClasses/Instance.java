@@ -1,4 +1,4 @@
-package src;
+package src.dataClasses;
 
 public class Instance {
     private String name;

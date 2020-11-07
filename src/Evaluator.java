@@ -1,5 +1,8 @@
 package src;
 
+import src.dataClasses.*;
+import src.solClasses.*;
+
 public class Evaluator {
    public static double[] evaluator(TTSPData ttspdata, TTSPSolution ttspsolution) {
        //List of outsourcings interventions with the lenght of the array in the first element

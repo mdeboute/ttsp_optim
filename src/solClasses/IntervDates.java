@@ -1,4 +1,4 @@
-package src;
+package src.solClasses;
 
 public class IntervDates {
     private int interv;

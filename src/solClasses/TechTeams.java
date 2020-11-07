@@ -1,4 +1,4 @@
-package src;
+package src.solClasses;
 
 import java.util.Arrays;
 

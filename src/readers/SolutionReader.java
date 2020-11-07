@@ -1,4 +1,4 @@
-package src;
+package src.readers;
 
 import java.io.*;
 
