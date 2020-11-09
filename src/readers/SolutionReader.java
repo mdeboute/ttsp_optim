@@ -152,7 +152,7 @@ public class SolutionReader {
 
 
     public static void main(String[] args) {
-        TTSPSolution ttspsolution = parse("./datas/datasetA/data1");
+        TTSPSolution ttspsolution = parse("./datas/solutions/sol_A_3_#2");
         System.out.println(Arrays.toString(ttspsolution.getInterv_dates()));
         System.out.println(Arrays.toString(ttspsolution.getTech_teams()));
     }
