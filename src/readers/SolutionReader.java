@@ -47,6 +47,7 @@ public class SolutionReader {
                 array_interv_dates.add(id);
                 lineNumber++;
             }
+            int count = 0;
             /* Create the array of IntervDates with the right number of element */
             interv_dates = new IntervDates[lineNumber - 1];
             /* List path to put it into the ttspSolution */
