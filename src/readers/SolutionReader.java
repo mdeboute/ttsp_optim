@@ -47,7 +47,6 @@ public class SolutionReader {
                 array_interv_dates.add(id);
                 lineNumber++;
             }
-            int count = 0;
             /* Create the array of IntervDates with the right number of element */
             interv_dates = new IntervDates[lineNumber - 1];
             /* List path to put it into the ttspSolution */
@@ -98,7 +97,7 @@ public class SolutionReader {
                 /* Increase the counter to be on the "[" */
                 int cpt = 1;
                 /* while the line is not finish */
-                while (cpt <= splitLine.length) {
+                while (cpt < splitLine.length) {
                     cpt++;
                     /* while the array is not finish put all the elements into teamElement */
                     while (!splitLine[cpt].equals("]")) {
