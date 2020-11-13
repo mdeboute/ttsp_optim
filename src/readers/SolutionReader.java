@@ -13,7 +13,7 @@ import java.util.Arrays;
 public class SolutionReader {
 
     public static TTSPSolution parse(String filePath) {
-        String file_intervd = filePath;/* + "/interv_dates";*/
+        String file_intervd = filePath+ "/interv_dates";
         String file_techt = filePath + "/tech_teams";
         IntervDates[] interv_dates = processIntervDates(file_intervd);
         TechTeams[] tech_teams = processTechTeams(file_techt);
@@ -23,22 +23,20 @@ public class SolutionReader {
     public static IntervDates[] processIntervDates(String file_intervd) {
         BufferedReader br = null;
         FileReader fr;
-        int nbinterv;
+        int nbinterv = 0;
         /* try to catch the nb of intervention */
         try {
-            fr = new FileReader(file_intervd + "/instance");
+            fr = new FileReader(file_intervd);
             br = new BufferedReader(fr);
             // Reads the first line and puts everything in the String lineFile
-            br.readLine();
             String lineFile;
-            lineFile = br.readLine();
-            // Splits lineFile in several Strings using the space separator
-            String[] splitLine = lineFile.split(" ");
-            nbinterv = Integer.parseInt(splitLine[4]);
+            while ((lineFile = br.readLine()) != null) {
+                nbinterv++;
+            }
         } catch (Exception e) {
             e.printStackTrace();
             throw new IllegalStateException(
-                    "Exception during the read of the file " + file_intervd + "/instance");
+                    "Exception during the read of the file " + file_intervd);
         } finally {
             if (br != null) {
                 try {
@@ -49,16 +47,15 @@ public class SolutionReader {
             }
         }
 
-        IntervDates[] interv_dates = new IntervDates[nbinterv + 1];
+        IntervDates[] interv_dates = new IntervDates[nbinterv];
         /* reading the file with interventions */
         try {
             /* Take the file in parameter to read it */
-            fr = new FileReader(file_intervd + "/interv_dates");
+            fr = new FileReader(file_intervd);
             br = new BufferedReader(fr);
             String lineFile;
             String[] splitLine;
-            int count = 1;
-            /* Creation of the arraylist with all interventions */
+            int count = 0;
             while ((lineFile = br.readLine()) != null) {
                 /* Splits lineFile in several Strings using the space separator */
                 splitLine = lineFile.split(" ");
@@ -69,9 +66,6 @@ public class SolutionReader {
                 interv_dates[count].setTeam(Integer.parseInt(splitLine[3]));
                 count ++;
             }
-            /* List path to put it into the ttspSolution */
-            // interv_dates[0].setInterv(lineNumber);
-            interv_dates[0] = new IntervDates(count, 0, 0, 0);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -90,66 +84,87 @@ public class SolutionReader {
         BufferedReader br = null;
         FileReader fr;
         int lineNumber = 1;
-        TechTeams[] tech_teams = new TechTeams[lineNumber];
+        int nbDays = 0;
+        ArrayList<Integer> nbteamsperday = new ArrayList<>();
+        int count = 0;
         /* reading the file with technicians */
+        try {
+            fr = new FileReader(file_techt);
+            br = new BufferedReader(fr);
+            // Reads the first line and puts everything in the String lineFile
+            String lineFile;
+            while ((lineFile = br.readLine()) != null) {
+                String[] splitLine = lineFile.split(" ");
+                for(String i : splitLine){
+                    if(i.equals("[")){
+                        count++;
+                    }
+                }
+                nbteamsperday.add(count);
+                nbDays++;
+                count = 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new IllegalStateException(
+                    "Exception during the read of the file " + file_techt);
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        TechTeams[] tech_teams = new TechTeams[nbDays];
+        int[] teamsperday = new int[nbDays];
+        for (Integer i : nbteamsperday){
+            teamsperday[count] = i;
+            count++;
+        }
+        count = 0;
+
         try {
             /* Take the file in parameter to read it */
             fr = new FileReader(file_techt);
             br = new BufferedReader(fr);
             String lineFile;
-            /* Creation of the arraylist with all interventions */
-            ArrayList<TechTeams> array_tech_teams = new ArrayList<>();
-            TechTeams tt = new TechTeams(0, null);
-            ArrayList<int[]> teams = new ArrayList<>();
-            ArrayList<Integer> teamElement = new ArrayList<>();
             /* while the file is not empty */
             while ((lineFile = br.readLine()) != null) {
                 /* Splits lineFile in several Strings using the space separator */
                 String[] splitLine = lineFile.split(" ");
                 /* creation of teams to put all the teams for a day and teamElement to put all the tech of a team */
-                int[] teami;
+                tech_teams[count] = new TechTeams(0, null);
+                int[][] teams = new int [teamsperday[count]][];
                 /* Put the day into the TechTeams tt */
-                tt.setDay(Integer.parseInt(splitLine[0]));
-                /* Increase the counter to be on the "[" */
+                tech_teams[count].setDay(Integer.parseInt(splitLine[0]));
+                /* Increase the counter of the line to be on the "[" */
                 int cpt = 1;
+                /* Start the counter of array of the line */
+                int counter = 0;
                 /* while the line is not finish */
                 while (cpt < splitLine.length) {
                     cpt++;
+                    ArrayList<String> teamElement = new ArrayList<>();
                     /* while the array is not finish put all the elements into teamElement */
                     while (!splitLine[cpt].equals("]")) {
-                        teamElement.add(Integer.parseInt(splitLine[cpt]));
+                        teamElement.add(splitLine[cpt]);
                         cpt++;
                     }
+                    String[] obj = teamElement.toArray(new String[0]);
                     cpt++;
                     /* Put all the element of teamElement into a int[] teami */
-                    teami = new int[teamElement.size()];
-                    int s = 0;
-                    for (Integer i : teamElement) {
-                        teami[s] = i;
-                        s++;
+                    teams[counter] = new int[teamElement.size()];
+                    for (int j = 0; j < teams[counter].length; j++){
+                        int tech = Integer.parseInt(obj[j]);
+                        teams[counter][j] = tech;
                     }
-                    teams.add(teami);
+                    counter++;
                 }
-                /* Put all the element of teams into a int[][] teamline */
-                int[][] teamline = new int[teams.size()][];
-                int s = 0;
-                for (int[] j : teams) {
-                    teamline[s] = j;
-                    s++;
-                }
-                tt.setTeam(teamline);
-                array_tech_teams.add(tt);
-                lineNumber++;
-            }
-            /* Put all the element of array_tech_teams into a TechTeams[] tech_teams */
-            tech_teams = new TechTeams[lineNumber];
-            tech_teams[0] = new TechTeams(0, null);
-            tech_teams[0] = null;
-            int count = 1;
-            for (TechTeams i : array_tech_teams) {
-                tech_teams[count] = new TechTeams(0, null);
-                tech_teams[count] = i;
+                tech_teams[count].setTeam(teams);
                 count++;
+                lineNumber++;
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -168,14 +183,7 @@ public class SolutionReader {
 
     public static void main(String[] args) {
         TTSPSolution ttspsolution = parse("./datas/solutions/sol_A_3_#2");
-        int count = ttspsolution.getInterv_dates()[0].getInterv();
-        for (int i = 1; i < count + 1; i++){
-            System.out.println("IntervDates{interv = " + ttspsolution.getInterv_dates()[i].getInterv() + 
-            ", day = " + ttspsolution.getInterv_dates()[i].getDay() + 
-            ", time = " + ttspsolution.getInterv_dates()[i].getTime() + 
-            ", team = " + ttspsolution.getInterv_dates()[i].getTeam() + "}, ");
-        }
-        // System.out.println(Arrays.toString(ttspsolution.getInterv_dates()));
+        System.out.println(Arrays.toString(ttspsolution.getInterv_dates()));
         System.out.println(Arrays.toString(ttspsolution.getTech_teams()));
     }
 }
