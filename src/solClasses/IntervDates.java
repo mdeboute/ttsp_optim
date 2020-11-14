@@ -16,12 +16,8 @@ public class IntervDates {
 
     @Override
     public String toString() {
-        return "IntervDates{" +
-                "interv=" + interv +
-                ", day=" + day +
-                ", time=" + time +
-                ", team=" + team +
-                '}';
+        System.out.println("#" + getInterv() + " :  day " + getDay() + " -> starts at time " + getTime() + " / executed by team #"+ getTeam());
+        return null;
     }
 
     public int getInterv() {

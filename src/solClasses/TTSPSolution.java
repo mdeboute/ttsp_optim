@@ -1,7 +1,5 @@
 package src.solClasses;
 
-import java.util.Arrays; // for the toString
-
 public class TTSPSolution {
     private final IntervDates[] interv_dates;
     private final TechTeams[] tech_teams;
@@ -22,9 +20,20 @@ public class TTSPSolution {
 
     @Override
     public String toString() {
-        return "TTSPSolution{" +
-                "interv_dates=" + Arrays.toString(interv_dates) +
-                ", tech_teams=" + Arrays.toString(tech_teams) +
-                '}';
+        System.out.println("///////////// Solution ////////////");
+        System.out.println("----------------------------------");
+        System.out.println("----- INTERVENTION SCHEDULE ------");
+        System.out.println("----------------------------------");
+        for(int i=0 ; i<getInterv_dates().length ; i++){
+            String dates= getInterv_dates()[i].toString();
+        }
+        System.out.println();
+        System.out.println("----------------------------------");
+        System.out.println("------- TECHNICIAN TEAMS ---------");
+        System.out.println("----------------------------------");
+        for(int i=0 ; i<getTech_teams().length ; i++){
+            String teams= getTech_teams()[i].toString();
+        }
+        return null;
     }
 }

@@ -8,7 +8,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class SolutionReader {
 
@@ -135,14 +134,12 @@ public class SolutionReader {
                 /* Splits lineFile in several Strings using the space separator */
                 String[] splitLine = lineFile.split(" ");
                 /* creation of teams to put all the teams for a day and teamElement to put all the tech of a team */
-                tech_teams[count] = new TechTeams(0, null);
-                int[][] teams = new int [teamsperday[count]][];
+                ArrayList<int[]> taboftab = new ArrayList<>() ;
                 /* Put the day into the TechTeams tt */
-                tech_teams[count].setDay(Integer.parseInt(splitLine[0]));
+                int nb_days=Integer.parseInt(splitLine[0]);
                 /* Increase the counter of the line to be on the "[" */
                 int cpt = 1;
                 /* Start the counter of array of the line */
-                int counter = 0;
                 /* while the line is not finish */
                 while (cpt < splitLine.length) {
                     cpt++;
@@ -155,14 +152,15 @@ public class SolutionReader {
                     String[] obj = teamElement.toArray(new String[0]);
                     cpt++;
                     /* Put all the element of teamElement into a int[] teami */
-                    teams[counter] = new int[teamElement.size()];
-                    for (int j = 0; j < teams[counter].length; j++){
+                    int[] tab= new int[teamElement.size()];
+                    for (int j = 0; j < tab.length; j++){
                         int tech = Integer.parseInt(obj[j]);
-                        teams[counter][j] = tech;
+                        tab[j] = tech;
                     }
-                    counter++;
+                    taboftab.add(tab);
                 }
-                tech_teams[count].setTeam(teams);
+                int[][] teams = taboftab.toArray(new int[0][0]);
+                tech_teams[count] = new TechTeams(nb_days, teams);
                 count++;
                 lineNumber++;
             }
@@ -183,8 +181,7 @@ public class SolutionReader {
 
     public static void main(String[] args) {
         TTSPSolution ttspsolution = parse("./datas/solutions/sol_A_3_#2");
-        System.out.println(Arrays.toString(ttspsolution.getInterv_dates()));
-        System.out.println(Arrays.toString(ttspsolution.getTech_teams()));
+        String print= ttspsolution.toString();
     }
 }
 

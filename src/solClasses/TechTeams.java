@@ -1,16 +1,18 @@
 package src.solClasses;
 
-import java.util.Arrays;
-
 public class TechTeams {
     private int day;
 
-    @Override
     public String toString() {
-        return "TechTeams{" +
-                "day=" + day +
-                ", team=" + Arrays.toString(team) +
-                '}';
+        System.out.println("Teams of day " + day);
+        for( int i=0 ; i<getTeam().length ; i++){
+            System.out.print("#" + i + " ->");
+            for (int j=0 ; j<getTeam()[i].length ; j++){
+                System.out.print(" " + getTeam()[i][j]);
+            }
+            System.out.println();
+        }
+        return null;
     }
 
     private int[][] team;
