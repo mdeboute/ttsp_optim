@@ -2,7 +2,7 @@ package src.solClasses;
 
 public class TTSPSolution {
     private final IntervDates[] interv_dates;
-    private final TechTeams[] tech_teams;
+    private final TechTeams[] tech_teams; //first techTeam[0] is null, techTeam of day 1= TechTeam[1],...
 
     public TTSPSolution(IntervDates[] interv_dates, TechTeams[] tech_teams) {
         super();
