@@ -116,7 +116,8 @@ public class SolutionReader {
                 }
             }
         }
-        TechTeams[] tech_teams = new TechTeams[nbDays];
+        TechTeams[] tech_teams = new TechTeams[nbDays+1];
+        tech_teams[0]=null;
         int[] teamsperday = new int[nbDays];
         for (Integer i : nbteamsperday){
             teamsperday[count] = i;
@@ -159,8 +160,8 @@ public class SolutionReader {
                     }
                     taboftab.add(tab);
                 }
-                int[][] teams = taboftab.toArray(new int[0][0]);
-                tech_teams[count] = new TechTeams(nb_days, teams);
+                int[][] teams = taboftab.toArray(new int[1][0]);
+                tech_teams[count+1] = new TechTeams(nb_days, teams);
                 count++;
                 lineNumber++;
             }

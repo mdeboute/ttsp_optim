@@ -31,7 +31,7 @@ public class TTSPSolution {
         System.out.println("----------------------------------");
         System.out.println("------- TECHNICIAN TEAMS ---------");
         System.out.println("----------------------------------");
-        for(int i=0 ; i<getTech_teams().length ; i++){
+        for(int i=1 ; i<getTech_teams().length ; i++){
             String teams= getTech_teams()[i].toString();
         }
         return null;
