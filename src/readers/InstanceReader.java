@@ -1,10 +1,14 @@
 package src.readers;
 
-import src.dataClasses.*;
+import src.dataClasses.Instance;
+import src.dataClasses.IntervList;
+import src.dataClasses.TTSPData;
+import src.dataClasses.TechList;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class InstanceReader {
     /**
@@ -184,8 +188,6 @@ public class InstanceReader {
 
     public static void main(String[] args) {
         TTSPData ttspdata = parse(args[0]);
-        System.out.println(ttspdata.getInstance().toString());
-        System.out.println(Arrays.toString(ttspdata.getIntervention()));
-        System.out.println(Arrays.toString(ttspdata.getTechnician()));
+        System.out.println(ttspdata.toString());
     }
 }

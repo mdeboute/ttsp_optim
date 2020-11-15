@@ -5,21 +5,19 @@ public class Instance {
     private int domains;
     private int level;
     private int techs;
+    private int interv;
+    private int abandon;
 
     @Override
     public String toString() {
-        return "Instance{" +
-                "name='" + name + '\'' +
-                ", domains=" + domains +
-                ", level=" + level +
-                ", techs=" + techs +
-                ", interv=" + interv +
-                ", abandon=" + abandon +
-                '}';
+        System.out.println("#Interventions = " + getInterv() + "\n" +
+                "#Technicians = " + getTechs() + "\n" +
+                "#Domains / #Levels = " + getDomains() + " / " + getLevel() + "\n" +
+                "Outsourcing budget = " + getAbandon()
+        );
+        return null;
     }
 
-    private int interv;
-    private int abandon;
 
     public Instance(String name, int domains, int level, int techs, int interv, int abandon) {
         super();

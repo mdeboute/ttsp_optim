@@ -1,7 +1,5 @@
 package src.dataClasses;
 
-import java.util.Arrays;
-
 public class IntervList {
     private int number;
     private int time;
@@ -22,14 +20,18 @@ public class IntervList {
 
     @Override
     public String toString() {
-        return "IntervList{" +
-                "number=" + number +
-                ", time=" + time +
-                ", preds=" + Arrays.toString(preds) +
-                ", prio=" + prio +
-                ", cost=" + cost +
-                ", d=" + Arrays.toString(d) +
-                '}';
+        System.out.println("-> Interv #" + getNumber());
+        System.out.println("Time = " + getTime() + " Priority = " + getPrio() + " Cost = " + getCost());
+        System.out.print("domain and level :");
+        for(int i=0 ; i<getD().length ; i++){
+            System.out.print(" " + getD()[i]);
+        }
+        System.out.println();
+        System.out.print("Predecessors =");
+        for(int i=0 ; i<getPreds().length ; i++){
+            System.out.print(" " + getPreds()[i]);
+        }
+        return null;
     }
 
     public int getNumber() {

@@ -1,7 +1,5 @@
 package src.dataClasses;
 
-import java.util.Arrays;
-
 public class TechList {
     private int tech;
     private int[] d; // d[0]=0, puis d[1]=d1, ...
@@ -9,11 +7,18 @@ public class TechList {
 
     @Override
     public String toString() {
-        return "TechList{" +
-                "tech=" + tech +
-                ", d=" + Arrays.toString(d) +
-                ", dispo=" + Arrays.toString(dispo) +
-                '}';
+        System.out.println("-> Tech #" + getTech());
+        System.out.print("Skills (mastered level per domain) ->");
+        for(int i=1 ; i< getD().length ; i++) {
+            System.out.print(" " + getD()[i]);
+        }
+        System.out.println();
+        System.out.print("Not available on day(s) ->");
+        for(int i=1 ; i< getDispo().length ; i++) {
+            System.out.print(" " + getDispo()[i]);
+        }
+        System.out.println();
+        return null;
     }
 
     public TechList(int tech, int[] d, int[] dispo) {
