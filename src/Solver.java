@@ -203,8 +203,8 @@ public class Solver {
                         if (!Arrays.toString(data.getTechnician()[t + 1].getDispo()).contains("" + k + 1)) {
                             GRBLinExpr expr = new GRBLinExpr();
                             for (int r = 0; r < data.getInstance().getTechs(); ++r) {
-                                for (int q = 0; q < data.getTechnician()[t + 1].getD().length; ++q) {
-                                    expr.addTerm(data.getTechnician()[t + 1].getD()[q], x[t][k][r]);
+                                for (int q = 0; q < data.getTechnician()[t + 1].getD().length - 1; ++q) {
+                                    expr.addTerm(data.getTechnician()[t + 1].getD()[q + 1], x[t][k][r]);
                                     for (int s = 0; s < data.getIntervention()[i + 1].getD().length; ++s) {
                                         expr.addTerm(-data.getIntervention()[i + 1].getD()[s], y[i][k][r]);
                                     }
