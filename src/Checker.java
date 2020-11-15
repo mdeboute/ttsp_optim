@@ -206,8 +206,8 @@ public class Checker {
     }
 
     public static void main(String[] args) {
-        TTSPSolution ttspSolution = SolutionReader.parse("./datas/solutions/sol_A_2_#2");
-        TTSPData ttspData = InstanceReader.parse("./datas/solutions/sol_A_2_#2");
+        TTSPSolution ttspSolution = SolutionReader.parse(args[0]);
+        TTSPData ttspData = InstanceReader.parse(args[0]);
         System.out.print("----------------------------\n");
         System.out.print("----- CHECK CONSTRAINTS ----\n");
         System.out.print("----------------------------\n");
