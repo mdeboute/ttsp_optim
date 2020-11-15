@@ -106,27 +106,15 @@ public class Solver {
 
             System.out.println("--> Creating the constraints");
             // 2
-            for (int i = 0; i < data.getInstance().getInterv(); ++i) {
-                if (data.getIntervention()[i + 1].getPrio() == 1) {
-                    GRBLinExpr expr = new GRBLinExpr();
-                    expr.addTerm(1.0, f[0]);
-                    expr.addTerm(-1.0, d[i]);
-                    expr.addConstant(-(double) data.getIntervention()[i + 1].getPrio());
-                    model.addConstr(expr, GRB.GREATER_EQUAL, 0, String.format("Finish time f1 >= d(%s) + p(%s)", i, i));
-                }
-                if (data.getIntervention()[i + 1].getPrio() == 2) {
-                    GRBLinExpr expr = new GRBLinExpr();
-                    expr.addTerm(1.0, f[1]);
-                    expr.addTerm(-1.0, d[i]);
-                    expr.addConstant(-(double) data.getIntervention()[i + 1].getPrio());
-                    model.addConstr(expr, GRB.GREATER_EQUAL, 0, String.format("Finish time f2 >= d(%s) + p(%S)", i, i));
-                }
-                if (data.getIntervention()[i + 1].getPrio() == 3) {
-                    GRBLinExpr expr = new GRBLinExpr();
-                    expr.addTerm(1.0, f[2]);
-                    expr.addTerm(-1.0, d[i]);
-                    expr.addConstant(-(double) data.getIntervention()[i + 1].getPrio());
-                    model.addConstr(expr, GRB.GREATER_EQUAL, 0, String.format("Finish time f3 >= d(%s) + p(%S)", i, i));
+            for (int p = 0; p < 3; ++p) {
+                for (int i = 0; i < data.getInstance().getInterv(); ++i) {
+                    if (data.getIntervention()[i + 1].getPrio() == 1 || data.getIntervention()[i + 1].getPrio() == 2 || data.getIntervention()[i + 1].getPrio() == 3) {
+                        GRBLinExpr expr = new GRBLinExpr();
+                        expr.addTerm(1.0, f[p]);
+                        expr.addTerm(-1.0, d[i]);
+                        expr.addConstant(-(double) data.getIntervention()[i + 1].getPrio());
+                        model.addConstr(expr, GRB.GREATER_EQUAL, 0, String.format("Finish time 1(%s)", p));
+                    }
                 }
             }
 
@@ -136,13 +124,14 @@ public class Solver {
                 expr.addTerm(1.0, f[3]);
                 expr.addTerm(-1.0, d[i]);
                 expr.addConstant(-(double) data.getIntervention()[i + 1].getPrio());
-                model.addConstr(expr, GRB.GREATER_EQUAL, 0, String.format("Finish time f4 >= d(%s) + p(%S)", i, i));
+                model.addConstr(expr, GRB.GREATER_EQUAL, 0, String.format("Finish time 2(%s)", i));
             }
 
             // 4
             for (int i = 0; i < data.getInstance().getInterv(); ++i) {
                 GRBLinExpr expr = new GRBLinExpr();
-                expr.addTerm(data.getIntervention()[i + 1].getCost(), z[i]);
+                expr.addConstant(data.getIntervention()[i + 1].getCost());
+                expr.addTerm(1.0, z[i]);
                 model.addConstr(expr, GRB.LESS_EQUAL, data.getInstance().getAbandon(), String.format("Subcontracting budget (%s)", i));
             }
 
@@ -154,14 +143,14 @@ public class Solver {
                         expr.addTerm(1.0, z[j]);
                     }
                     expr.addTerm(-(double) data.getIntervention()[i + 1].getPreds().length, z[i]);
-                    model.addConstr(expr, GRB.GREATER_EQUAL, 0, String.format("If a task is outsourced, all tasks succeed him are also outsourced (%s)", i));
+                    model.addConstr(expr, GRB.GREATER_EQUAL, 0, String.format("Preds interv (%s)", i));
                 }
             }
 
             // 6
             for (int t = 0; t < data.getInstance().getTechs(); ++t) {
                 for (int k = 0; k < data.getInstance().getInterv(); ++k) {
-                    if (!Arrays.toString(data.getTechnician()[t + 1].getDispo()).contains("" + k + 1)) {
+                    if (!Arrays.toString(data.getTechnician()[t + 1].getDispo()).contains("" + k)) {
                         GRBLinExpr expr = new GRBLinExpr();
                         for (int r = 0; r < data.getInstance().getTechs(); ++r) {
                             expr.addTerm(1.0, x[t][k][r]);
@@ -174,7 +163,7 @@ public class Solver {
             // 7
             for (int t = 0; t < data.getInstance().getTechs(); ++t) {
                 for (int k = 0; k < data.getInstance().getInterv(); ++k) {
-                    if (Arrays.toString(data.getTechnician()[t + 1].getDispo()).contains("" + k + 1)) {
+                    if (Arrays.toString(data.getTechnician()[t + 1].getDispo()).contains("" + k)) {
                         GRBLinExpr expr = new GRBLinExpr();
                         for (int r = 0; r < data.getInstance().getTechs(); ++r) {
                             expr.addTerm(1.0, x[t][k][r]);
@@ -200,14 +189,22 @@ public class Solver {
             for (int i = 0; i < data.getInstance().getInterv(); ++i) {
                 for (int t = 0; t < data.getInstance().getTechs(); ++t) {
                     for (int k = 0; k < data.getInstance().getInterv(); ++k) {
-                        if (!Arrays.toString(data.getTechnician()[t + 1].getDispo()).contains("" + k + 1)) {
+                        if (!Arrays.toString(data.getTechnician()[t + 1].getDispo()).contains("" + k)) {
                             GRBLinExpr expr = new GRBLinExpr();
                             for (int r = 0; r < data.getInstance().getTechs(); ++r) {
+<<<<<<< HEAD
                                 for (int q = 0; q < data.getTechnician()[t + 1].getD().length - 1; ++q) {
                                     expr.addTerm(data.getTechnician()[t + 1].getD()[q + 1], x[t][k][r]);
                                     for (int s = 0; s < data.getIntervention()[i + 1].getD().length; ++s) {
                                         expr.addTerm(-data.getIntervention()[i + 1].getD()[s], y[i][k][r]);
                                     }
+=======
+                                for (int q = 0; q < data.getTechnician()[t + 1].getD().length; ++q) {
+                                    expr.addTerm(data.getTechnician()[t + 1].getD()[q], x[t][k][r]);
+                                }
+                                for (int s = 0; s < data.getIntervention()[i + 1].getD().length; ++s) {
+                                    expr.addTerm(-data.getIntervention()[i + 1].getD()[s], y[i][k][r]);
+>>>>>>> 4f09e8fe758ec94de18619fa97fb5c25d57d91d7
                                 }
                             }
                             model.addConstr(expr, GRB.GREATER_EQUAL, 0, String.format("Each task is performed by a team with the appropriate skills (%s)", i));
@@ -222,12 +219,12 @@ public class Solver {
                 if (data.getIntervention()[i + 1].getPreds().length != 0) {
                     GRBLinExpr expr = new GRBLinExpr();
                     expr.addTerm(1.0, d[i]);
-                    expr.addConstant(data.getIntervention()[i+1].getPrio());
-                    for (int j = 0; j < data.getIntervention()[i+1].getPreds().length; ++j) {
+                    expr.addConstant(data.getIntervention()[i].getPrio());
+                    for (int j = 0; j < data.getIntervention()[i].getPreds().length; ++j) {
                         expr.addTerm(-1.0, d[j]);
                     }
                     expr.addTerm(-M, z[i]);
-                    model.addConstr(expr, GRB.LESS_EQUAL, 0, String.format("Precedences constraints (%s)", i));
+                    model.addConstr(expr, GRB.LESS_EQUAL, 0, String.format("precedence constraints (%s)", i));
                 }
             }
 
@@ -236,7 +233,7 @@ public class Solver {
                 GRBLinExpr expr = new GRBLinExpr();
                 for (int k = 0; k < data.getInstance().getInterv(); ++k) {
                     for (int r = 0; r < data.getInstance().getTechs(); ++r) {
-                        expr.addTerm(120 * k, y[i][k][r]);
+                        expr.addTerm(120 * (k - 1), y[i][k][r]);
                     }
                 }
                 expr.addTerm(-1.0, d[i]);
@@ -248,13 +245,13 @@ public class Solver {
                 GRBLinExpr expr = new GRBLinExpr();
                 for (int k = 0; k < data.getInstance().getInterv(); ++k) {
                     for (int r = 0; r < data.getInstance().getTechs(); ++r) {
-                        expr.addTerm(120 * (k + 1), y[i][k][r]);
+                        expr.addTerm(120 * k, y[i][k][r]);
                         expr.addConstant(M);
                         expr.addTerm(-M, y[i][k][r]);
                     }
                 }
                 expr.addTerm(-1.0, d[i]);
-                expr.addConstant(-(double) data.getIntervention()[i + 1].getPrio());
+                expr.addConstant(-data.getIntervention()[i + 1].getPrio());
                 model.addConstr(expr, GRB.GREATER_EQUAL, 0, String.format("Lower and upper limits on the start time of each task 2 (%s)", i));
             }
 
@@ -268,7 +265,7 @@ public class Solver {
                         expr.addConstant(-M);
                         expr.addTerm(M, h[i][j]);
                         expr.addTerm(-1.0, d[j]);
-                        model.addConstr(expr, GRB.LESS_EQUAL, 0, String.format("Define h relative to the start times of interventions (%s, %s)", i, j));
+                        model.addConstr(expr, GRB.LESS_EQUAL, 0, String.format("Define h (%s, %s)", i, j));
                     }
                 }
             }
