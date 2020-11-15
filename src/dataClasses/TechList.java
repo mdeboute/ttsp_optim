@@ -14,7 +14,7 @@ public class TechList {
         }
         System.out.println();
         System.out.print("Not available on day(s) ->");
-        for(int i=0 ; i< getDispo().length ; i++) {
+        for(int i=1 ; i< getDispo().length ; i++) {
             System.out.print(" " + getDispo()[i]);
         }
         System.out.println();
