@@ -34,6 +34,6 @@ public class TTSPSolution {
         for(int i=1 ; i<getTech_teams().length ; i++){
             String teams= getTech_teams()[i].toString();
         }
-        return null;
+        return "";
     }
 }
