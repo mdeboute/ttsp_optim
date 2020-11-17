@@ -1,15 +1,10 @@
 package src;
 
-import gurobi.GRB;
+import gurobi.*;
 import gurobi.GRB.DoubleAttr;
 import gurobi.GRB.DoubleParam;
 import gurobi.GRB.IntAttr;
 import gurobi.GRB.IntParam;
-import gurobi.GRBEnv;
-import gurobi.GRBException;
-import gurobi.GRBLinExpr;
-import gurobi.GRBModel;
-import gurobi.GRBVar;
 import src.dataClasses.TTSPData;
 import src.readers.InstanceReader;
 
@@ -105,6 +100,7 @@ public class Solver {
             /////////////////////////////////////////
 
             System.out.println("--> Creating the constraints");
+
             // 2
             for (int i = 0; i < data.getInstance().getInterv(); ++i) {
                 if (data.getIntervention()[i + 1].getPrio() == 1) {
@@ -196,21 +192,21 @@ public class Solver {
                 model.addConstr(expr, GRB.EQUAL, 1, String.format("Each task is executed or subcontracted (%s)", i));
             }
 
-            // 9
+            // 9 !
             for (int i = 0; i < data.getInstance().getInterv(); ++i) {
                 for (int k = 0; k < data.getInstance().getInterv(); ++k) {
                     for (int r = 0; r < data.getInstance().getTechs(); ++r) {
-                        for (int q = 0; q < data.getInstance().getDomains(); ++q) {
-                            for (int s = 0; s < data.getInstance().getLevel() + 1; ++s) {
-                                GRBLinExpr expr = new GRBLinExpr();
-                                expr.addTerm(-data.getIntervention()[i + 1].getD()[s], y[i][k][r]);
-                                for (int t = 0; t < data.getInstance().getTechs(); ++t){
-                                    if (!Arrays.toString(data.getTechnician()[t + 1].getDispo()).contains("" + k + 1)) {
+                        for (int a = 0; a < data.getInstance().getLevel() * data.getInstance().getDomains(); ++a) {
+                            GRBLinExpr expr = new GRBLinExpr();
+                            expr.addTerm(-data.getIntervention()[i + 1].getD()[a], y[i][k][r]);
+                            for (int t = 0; t < data.getInstance().getTechs(); ++t){
+                                if (!Arrays.toString(data.getTechnician()[t + 1].getDispo()).contains("" + k + 1)) {
+                                    for (int q = 0; q < data.getInstance().getDomains(); ++q) {
                                         expr.addTerm(data.getTechnician()[t + 1].getD()[q + 1], x[t][k][r]);
                                     }
                                 }
-                                model.addConstr(expr, GRB.GREATER_EQUAL, 0, String.format("Each task is performed by a team with the appropriate skills (%s)", i));
                             }
+                            model.addConstr(expr, GRB.GREATER_EQUAL, 0, String.format("Each task is performed by a team with the appropriate skills (%s)", i));
                         }
                     }
                 }
@@ -304,7 +300,7 @@ public class Solver {
                 // the solver has computed the optimal solution or a feasible solution (when the
                 // time limit is reached before proving optimality)
                 // prints the solver status (2 if optimal / 9 if time limit)
-                System.out.println("Succes! (Status: " + model.get(IntAttr.Status) + ")");
+                System.out.println("Success! (Status: " + model.get(IntAttr.Status) + ")");
                 System.out.println("Runtime : " + Math.round(model.get(DoubleAttr.Runtime) * 1000) / 1000.0 + " seconds");
 
                 System.out.println("--> Printing results ");
@@ -320,6 +316,16 @@ public class Solver {
             System.err.println("Gurobi exception");
             e.printStackTrace();
         }
+    }
+
+    public int[] getV(String filePath, int t) {
+        TTSPData data = InstanceReader.parse(filePath);
+        int p = data.getInstance().getLevel();
+        int q = data.getInstance().getDomains();
+        int[] d = data.getTechnician()[t].getD();
+        int[] v = new int[p * q];
+        //TODO: transformer d en v;
+        return v;
     }
 
     public static void main(String[] args) {
