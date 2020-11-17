@@ -323,9 +323,24 @@ public class Solver {
         int p = data.getInstance().getLevel();
         int q = data.getInstance().getDomains();
         int[] d = data.getTechnician()[t].getD();
-        int[] v = new int[p * q];
-        //TODO: transformer d en v;
-        return v;
+        int[] V = new int[p * q];
+        int cpt=0;
+        for(int i=1 ; i<q+1 ; i++){
+            for(int j=0 ; j<p ; j++){
+                if(j<d[i]) {
+                    V[cpt] = 1;
+                }else{
+                    V[cpt]=0;
+                }
+                cpt++;
+            }
+        }
+        System.out.print("[");
+        for(int i=0 ; i<V.length ; i++){
+            System.out.print(" " +V[i]);
+        }
+        System.out.print(" ]");
+        return V;
     }
 
     public static void main(String[] args) {
