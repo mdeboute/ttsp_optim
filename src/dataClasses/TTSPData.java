@@ -27,7 +27,7 @@ public class TTSPData {
     @Override
     public String toString() {
         System.out.println("///////////// Instance test1 ////////////");
-        String instance= getInstance().toString();
+        String instance = getInstance().toString();
         System.out.println();
         System.out.println("----------------------------------");
         System.out.println("--------- INTERVENTIONS ----------");
@@ -55,7 +55,7 @@ public class TTSPData {
         System.out.println("---------- TECHNICIANS -----------");
         System.out.println("----------------------------------");
         for(int i=1 ; i< getTechnician().length ; i++){
-            String technican= getTechnician()[i].toString();
+            String technican = getTechnician()[i].toString();
         }
         return "/////////////////////////////////////////";
     }

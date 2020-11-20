@@ -52,5 +52,20 @@ public class TechList {
         this.tech = tech;
     }
 
+    public int[] getV(int p, int q) {
+        int[] V = new int[p * q];
+        int cpt=0;
+        for(int i=1 ; i<q+1 ; i++){
+            for(int j=0 ; j<p ; j++){
+                if(j<d[i]) {
+                    V[cpt] = 1;
+                }else{
+                    V[cpt]=0;
+                }
+                cpt++;
+            }
+        }
+        return V;
+    }
 
 }

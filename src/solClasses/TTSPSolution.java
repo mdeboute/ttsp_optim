@@ -25,14 +25,14 @@ public class TTSPSolution {
         System.out.println("----- INTERVENTION SCHEDULE ------");
         System.out.println("----------------------------------");
         for(int i=0 ; i<getInterv_dates().length ; i++){
-            String dates= getInterv_dates()[i].toString();
+            String dates = getInterv_dates()[i].toString();
         }
         System.out.println();
         System.out.println("----------------------------------");
         System.out.println("------- TECHNICIAN TEAMS ---------");
         System.out.println("----------------------------------");
         for(int i=1 ; i<getTech_teams().length ; i++){
-            String teams= getTech_teams()[i].toString();
+            String teams = getTech_teams()[i].toString();
         }
         return "";
     }

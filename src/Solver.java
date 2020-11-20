@@ -192,7 +192,7 @@ public class Solver {
                 model.addConstr(expr, GRB.EQUAL, 1, String.format("Each task is executed or subcontracted (%s)", i));
             }
 
-            // 9 !
+            // 9
             for (int i = 0; i < data.getInstance().getInterv(); ++i) {
                 for (int k = 0; k < data.getInstance().getInterv(); ++k) {
                     for (int r = 0; r < data.getInstance().getTechs(); ++r) {
@@ -201,9 +201,7 @@ public class Solver {
                             expr.addTerm(-data.getIntervention()[i + 1].getD()[a], y[i][k][r]);
                             for (int t = 0; t < data.getInstance().getTechs(); ++t){
                                 if (!Arrays.toString(data.getTechnician()[t + 1].getDispo()).contains("" + k + 1)) {
-                                    for (int q = 0; q < data.getInstance().getDomains(); ++q) {
-                                        expr.addTerm(data.getTechnician()[t + 1].getD()[q + 1], x[t][k][r]);
-                                    }
+                                    expr.addTerm(data.getTechnician()[t + 1].getV(data.getInstance().getLevel(), data.getInstance().getDomains())[a], x[t][k][r]);
                                 }
                             }
                             model.addConstr(expr, GRB.GREATER_EQUAL, 0, String.format("Each task is performed by a team with the appropriate skills (%s)", i));
@@ -316,31 +314,6 @@ public class Solver {
             System.err.println("Gurobi exception");
             e.printStackTrace();
         }
-    }
-
-    public int[] getV(String filePath, int t) {
-        TTSPData data = InstanceReader.parse(filePath);
-        int p = data.getInstance().getLevel();
-        int q = data.getInstance().getDomains();
-        int[] d = data.getTechnician()[t].getD();
-        int[] V = new int[p * q];
-        int cpt=0;
-        for(int i=1 ; i<q+1 ; i++){
-            for(int j=0 ; j<p ; j++){
-                if(j<d[i]) {
-                    V[cpt] = 1;
-                }else{
-                    V[cpt]=0;
-                }
-                cpt++;
-            }
-        }
-        System.out.print("[");
-        for(int i=0 ; i<V.length ; i++){
-            System.out.print(" " +V[i]);
-        }
-        System.out.print(" ]");
-        return V;
     }
 
     public static void main(String[] args) {
