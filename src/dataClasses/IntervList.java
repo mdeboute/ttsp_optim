@@ -7,6 +7,7 @@ public class IntervList {
     private int prio;
     private int cost;
     private int[] d; // [d1_1, d1_2, d1_3, d2_1, d2_2, d2_3, ...]
+    private int[] dayTeam; // ajouté par Gonzague pour algo de résolution
 
     public IntervList(int number, int time, int[] preds, int prio, int cost, int[] d) {
         super();
@@ -16,6 +17,7 @@ public class IntervList {
         this.prio = prio;
         this.cost = cost;
         this.d = d;
+        this.dayTeam= new int[2]; // [0] jour ou est réalisé l'intervention ; [1] : numéro de la team
     }
 
     @Override
@@ -80,6 +82,30 @@ public class IntervList {
 
     public void setD(int[] d) {
         this.d = d;
+    }
+
+    public int[] getDayTeam() {
+        return dayTeam;
+    }
+
+    public void setDayTeam(int day, int team) {
+        this.dayTeam[0]=day;
+        this.dayTeam[1]=team;
+    }
+
+    // Return an double array with level required for each domains
+    public int[][] skills_interv(TTSPData data){
+        int nb_domain = data.getInstance().getDomains(); //number of domains
+        int nb_level = data.getInstance().getLevel(); //equal to the max level
+        int[][] dom_interv = new int[nb_domain][nb_level]; // array of domains and competences of intervention i
+        int cpt1 = 0;
+        for (int j = 0; j < nb_domain; j++) {
+            for (int k = 0; k < nb_level; k++) {
+                dom_interv[j][k] = getD()[cpt1];
+                cpt1++;
+            }
+        }
+        return dom_interv;
     }
 
 }
