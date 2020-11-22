@@ -17,55 +17,55 @@ Subject To
  Subcontracting_budget_(2): 100 z(2) <= 0
  Subcontracting_budget_(3): 300 z(3) <= 0
  Subcontracting_budget_(4): 150 z(4) <= 0
- One_tech_is_used_at_most_in_one_shift_per_day_(0): x(0,_0,_0) + x(0,_0,_1)
+ One_tech_is_used_at_most_in_one_team_per_day_(0): x(0,_0,_0) + x(0,_0,_1)
    + x(0,_0,_2) + x(0,_0,_3) + x(0,_0,_4) <= 1
- One_tech_is_used_at_most_in_one_shift_per_day_(0): x(0,_1,_0) + x(0,_1,_1)
-   + x(0,_1,_2) + x(0,_1,_3) + x(0,_1,_4) <= 1
- One_tech_is_used_at_most_in_one_shift_per_day_(0): x(0,_2,_0) + x(0,_2,_1)
-   + x(0,_2,_2) + x(0,_2,_3) + x(0,_2,_4) <= 1
- One_tech_is_used_at_most_in_one_shift_per_day_(0): x(0,_3,_0) + x(0,_3,_1)
-   + x(0,_3,_2) + x(0,_3,_3) + x(0,_3,_4) <= 1
- One_tech_is_used_at_most_in_one_shift_per_day_(0): x(0,_4,_0) + x(0,_4,_1)
-   + x(0,_4,_2) + x(0,_4,_3) + x(0,_4,_4) <= 1
- One_tech_is_used_at_most_in_one_shift_per_day_(1): x(1,_0,_0) + x(1,_0,_1)
+ One_tech_is_used_at_most_in_one_team_per_day_(1): x(1,_0,_0) + x(1,_0,_1)
    + x(1,_0,_2) + x(1,_0,_3) + x(1,_0,_4) <= 1
- One_tech_is_used_at_most_in_one_shift_per_day_(1): x(1,_1,_0) + x(1,_1,_1)
-   + x(1,_1,_2) + x(1,_1,_3) + x(1,_1,_4) <= 1
- One_tech_is_used_at_most_in_one_shift_per_day_(1): x(1,_2,_0) + x(1,_2,_1)
-   + x(1,_2,_2) + x(1,_2,_3) + x(1,_2,_4) <= 1
- One_tech_is_used_at_most_in_one_shift_per_day_(1): x(1,_3,_0) + x(1,_3,_1)
-   + x(1,_3,_2) + x(1,_3,_3) + x(1,_3,_4) <= 1
- One_tech_is_used_at_most_in_one_shift_per_day_(1): x(1,_4,_0) + x(1,_4,_1)
-   + x(1,_4,_2) + x(1,_4,_3) + x(1,_4,_4) <= 1
- One_tech_is_used_at_most_in_one_shift_per_day_(2): x(2,_0,_0) + x(2,_0,_1)
+ One_tech_is_used_at_most_in_one_team_per_day_(2): x(2,_0,_0) + x(2,_0,_1)
    + x(2,_0,_2) + x(2,_0,_3) + x(2,_0,_4) <= 1
- One_tech_is_used_at_most_in_one_shift_per_day_(2): x(2,_1,_0) + x(2,_1,_1)
-   + x(2,_1,_2) + x(2,_1,_3) + x(2,_1,_4) <= 1
- One_tech_is_used_at_most_in_one_shift_per_day_(2): x(2,_2,_0) + x(2,_2,_1)
-   + x(2,_2,_2) + x(2,_2,_3) + x(2,_2,_4) <= 1
- One_tech_is_used_at_most_in_one_shift_per_day_(2): x(2,_3,_0) + x(2,_3,_1)
-   + x(2,_3,_2) + x(2,_3,_3) + x(2,_3,_4) <= 1
- One_tech_is_used_at_most_in_one_shift_per_day_(2): x(2,_4,_0) + x(2,_4,_1)
-   + x(2,_4,_2) + x(2,_4,_3) + x(2,_4,_4) <= 1
- One_tech_is_used_at_most_in_one_shift_per_day_(3): x(3,_0,_0) + x(3,_0,_1)
+ One_tech_is_used_at_most_in_one_team_per_day_(3): x(3,_0,_0) + x(3,_0,_1)
    + x(3,_0,_2) + x(3,_0,_3) + x(3,_0,_4) <= 1
- One_tech_is_used_at_most_in_one_shift_per_day_(3): x(3,_1,_0) + x(3,_1,_1)
-   + x(3,_1,_2) + x(3,_1,_3) + x(3,_1,_4) <= 1
- One_tech_is_used_at_most_in_one_shift_per_day_(3): x(3,_2,_0) + x(3,_2,_1)
-   + x(3,_2,_2) + x(3,_2,_3) + x(3,_2,_4) <= 1
- One_tech_is_used_at_most_in_one_shift_per_day_(3): x(3,_3,_0) + x(3,_3,_1)
-   + x(3,_3,_2) + x(3,_3,_3) + x(3,_3,_4) <= 1
- One_tech_is_used_at_most_in_one_shift_per_day_(3): x(3,_4,_0) + x(3,_4,_1)
-   + x(3,_4,_2) + x(3,_4,_3) + x(3,_4,_4) <= 1
- One_tech_is_used_at_most_in_one_shift_per_day_(4): x(4,_0,_0) + x(4,_0,_1)
+ One_tech_is_used_at_most_in_one_team_per_day_(4): x(4,_0,_0) + x(4,_0,_1)
    + x(4,_0,_2) + x(4,_0,_3) + x(4,_0,_4) <= 1
- One_tech_is_used_at_most_in_one_shift_per_day_(4): x(4,_1,_0) + x(4,_1,_1)
+ One_tech_is_used_at_most_in_one_team_per_day_(0): x(0,_1,_0) + x(0,_1,_1)
+   + x(0,_1,_2) + x(0,_1,_3) + x(0,_1,_4) <= 1
+ One_tech_is_used_at_most_in_one_team_per_day_(1): x(1,_1,_0) + x(1,_1,_1)
+   + x(1,_1,_2) + x(1,_1,_3) + x(1,_1,_4) <= 1
+ One_tech_is_used_at_most_in_one_team_per_day_(2): x(2,_1,_0) + x(2,_1,_1)
+   + x(2,_1,_2) + x(2,_1,_3) + x(2,_1,_4) <= 1
+ One_tech_is_used_at_most_in_one_team_per_day_(3): x(3,_1,_0) + x(3,_1,_1)
+   + x(3,_1,_2) + x(3,_1,_3) + x(3,_1,_4) <= 1
+ One_tech_is_used_at_most_in_one_team_per_day_(4): x(4,_1,_0) + x(4,_1,_1)
    + x(4,_1,_2) + x(4,_1,_3) + x(4,_1,_4) <= 1
- One_tech_is_used_at_most_in_one_shift_per_day_(4): x(4,_2,_0) + x(4,_2,_1)
+ One_tech_is_used_at_most_in_one_team_per_day_(0): x(0,_2,_0) + x(0,_2,_1)
+   + x(0,_2,_2) + x(0,_2,_3) + x(0,_2,_4) <= 1
+ One_tech_is_used_at_most_in_one_team_per_day_(1): x(1,_2,_0) + x(1,_2,_1)
+   + x(1,_2,_2) + x(1,_2,_3) + x(1,_2,_4) <= 1
+ One_tech_is_used_at_most_in_one_team_per_day_(2): x(2,_2,_0) + x(2,_2,_1)
+   + x(2,_2,_2) + x(2,_2,_3) + x(2,_2,_4) <= 1
+ One_tech_is_used_at_most_in_one_team_per_day_(3): x(3,_2,_0) + x(3,_2,_1)
+   + x(3,_2,_2) + x(3,_2,_3) + x(3,_2,_4) <= 1
+ One_tech_is_used_at_most_in_one_team_per_day_(4): x(4,_2,_0) + x(4,_2,_1)
    + x(4,_2,_2) + x(4,_2,_3) + x(4,_2,_4) <= 1
- One_tech_is_used_at_most_in_one_shift_per_day_(4): x(4,_3,_0) + x(4,_3,_1)
+ One_tech_is_used_at_most_in_one_team_per_day_(0): x(0,_3,_0) + x(0,_3,_1)
+   + x(0,_3,_2) + x(0,_3,_3) + x(0,_3,_4) <= 1
+ One_tech_is_used_at_most_in_one_team_per_day_(1): x(1,_3,_0) + x(1,_3,_1)
+   + x(1,_3,_2) + x(1,_3,_3) + x(1,_3,_4) <= 1
+ One_tech_is_used_at_most_in_one_team_per_day_(2): x(2,_3,_0) + x(2,_3,_1)
+   + x(2,_3,_2) + x(2,_3,_3) + x(2,_3,_4) <= 1
+ One_tech_is_used_at_most_in_one_team_per_day_(3): x(3,_3,_0) + x(3,_3,_1)
+   + x(3,_3,_2) + x(3,_3,_3) + x(3,_3,_4) <= 1
+ One_tech_is_used_at_most_in_one_team_per_day_(4): x(4,_3,_0) + x(4,_3,_1)
    + x(4,_3,_2) + x(4,_3,_3) + x(4,_3,_4) <= 1
- One_tech_is_used_at_most_in_one_shift_per_day_(4): x(4,_4,_0) + x(4,_4,_1)
+ One_tech_is_used_at_most_in_one_team_per_day_(0): x(0,_4,_0) + x(0,_4,_1)
+   + x(0,_4,_2) + x(0,_4,_3) + x(0,_4,_4) <= 1
+ One_tech_is_used_at_most_in_one_team_per_day_(1): x(1,_4,_0) + x(1,_4,_1)
+   + x(1,_4,_2) + x(1,_4,_3) + x(1,_4,_4) <= 1
+ One_tech_is_used_at_most_in_one_team_per_day_(2): x(2,_4,_0) + x(2,_4,_1)
+   + x(2,_4,_2) + x(2,_4,_3) + x(2,_4,_4) <= 1
+ One_tech_is_used_at_most_in_one_team_per_day_(3): x(3,_4,_0) + x(3,_4,_1)
+   + x(3,_4,_2) + x(3,_4,_3) + x(3,_4,_4) <= 1
+ One_tech_is_used_at_most_in_one_team_per_day_(4): x(4,_4,_0) + x(4,_4,_1)
    + x(4,_4,_2) + x(4,_4,_3) + x(4,_4,_4) <= 1
  Each_task_is_executed_or_subcontracted_(0): y(0,_0,_0) + y(0,_0,_1)
    + y(0,_0,_2) + y(0,_0,_3) + y(0,_0,_4) + y(0,_1,_0) + y(0,_1,_1)

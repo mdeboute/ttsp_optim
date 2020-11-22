@@ -155,21 +155,21 @@ public class Solver {
             }
 
             // 6
-            for (int t = 0; t < data.getInstance().getTechs(); ++t) {
-                for (int k = 0; k < data.getInstance().getInterv(); ++k) {
+            for (int k = 0; k < data.getInstance().getInterv(); ++k) {
+                for (int t = 0; t < data.getInstance().getTechs(); ++t) {
                     if (!Arrays.toString(data.getTechnician()[t + 1].getDispo()).contains("" + k + 1)) {
                         GRBLinExpr expr = new GRBLinExpr();
                         for (int r = 0; r < data.getInstance().getTechs(); ++r) {
                             expr.addTerm(1.0, x[t][k][r]);
                         }
-                        model.addConstr(expr, GRB.LESS_EQUAL, 1, String.format("One tech is used at most in one shift per day (%s)", t));
+                        model.addConstr(expr, GRB.LESS_EQUAL, 1, String.format("One tech is used at most in one team per day (%s)", t));
                     }
                 }
             }
 
             // 7
-            for (int t = 0; t < data.getInstance().getTechs(); ++t) {
-                for (int k = 0; k < data.getInstance().getInterv(); ++k) {
+            for (int k = 0; k < data.getInstance().getInterv(); ++k) {
+                for (int t = 0; t < data.getInstance().getTechs(); ++t) {
                     if (Arrays.toString(data.getTechnician()[t + 1].getDispo()).contains("" + k + 1)) {
                         GRBLinExpr expr = new GRBLinExpr();
                         for (int r = 0; r < data.getInstance().getTechs(); ++r) {
@@ -302,8 +302,49 @@ public class Solver {
                 System.out.println("Runtime : " + Math.round(model.get(DoubleAttr.Runtime) * 1000) / 1000.0 + " seconds");
 
                 System.out.println("--> Printing results ");
-                System.out.println("Objective value = " + model.get(DoubleAttr.ObjVal)); // <gets the value of the objective
+                System.out.println("Objective value = " + model.get(DoubleAttr.ObjVal) + "\n"); // <gets the value of the objective
                 // function for the best computed solution (optimal if no time limit)
+
+                // --- Display the solution ---
+                System.out.println("--> The solution is :\n");
+                for (int t = 0; t < data.getInstance().getTechs(); ++t) {
+                    for (int k = 0; k < data.getInstance().getInterv(); ++k) {
+                        for (int r = 0; r < data.getInstance().getTechs(); ++r) {
+                            if (x[t][k][r].get(DoubleAttr.X) == 1) {
+                                System.out.println("The technician " + (t + 1) + " is assigned to team " + (r + 1) + " on day " + (k + 1));
+                            }
+                        }
+                    }
+                }
+                for (int i = 0; i < data.getInstance().getInterv(); ++i) {
+                    for (int k = 0; k < data.getInstance().getInterv(); ++k) {
+                        for (int r = 0; r < data.getInstance().getTechs(); ++r) {
+                            if (y[i][k][r].get(DoubleAttr.X) == 1) {
+                                System.out.println("The intervention " + (i + 1) + " is assigned to team " + (r + 1) + " on day " + (k + 1));
+                            }
+                        }
+                    }
+                }
+                for (int i = 0; i < data.getInstance().getInterv(); ++i) {
+                    System.out.println("Start time of the intervention " + (i + 1) + " is " + d[i].get(DoubleAttr.X));
+                }
+                for (int p = 0; p < 4; ++p) {
+                    System.out.println("The end time of the last priority intervention " + (p + 1) + " is " + f[p].get(DoubleAttr.X));
+                }
+                for (int i = 0; i < data.getInstance().getInterv(); ++i) {
+                    if (z[i].get(DoubleAttr.X) == 1) {
+                        System.out.println("The intervention " + (i + 1) + " is subcontracted");
+                    }
+                }
+                for (int i = 0; i < data.getInstance().getInterv(); ++i) {
+                    for (int j = 0; j < data.getInstance().getInterv(); ++j) {
+                        if (i != j) {
+                            if (h[i][j].get(DoubleAttr.X) == 1){
+                                System.out.println("The intervention " + (i + 1) + " ends before the start of intervention " + (j + 1));
+                            }
+                        }
+                    }
+                }
             } else {
                 // the model is infeasible (maybe wrong) or the solver has reached the time
                 // limit without finding a feasible solution
