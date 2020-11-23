@@ -1,6 +1,6 @@
 package src.solClasses;
 
-public class IntervDates {
+public class IntervDates implements Comparable<IntervDates> {
     private int interv;
     private int day;
     private int time;
@@ -50,6 +50,13 @@ public class IntervDates {
 
     public void setTeam(int team) {
         this.team = team;
+    }
+
+    @Override
+    //Allow to sort the interventions in ascending order according
+    // to the number of the intervention with Collections.sort
+    public int compareTo(IntervDates intervDates) {
+        return (this.interv - intervDates.interv);
     }
 
 }
