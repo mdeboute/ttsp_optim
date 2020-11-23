@@ -155,8 +155,8 @@ public class Solver {
             }
 
             // 6
-            for (int k = 0; k < data.getInstance().getInterv(); ++k) {
-                for (int t = 0; t < data.getInstance().getTechs(); ++t) {
+            for (int t = 0; t < data.getInstance().getTechs(); ++t) {
+                for (int k = 0; k < data.getInstance().getInterv(); ++k) {
                     if (!Arrays.toString(data.getTechnician()[t + 1].getDispo()).contains("" + k + 1)) {
                         GRBLinExpr expr = new GRBLinExpr();
                         for (int r = 0; r < data.getInstance().getTechs(); ++r) {
@@ -167,9 +167,9 @@ public class Solver {
                 }
             }
 
-            // 7
-            for (int k = 0; k < data.getInstance().getInterv(); ++k) {
-                for (int t = 0; t < data.getInstance().getTechs(); ++t) {
+            // 7 --> x
+            for (int t = 0; t < data.getInstance().getTechs(); ++t) {
+                for (int k = 0; k < data.getInstance().getInterv(); ++k) {
                     if (Arrays.toString(data.getTechnician()[t + 1].getDispo()).contains("" + k + 1)) {
                         GRBLinExpr expr = new GRBLinExpr();
                         for (int r = 0; r < data.getInstance().getTechs(); ++r) {
@@ -192,7 +192,7 @@ public class Solver {
                 model.addConstr(expr, GRB.EQUAL, 1, String.format("Each task is executed or subcontracted (%s)", i));
             }
 
-            // 9
+            // 9 --> x
             for (int i = 0; i < data.getInstance().getInterv(); ++i) {
                 for (int k = 0; k < data.getInstance().getInterv(); ++k) {
                     for (int r = 0; r < data.getInstance().getTechs(); ++r) {
