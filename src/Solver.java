@@ -8,8 +8,6 @@ import gurobi.GRB.IntParam;
 import src.dataClasses.TTSPData;
 import src.readers.InstanceReader;
 
-import java.util.Arrays;
-
 public class Solver {
     public static void solver(String filePath, double time) {
         TTSPData data = InstanceReader.parse(filePath);
@@ -157,7 +155,7 @@ public class Solver {
             // 6
             for (int t = 0; t < data.getInstance().getTechs(); ++t) {
                 for (int k = 0; k < data.getInstance().getInterv(); ++k) {
-                    if (!Arrays.toString(data.getTechnician()[t + 1].getDispo()).contains("" + k + 1)) {
+                    if (!Checker.check(data.getTechnician()[t + 1].getDispo(), k+1)) {
                         GRBLinExpr expr = new GRBLinExpr();
                         for (int r = 0; r < data.getInstance().getTechs(); ++r) {
                             expr.addTerm(1.0, x[t][k][r]);
@@ -167,10 +165,10 @@ public class Solver {
                 }
             }
 
-            // 7 --> x
+            // 7
             for (int t = 0; t < data.getInstance().getTechs(); ++t) {
                 for (int k = 0; k < data.getInstance().getInterv(); ++k) {
-                    if (Arrays.toString(data.getTechnician()[t + 1].getDispo()).contains("" + k + 1)) {
+                    if (Checker.check(data.getTechnician()[t + 1].getDispo(), k+1)) {
                         GRBLinExpr expr = new GRBLinExpr();
                         for (int r = 0; r < data.getInstance().getTechs(); ++r) {
                             expr.addTerm(1.0, x[t][k][r]);
@@ -192,7 +190,7 @@ public class Solver {
                 model.addConstr(expr, GRB.EQUAL, 1, String.format("Each task is executed or subcontracted (%s)", i));
             }
 
-            // 9 --> x
+            // 9
             for (int i = 0; i < data.getInstance().getInterv(); ++i) {
                 for (int k = 0; k < data.getInstance().getInterv(); ++k) {
                     for (int r = 0; r < data.getInstance().getTechs(); ++r) {
@@ -200,7 +198,7 @@ public class Solver {
                             GRBLinExpr expr = new GRBLinExpr();
                             expr.addTerm(-data.getIntervention()[i + 1].getD()[a], y[i][k][r]);
                             for (int t = 0; t < data.getInstance().getTechs(); ++t){
-                                if (!Arrays.toString(data.getTechnician()[t + 1].getDispo()).contains("" + k + 1)) {
+                                if (!Checker.check(data.getTechnician()[t + 1].getDispo(), k+1)) {
                                     expr.addTerm(data.getTechnician()[t + 1].getV(data.getInstance().getLevel(), data.getInstance().getDomains())[a], x[t][k][r]);
                                 }
                             }
