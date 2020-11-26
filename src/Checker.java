@@ -133,7 +133,7 @@ public class Checker {
             for (int j = 0; j < nb_ST; j++) {
                 int ST = interv_ST[j];
                 if (data.getIntervention()[i].getNumber() == ST) {
-                    break; //we check that we do not compare the outsourced intervention i with itself
+                    continue; //we check that we do not compare the outsourced intervention i with itself
                 }
                 if (check(data.getIntervention()[i].getPreds(), ST)) { //check if outsourced intervention j belongs to pred(i)
                     if (!check(interv_ST, data.getIntervention()[i].getNumber())) { //check if intervention i is outsourced
@@ -180,7 +180,7 @@ public class Checker {
             for (int j = 0; j < nb_domain; j++) {
                 for (int k = 0; k < nb_level; k++) {
                     if (dom_interv[j][k] > dom_team[j][k]) {
-                        System.out.print("[Issue] The team " + team + " of the day " + day + " is not competent enough in the domain " + j + " to do the intervention " + num + ".\n");
+                        System.out.print("[Issue] The team " + team + " of the day " + day + " is not competent enough in the domain " + (j+1) + " to do the intervention " + num + ".\n");
                         feasible = 0;
                     }
                 }
