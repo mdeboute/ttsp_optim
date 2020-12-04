@@ -1,8 +1,9 @@
 package src;
 
-import src.dataClasses.*;
-import src.solClasses.*;
-import src.readers.*;
+import src.dataClasses.TTSPData;
+import src.readers.InstanceReader;
+import src.readers.SolutionReader;
+import src.solClasses.TTSPSolution;
 
 public class Checker {
     public static int checker(TTSPData data, TTSPSolution solution) {
@@ -67,34 +68,26 @@ public class Checker {
         }
 
         //////////////////////////
-        for (int i = 1; i < nb_interv; i++) {
-            if (solution.getInterv_dates()[i].getInterv() != i + 1) {
-                break; //the outsourced interventions are not in Interv_dates, therefore avoids a shift with interv_list
-            }
+        for (int i = 0; i < solution.getInterv_dates().length; i++) {
+            int num= solution.getInterv_dates()[i].getInterv();
             int start_day = solution.getInterv_dates()[i].getTime();
-            int ST = solution.getInterv_dates()[i].getInterv();
-            int end_i = start_day + data.getIntervention()[ST].getTime();
+            int end_i = start_day + data.getIntervention()[num].getTime();
 
             // An intervention that has been started must be finished on the same day.
             if (end_i > 120) {
-                System.out.print("[Issue] Intervention " + i + " begin to late in day " + solution.getInterv_dates()[i].getDay() + " to be finish the same day.\n");
+                System.out.print("[Issue] Intervention " + num + " begin to late in day " + solution.getInterv_dates()[i].getDay() + " to be finish the same day.\n");
                 feasible = 0;
             }
 
             //  The intervention p belonging to Pred(i) ends before i begins ///
-            int start_i=0;
-            for (int l = 0; l < solution.getInterv_dates().length; l++) {
-                if (solution.getInterv_dates()[l].getInterv() == i) {
-                    start_i = solution.getInterv_dates()[l].getDay() * 120 + solution.getInterv_dates()[l].getTime();
-                }
-            }
-            for (int p = 0; p < data.getIntervention()[i].getPreds().length; p++) {
-                int pred = data.getIntervention()[i].getPreds()[p];
+            int start_i=solution.getInterv_dates()[i].getDay() * 120 + solution.getInterv_dates()[i].getTime();
+            for (int p = 0; p < data.getIntervention()[num].getPreds().length; p++) {
+                int pred = data.getIntervention()[num].getPreds()[p];
                 for (int l = 0; l < solution.getInterv_dates().length; l++) {
                     if (solution.getInterv_dates()[l].getInterv() == pred) {
                         int start_pred = solution.getInterv_dates()[l].getDay() * 120 + solution.getInterv_dates()[l].getTime();
                         if (data.getIntervention()[pred].getTime() + start_pred > start_i) {
-                            System.out.print("[Issue] Intervention " + pred + " is an intervention that precedes " + i + " and ends after " + i + " started.\n");
+                            System.out.print("[Issue] Intervention " + pred + " is an intervention that precedes " + num + " and ends after " + num + " started.\n");
                             feasible = 0;
                         }
 
@@ -108,7 +101,7 @@ public class Checker {
         int[] interv_ST = new int[nb_ST];
         int cpt = 0;
         int id=0;
-        for (int i = 0; i < nb_interv; i++) { //creation of a table of outsourced interventions
+        for (int i = 0; i < nb_interv-1; i++) { //creation of a table of outsourced interventions
             if (solution.getInterv_dates()[cpt].getInterv() != data.getIntervention()[i + 1].getNumber()) {
                 interv_ST[id] = data.getIntervention()[i + 1].getNumber();
                 id++;
@@ -180,7 +173,7 @@ public class Checker {
             for (int j = 0; j < nb_domain; j++) {
                 for (int k = 0; k < nb_level; k++) {
                     if (dom_interv[j][k] > dom_team[j][k]) {
-                        System.out.print("[Issue] The team " + team + " of the day " + day + " is not competent enough in the domain " + (j+1) + " to do the intervention " + num + ".\n");
+                        System.out.print("[Issue] The team " + team + " of the day " + day + " is not competent enough in the domain " + (j+1) + " for the level " + (k+1) + " to do the intervention " + num + ".\n");
                         feasible = 0;
                     }
                 }
