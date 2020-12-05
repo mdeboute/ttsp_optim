@@ -97,12 +97,13 @@ public class Checker {
         }
 
         ////////////////////// Check on outsourced interventions
+        //ArrayList<Integer> outsource = new ArrayList<>();
         int nb_ST = data.getIntervention().length - solution.getInterv_dates().length;
         int[] interv_ST = new int[nb_ST];
         int cpt = 0;
         int id=0;
         for (int i = 0; i < nb_interv-1; i++) { //creation of a table of outsourced interventions
-            if (solution.getInterv_dates()[cpt].getInterv() != data.getIntervention()[i + 1].getNumber()) {
+            if (id< interv_ST.length && cpt<solution.getInterv_dates().length && solution.getInterv_dates()[cpt].getInterv() != data.getIntervention()[i + 1].getNumber()) {
                 interv_ST[id] = data.getIntervention()[i + 1].getNumber();
                 id++;
             } else {
