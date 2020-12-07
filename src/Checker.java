@@ -116,7 +116,7 @@ public class Checker {
         int cost = 0;
         for (int value : interv_ST) {
             if(value != 0) {
-                cost = cost + data.getIntervention()[value + 1].getCost(); //cost total of outsourced interventions
+                cost = cost + data.getIntervention()[value].getCost(); //cost total of outsourced interventions
             }
         }
         if (cost > data.getInstance().getAbandon()) {
