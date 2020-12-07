@@ -67,6 +67,7 @@ public class Checker {
             }
         }
 
+        int comptage=0;
         //////////////////////////
         for (int i = 0; i < solution.getInterv_dates().length; i++) {
             int num= solution.getInterv_dates()[i].getInterv();
@@ -78,16 +79,16 @@ public class Checker {
                 System.out.print("[Issue] Intervention " + num + " begin to late in day " + solution.getInterv_dates()[i].getDay() + " to be finish the same day.\n");
                 feasible = 0;
             }
-
             //  The intervention p belonging to Pred(i) ends before i begins ///
-            int start_i=solution.getInterv_dates()[i].getDay() * 120 + solution.getInterv_dates()[i].getTime();
+            int start_i=(solution.getInterv_dates()[i].getDay()-1) * 120 + solution.getInterv_dates()[i].getTime();
             for (int p = 0; p < data.getIntervention()[num].getPreds().length; p++) {
                 int pred = data.getIntervention()[num].getPreds()[p];
                 for (int l = 0; l < solution.getInterv_dates().length; l++) {
                     if (solution.getInterv_dates()[l].getInterv() == pred) {
-                        int start_pred = solution.getInterv_dates()[l].getDay() * 120 + solution.getInterv_dates()[l].getTime();
+                        int start_pred = (solution.getInterv_dates()[l].getDay()-1) * 120 + solution.getInterv_dates()[l].getTime();
                         if (data.getIntervention()[pred].getTime() + start_pred > start_i) {
                             System.out.print("[Issue] Intervention " + pred + " is an intervention that precedes " + num + " and ends after " + num + " started.\n");
+                            comptage++;
                             feasible = 0;
                         }
 
@@ -95,6 +96,7 @@ public class Checker {
                 }
             }
         }
+        System.out.println(comptage + " Interventions ");
 
         ////////////////////// Check on outsourced interventions
         //ArrayList<Integer> outsource = new ArrayList<>();

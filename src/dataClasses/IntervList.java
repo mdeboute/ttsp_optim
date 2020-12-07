@@ -18,6 +18,7 @@ public class IntervList {
         this.cost = cost;
         this.d = d;
         this.dayTeam= new int[2]; // [0] jour ou est réalisé l'intervention ; [1] : numéro de la team
+        setDayTeam(-1,-1);
     }
 
     @Override
