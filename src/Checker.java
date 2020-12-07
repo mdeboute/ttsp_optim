@@ -96,7 +96,6 @@ public class Checker {
                 }
             }
         }
-        System.out.println(comptage + " Interventions ");
 
         ////////////////////// Check on outsourced interventions
         //ArrayList<Integer> outsource = new ArrayList<>();
