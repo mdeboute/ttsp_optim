@@ -5,10 +5,36 @@ import gurobi.GRB.DoubleAttr;
 import gurobi.GRB.DoubleParam;
 import gurobi.GRB.IntAttr;
 import gurobi.GRB.IntParam;
+
 import src.dataClasses.TTSPData;
 import src.readers.InstanceReader;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.Arrays;
+
+
 public class Solver {
+    public static void copyFullRecursive(File src, File dest) { //copy files func
+        if (src.isDirectory()) {
+            File dir = new File(dest, src.getName());
+            dir.mkdir();
+
+            File[] list = src.listFiles();
+            if (list != null)
+                for (File fic : list)
+                    copyFullRecursive(fic, dir);
+        } else {
+            try {
+                Files.copy(src.toPath(), new File(dest, src.getName()).toPath());
+            } catch (IOException ignore) {
+            }
+        }
+    }
+
     public static void solver(String filePath, double time) {
         TTSPData data = InstanceReader.parse(filePath);
 
@@ -105,21 +131,21 @@ public class Solver {
                     GRBLinExpr expr = new GRBLinExpr();
                     expr.addTerm(1.0, f[0]);
                     expr.addTerm(-1.0, d[i]);
-                    expr.addConstant(-(double) data.getIntervention()[i + 1].getTime());
+                    expr.addConstant(- data.getIntervention()[i + 1].getTime());
                     model.addConstr(expr, GRB.GREATER_EQUAL, 0, String.format("Finish time f1 >= d(%s) + p(%s)", i, i));
                 }
                 if (data.getIntervention()[i + 1].getPrio() == 2) {
                     GRBLinExpr expr = new GRBLinExpr();
                     expr.addTerm(1.0, f[1]);
                     expr.addTerm(-1.0, d[i]);
-                    expr.addConstant(-(double) data.getIntervention()[i + 1].getTime());
+                    expr.addConstant(- data.getIntervention()[i + 1].getTime());
                     model.addConstr(expr, GRB.GREATER_EQUAL, 0, String.format("Finish time f2 >= d(%s) + p(%S)", i, i));
                 }
                 if (data.getIntervention()[i + 1].getPrio() == 3) {
                     GRBLinExpr expr = new GRBLinExpr();
                     expr.addTerm(1.0, f[2]);
                     expr.addTerm(-1.0, d[i]);
-                    expr.addConstant(-(double) data.getIntervention()[i + 1].getTime());
+                    expr.addConstant(- data.getIntervention()[i + 1].getTime());
                     model.addConstr(expr, GRB.GREATER_EQUAL, 0, String.format("Finish time f3 >= d(%s) + p(%S)", i, i));
                 }
             }
@@ -129,7 +155,7 @@ public class Solver {
                 GRBLinExpr expr = new GRBLinExpr();
                 expr.addTerm(1.0, f[3]);
                 expr.addTerm(-1.0, d[i]);
-                expr.addConstant(-(double) data.getIntervention()[i + 1].getTime());
+                expr.addConstant(- data.getIntervention()[i + 1].getTime());
                 model.addConstr(expr, GRB.GREATER_EQUAL, 0, String.format("Finish time f4 >= d(%s) + p(%S)", i, i));
             }
 
@@ -147,7 +173,7 @@ public class Solver {
                     for (int j : data.getIntervention()[i + 1].getPreds()) {
                         expr.addTerm(1.0, z[j]);
                     }
-                    expr.addTerm(-(double) data.getIntervention()[i + 1].getPreds().length, z[i]);
+                    expr.addTerm(- data.getIntervention()[i + 1].getPreds().length, z[i]);
                     model.addConstr(expr, GRB.GREATER_EQUAL, 0, String.format("If a task is outsourced, all tasks succeed him are also outsourced (%s)", i));
                 }
             }
@@ -155,7 +181,7 @@ public class Solver {
             // 6
             for (int t = 0; t < data.getInstance().getTechs(); ++t) {
                 for (int k = 0; k < data.getInstance().getInterv(); ++k) {
-                    if (!Checker.check(data.getTechnician()[t + 1].getDispo(), k+1)) {
+                    if (!Checker.check(data.getTechnician()[t + 1].getDispo(), k + 1)) {
                         GRBLinExpr expr = new GRBLinExpr();
                         for (int r = 0; r < data.getInstance().getTechs(); ++r) {
                             expr.addTerm(1.0, x[t][k][r]);
@@ -168,7 +194,7 @@ public class Solver {
             // 7
             for (int t = 0; t < data.getInstance().getTechs(); ++t) {
                 for (int k = 0; k < data.getInstance().getInterv(); ++k) {
-                    if (Checker.check(data.getTechnician()[t + 1].getDispo(), k+1)) {
+                    if (Checker.check(data.getTechnician()[t + 1].getDispo(), k + 1)) {
                         GRBLinExpr expr = new GRBLinExpr();
                         for (int r = 0; r < data.getInstance().getTechs(); ++r) {
                             expr.addTerm(1.0, x[t][k][r]);
@@ -197,8 +223,8 @@ public class Solver {
                         for (int a = 0; a < data.getInstance().getLevel() * data.getInstance().getDomains(); ++a) {
                             GRBLinExpr expr = new GRBLinExpr();
                             expr.addTerm(-data.getIntervention()[i + 1].getD()[a], y[i][k][r]);
-                            for (int t = 0; t < data.getInstance().getTechs(); ++t){
-                                if (!Checker.check(data.getTechnician()[t + 1].getDispo(), k+1)) {
+                            for (int t = 0; t < data.getInstance().getTechs(); ++t) {
+                                if (!Checker.check(data.getTechnician()[t + 1].getDispo(), k + 1)) {
                                     expr.addTerm(data.getTechnician()[t + 1].getV(data.getInstance().getLevel(), data.getInstance().getDomains())[a], x[t][k][r]);
                                 }
                             }
@@ -245,7 +271,7 @@ public class Solver {
                     }
                     expr.addConstant(M);
                     expr.addTerm(-1.0, d[i]);
-                    expr.addConstant(-(double) data.getIntervention()[i + 1].getTime());
+                    expr.addConstant(- data.getIntervention()[i + 1].getTime());
                     model.addConstr(expr, GRB.GREATER_EQUAL, 0, String.format("Lower and upper limits on the start time of each task 2 (%s)", i));
                 }
             }
@@ -303,46 +329,89 @@ public class Solver {
                 System.out.println("Objective value = " + model.get(DoubleAttr.ObjVal) + "\n"); // <gets the value of the objective
                 // function for the best computed solution (optimal if no time limit)
 
-                // --- Display the solution ---
-                System.out.println("--> The solution is :\n");
-                for (int t = 0; t < data.getInstance().getTechs(); ++t) {
+
+                // --- Creating the solution files ---
+                String[] dataName = filePath.split("/");
+                String filepathSol = "datas/solverSolutions/" + dataName[dataName.length - 1] + "/";
+                copyFullRecursive(new File(filePath), new File("datas/solverSolutions/"));
+
+                // First file :
+                try {
+                    FileWriter fw = new FileWriter(filepathSol + "interv_dates", false); // create file writer (false to erase the file if it already exists)  -> filePath is a String that represents the path to the file that will be created/written
+                    BufferedWriter output = new BufferedWriter(fw); // create buffered writer
+                    for (int i = 0; i < data.getInstance().getInterv(); ++i) {
+                        for (int k = 0; k < data.getInstance().getInterv(); ++k) {
+                            for (int r = 0; r < data.getInstance().getTechs(); ++r) {
+                                if (y[i][k][r].get(DoubleAttr.X) == 1) {
+                                    output.write("" + (i + 1)); // writes into the buffer
+                                    output.write(" " + (k + 1));
+                                    output.write(" " + Math.round(d[i].get(DoubleAttr.X)));
+                                    output.write(" " + (r + 1));
+                                    output.write("\n"); // to go the next line
+                                }
+                            }
+                        }
+                    }
+                    output.flush(); // flushes the content of buffer to the file (it writes the content)
+                    output.close(); // close the buffer
+                    fw.close(); // close the writer
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    throw new IllegalStateException("Error when writing the file\n");
+                }
+
+                //Second file :
+                try {
+                    FileWriter fw = new FileWriter(filepathSol + "tech_teams", false);
+                    BufferedWriter output = new BufferedWriter(fw);
+                    int[][][] teams = new int[data.getInstance().getInterv()][data.getInstance().getTechs()][data.getInstance().getTechs()];
+                    for (int t = 0; t < data.getInstance().getTechs(); ++t) {
+                        for (int k = 0; k < data.getInstance().getInterv(); ++k) {
+                            for (int r = 0; r < data.getInstance().getTechs(); ++r) {
+                                if (x[t][k][r].get(DoubleAttr.X) == 1) {
+                                    teams[k][r][t] = t + 1;
+                                }
+                            }
+                        }
+                    }
+
+                    int[][] team0 = new int[data.getInstance().getInterv()][data.getInstance().getTechs()];
+                    for (int t = 0; t < data.getInstance().getTechs(); ++t) {
+                        for (int k = 0; k < data.getInstance().getInterv(); ++k) {
+                            if (Checker.check(data.getTechnician()[t + 1].getDispo(), k + 1)) {
+                                team0[k][t] = t + 1;
+                            }
+                        }
+                    }
+
                     for (int k = 0; k < data.getInstance().getInterv(); ++k) {
+                        output.write("" + (k + 1));
+                        output.write(" " + Arrays.toString(Arrays.stream(team0[k]).filter(num -> num != 0).toArray())
+                                .replace(",", "") //remove the commas
+                                .replace("[", "[ ")
+                                .replace("]", " ]")
+                                .replace("[  ]", "[ ]")
+                                .trim()); //remove trailing spaces from partially initialized arrays+ " ] ");
                         for (int r = 0; r < data.getInstance().getTechs(); ++r) {
-                            if (x[t][k][r].get(DoubleAttr.X) == 1) {
-                                System.out.println("The technician " + (t + 1) + " is assigned to team " + (r + 1) + " on day " + (k + 1));
-                            }
+                            output.write(" " + Arrays.toString(Arrays.stream(teams[k][r]).filter(num -> num != 0).toArray())
+                                    .replace(",", "")
+                                    .replace("[", "[ ")
+                                    .replace("]", " ]")
+                                    .replace("[  ]", "[ ]")
+                                    .trim());
                         }
+                        output.write("\n");
                     }
+                    output.flush();
+                    output.close();
+                    fw.close();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    throw new IllegalStateException("Error when writing the file\n");
                 }
-                for (int i = 0; i < data.getInstance().getInterv(); ++i) {
-                    for (int k = 0; k < data.getInstance().getInterv(); ++k) {
-                        for (int r = 0; r < data.getInstance().getTechs(); ++r) {
-                            if (y[i][k][r].get(DoubleAttr.X) == 1) {
-                                System.out.println("The intervention " + (i + 1) + " is assigned to team " + (r + 1) + " on day " + (k + 1));
-                            }
-                        }
-                    }
-                }
-                for (int i = 0; i < data.getInstance().getInterv(); ++i) {
-                    System.out.println("Start time of the intervention " + (i + 1) + " is " + d[i].get(DoubleAttr.X));
-                }
-                for (int p = 0; p < 4; ++p) {
-                    System.out.println("The end time of the last priority intervention " + (p + 1) + " is " + f[p].get(DoubleAttr.X));
-                }
-                for (int i = 0; i < data.getInstance().getInterv(); ++i) {
-                    if (z[i].get(DoubleAttr.X) == 1) {
-                        System.out.println("The intervention " + (i + 1) + " is subcontracted");
-                    }
-                }
-                for (int i = 0; i < data.getInstance().getInterv(); ++i) {
-                    for (int j = 0; j < data.getInstance().getInterv(); ++j) {
-                        if (i != j) {
-                            if (h[i][j].get(DoubleAttr.X) == 1){
-                                System.out.println("The intervention " + (i + 1) + " ends before the start of intervention " + (j + 1));
-                            }
-                        }
-                    }
-                }
+
             } else {
                 // the model is infeasible (maybe wrong) or the solver has reached the time
                 // limit without finding a feasible solution
@@ -357,6 +426,6 @@ public class Solver {
 
     public static void main(String[] args) {
         //solver(args[0], Double.parseDouble(args[1]));
-        solver("./datas/datasetA/data1", 600);
+        solver("./datas/datasetA/data2", 600);
     }
 }
