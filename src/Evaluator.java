@@ -20,14 +20,14 @@ public class Evaluator {
         //Put the latest completion time in the rescpectiv LCT
         for (int i = 0; i < ttspsolution.getInterv_dates().length; i++) {
             int num = ttspsolution.getInterv_dates()[i].getInterv();
-            if (ttspdata.getIntervention()[num].getPrio() == 1 && C1 < (120 * (ttspsolution.getInterv_dates()[i].getDay()-1) + ttspsolution.getInterv_dates()[i].getTime())) {
-                C1 = 120 * (ttspsolution.getInterv_dates()[i].getDay()-1) + ttspsolution.getInterv_dates()[i].getTime();
+            if (ttspdata.getIntervention()[num].getPrio() == 1 && C1 < (120 * (ttspsolution.getInterv_dates()[i].getDay()-1) + ttspsolution.getInterv_dates()[i].getTime() + ttspdata.getIntervention()[num].getTime())) {
+                C1 = 120 * (ttspsolution.getInterv_dates()[i].getDay()-1) + ttspsolution.getInterv_dates()[i].getTime() + ttspdata.getIntervention()[num].getTime();
             }
-            if (ttspdata.getIntervention()[num].getPrio() == 2 && C2 < (120 * (ttspsolution.getInterv_dates()[i].getDay()-1) + ttspsolution.getInterv_dates()[i].getTime())) {
-                C2 = 120 * (ttspsolution.getInterv_dates()[i].getDay()-1) + ttspsolution.getInterv_dates()[i].getTime();
+            if (ttspdata.getIntervention()[num].getPrio() == 2 && C2 < (120 * (ttspsolution.getInterv_dates()[i].getDay()-1) + ttspsolution.getInterv_dates()[i].getTime() + ttspdata.getIntervention()[num].getTime())) {
+                C2 = 120 * (ttspsolution.getInterv_dates()[i].getDay()-1) + ttspsolution.getInterv_dates()[i].getTime() + ttspdata.getIntervention()[num].getTime();
             }
-            if (ttspdata.getIntervention()[num].getPrio() == 3 && C3 < (120 * (ttspsolution.getInterv_dates()[i].getDay()-1) + ttspsolution.getInterv_dates()[i].getTime())) {
-                C3 = 120 * (ttspsolution.getInterv_dates()[i].getDay()-1) + ttspsolution.getInterv_dates()[i].getTime();
+            if (ttspdata.getIntervention()[num].getPrio() == 3 && C3 < (120 * (ttspsolution.getInterv_dates()[i].getDay()-1) + ttspsolution.getInterv_dates()[i].getTime() + ttspdata.getIntervention()[num].getTime())) {
+                C3 = 120 * (ttspsolution.getInterv_dates()[i].getDay()-1) + ttspsolution.getInterv_dates()[i].getTime() + ttspdata.getIntervention()[num].getTime();
             }
         }
 
