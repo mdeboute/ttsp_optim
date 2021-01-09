@@ -69,7 +69,7 @@ public class Solution {
         if((cost+totalCost) <= data.getInstance().getAbandon()){
             this.totalCost += cost;
             this.intervOS.addAll(mustBeOt);
-            if(mustBeOt.size()!=0) System.out.println("Intervention sous-traité " + mustBeOt.toString());
+            //if(mustBeOt.size()!=0) System.out.println("Intervention sous-traité " + mustBeOt.toString());
         }
     }
 

@@ -51,6 +51,16 @@ public class Team {
         return true;
     }
 
+    public void remove_interv(TTSPData data, int interv){
+        for(int i=0 ; i<this.interv.size() ; i++){
+            if(this.interv.get(i).equals(interv)) this.interv.remove(i);
+        }
+        this.time -= data.getIntervention()[interv].getTime();
+        if(this.time< 110){
+            this.isFull=false;
+        }
+    }
+
     public ArrayList<Integer> getTechnician() {
         return technician;
     }
@@ -75,6 +85,20 @@ public class Team {
             }
         }
         //System.out.println("ajout du technicien : " + technician + " team : " + getNumber());
+    }
+
+    public void remove_tech(TTSPData data, int technician){
+        for(int i=0 ; i<this.technician.size() ; i++){
+            if(this.technician.get(i).equals(technician)) this.technician.remove(i);
+        }
+        int nb_domain = data.getInstance().getDomains(); //number of domains
+        int nb_level = data.getInstance().getLevel();
+        int[][] tech = Tech.skills_tech(data, technician);
+        for (int j = 0; j < nb_domain; j++) {
+            for (int k = 0; k < nb_level; k++) {
+                this.dom_team[j][k] -= tech[j][k];
+            }
+        }
     }
 
     // Look if a team quite qualified to do the intervention

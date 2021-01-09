@@ -1,6 +1,7 @@
 package src.AlgorithmGB;
 
 import src.Checker;
+import src.Evaluator;
 import src.dataClasses.TTSPData;
 import src.readers.InstanceReader;
 import src.solClasses.TTSPSolution;
@@ -13,22 +14,29 @@ public class algorithm_gb {
     public static TTSPSolution build(TTSPData data) {
         Solution solution = new Solution();
         solution.addDay(data);
+        ArrayList<Integer> intervRest = new ArrayList<>();
         int priority = 1;
         while (priority != 5) {
-            loop(data, solution, priority);
+            ArrayList<Integer> rest = (loop(data, solution, priority));
             priority++;
+            rest.removeAll(intervRest);
+            intervRest.addAll(rest);
         }
+        intervRest.removeAll(solution.getIntervDone());
+        intervRest=completeTeamDday(data, solution, intervRest);
+        if(intervRest.size()!=0) System.out.println(intervRest.toString() +" sont les interventions non traités");
         return buildTTSPSol.buildSol(data, solution);
     }
 
-    public static void loop(TTSPData data, Solution solution,int priority){
+    public static ArrayList<Integer> loop(TTSPData data, Solution solution,int priority){
         ArrayList<ArrayList<Integer>> First = buildArray(data, priority, solution);
         ArrayList<Integer> number = new ArrayList<>();
         int nb_loop= data.getInstance().getTechs();
-        ArrayList<Integer> intervs;
+        ArrayList<Integer> intervs = new ArrayList<>();
         for(int j=0 ; j<2 ; j++) {
             intervs = First.get(j);
             intervs=tryToOutSource(data, solution, intervs);
+            intervs.addAll(number);
             int count = intervs.size();
             int cpt = 0;
             int fail = 300;
@@ -41,18 +49,25 @@ public class algorithm_gb {
                     cpt = intervs.size();
                     count = 0;
                 }
-                //intervs = completeTeamDday(data, solution, intervs);
-                for (int i = 0; i < nb_loop; i++) intervs = Chance(data, solution, intervs);
-                //intervs = buildTeam(data, solution, intervs);
+                for (int i = 0; i < nb_loop; i++) {
+                    if(data.getInstance().getInterv()>10) {
+                        intervs = completeTeamDday(data, solution, intervs);
+                        intervs = sortByTimeInterv(data, intervs);
+                    }
+                    if(solution.getDays(day).getTechAvailable().size()!=0) intervs = Chance(data, solution, intervs, solution.getDays().size()-1);
+                }
                 cpt++;
                 loop++;
             }
             if(solution.getDays(day).getTeams().size()==0) solution.getDays().remove(day);
+            for(int i=0 ; i< intervs.size() ; i++){
+                if(!number.contains(intervs.get(i))) number.add(intervs.get(i));
+            }
             intervs.removeAll(solution.getIntervDone());
-            number.addAll(intervs);
         }
-        if(number.size()!=0) System.out.println(number.toString() +" sont les interventions non traités");
+        return intervs;
     }
+
 
     public static ArrayList<Integer> tryToOutSource(TTSPData data, Solution solution, ArrayList<Integer> interv) {
         for (Integer integer : interv) {
@@ -66,16 +81,10 @@ public class algorithm_gb {
     public static ArrayList<Integer> buildTeam(TTSPData data, Solution sol, ArrayList<Integer> intervs) {
         int count=intervs.size();
         int fail=0;
-        int cpt=0;
-        while (fail!=3){
+        while (fail!=count*2){
             if(intervs.size()==0) return intervs;
             int inter = intervs.get(0);
             int day = sol.getDays().size()-1;
-            if(cpt==count ){
-                count=intervs.size();
-                fail++;
-                cpt=0;
-            }
             int check = 0;
             int[][] skillsInterv = data.getIntervention()[inter].skills_interv(data);
             if(sol.getDays(day).getTeams().size()!= 0) {
@@ -98,7 +107,7 @@ public class algorithm_gb {
                     /////////
                     ArrayList<Integer> techs = new ArrayList<>();
                     int[][] skillsTeam = sol.getDays(day).getTeams(t).getDom_team();
-                    check= addNtechToTeam(data,sol,day,inter,t,techs,skillsTeam, num);
+                    check= addnTechToTeam(data,sol,day,inter,t,techs,skillsTeam, num);
                     if (check==1) intervs.remove(0);
                     /////////
                 }
@@ -111,21 +120,21 @@ public class algorithm_gb {
             if (check == 0) {
                 intervs.add(inter);
                 intervs.remove(0);
-                cpt++;
             }
             intervs.removeAll(sol.getIntervDone());
+            fail++;
         }
         return intervs;
     }
 
-    // recursive fonction who take a intervention and a team of a day
+    // recursive function who take a intervention and a team of a day
     // take a tech, if the team+tech are sufficent to do the intervention, the intervention is done and tech add to the team
     // else we call this function, we do the same things with a additionnal tech
     // we do this the number of level max time (because it's the max of tech who can be required in a domain)
-    public static int addNtechToTeam(TTSPData data, Solution sol, int day, int interv, int team, ArrayList<Integer> techs, int[][] skillsTeam, int num){
+    public static int addnTechToTeam(TTSPData data, Solution sol, int day, int interv, int team, ArrayList<Integer> techs, int[][] skillsTeam, int num){
         if(num==0) return 0;
         int[][] skillsInterv = data.getIntervention()[interv].skills_interv(data);
-        for (int j = 0; j < sol.getDays(day).getTechAvailable().size() - 1; j++) {
+        for (int j = 0; j < sol.getDays(day).getTechAvailable().size() ; j++) {
             int techJ = sol.getDays(day).getTechAvailable().get(j);
             if(techs.contains(techJ)) continue;
             int[][] skillsTech = Tech.skills_tech(data, techJ);
@@ -135,10 +144,11 @@ public class algorithm_gb {
                 for (Integer tech : techs) {
                     sol.getDays(day).getTeams(team).add_tech(data, tech);
                 }
+                removeUselessTech(data, sol, team, day);
                 return 1;
             }else{
                 techs.add(techJ);
-                return addNtechToTeam(data,sol,day,interv,team,techs,teamAndJ, num-1);
+                return addnTechToTeam(data,sol,day,interv,team,techs,teamAndJ, num-1);
             }
         }
         return 0;
@@ -175,11 +185,10 @@ public class algorithm_gb {
     }
 
     // tech the remaining avalaible techs and create a team, check if the team is good enough for each remaining interv
-    public static ArrayList<Integer> Chance(TTSPData data, Solution sol, ArrayList<Integer> intervs){
-        int day = sol.getDays().size()-1;
+    public static ArrayList<Integer> Chance(TTSPData data, Solution sol, ArrayList<Integer> intervs, int day){
         sol.getDays(day).createTeam(data, sol.getDays(day).getTechAvailable().get(0));
         int team = sol.getDays(day).getTeams().size() - 1;
-        for(int t=1 ; t<sol.getDays(day).getTechAvailable().size() ; t++){
+        for(int t=0 ; t<sol.getDays(day).getTechAvailable().size() ; t++){
             sol.getDays(day).getTeams(team).add_tech(data,sol.getDays(day).getTechAvailable().get(t));
         }
         sol.getDays(day).getTechAvailable().removeAll(sol.getDays(day).getTeams(team).getTechnician());
@@ -192,7 +201,17 @@ public class algorithm_gb {
                     break;
                 }
             }
-        }//we check if we can remove a tech from the team creating (if he is useless for all the intervention made by the team)
+        }
+        removeUselessTech(data,sol, team, day);
+        if(sol.getDays(day).getTeams(team).getInterv().size()==0){
+            sol.getDays(day).getTechAvailable().addAll(sol.getDays(day).getTeams(team).getTechnician());
+            sol.getDays(day).getTeams().remove(team);
+        }else intervs.removeAll(sol.getDays(day).getTeams(team).getInterv());
+        return intervs;
+    }
+
+    //we check if we can remove a tech from the team creating (if he is useless for all the intervention made by the team)
+    public static void removeUselessTech(TTSPData data, Solution sol, int team, int day){
         ArrayList<Integer> techs = new ArrayList<>();
         int[][] skills =sol.getDays(day).getTeams(team).getDom_team();
         for(int i=0 ; i<sol.getDays(day).getTeams(team).getTechnician().size() ; i++){
@@ -207,64 +226,115 @@ public class algorithm_gb {
             if(cpt==0) techs.add(tech);
         }
         //System.out.println(("les techniciens non utilisés sont : " + techs.toString()));
-        sol.getDays(day).getTeams(team).getTechnician().removeAll(techs);
+        sol.getDays(day).getTeams(team).getTechnician();
+        for (Integer tech : techs) {
+            if (sol.getDays(day).getTeams(team).getTechnician().contains(tech))
+                sol.getDays(day).getTeams(team).remove_tech(data, tech);
+        }
         sol.getDays(day).getTechAvailable().addAll(techs);
+    }
+
+    public static ArrayList<Integer> LastChance(TTSPData data, Solution sol, ArrayList<Integer> intervs){
+        if(intervs.size()==0) return intervs;
+        sol.addDay(data);
+        int day= sol.getDays().size()-1;
+        sol.getDays(day).createTeam(data, sol.getDays(day).getTechAvailable().get(0));
+        int team = sol.getDays(day).getTeams().size() - 1;
+        for(int t=0 ; t<sol.getDays(day).getTechAvailable().size() ; t++){
+            sol.getDays(day).getTeams(team).add_tech(data,sol.getDays(day).getTechAvailable().get(t));
+        }
+        sol.getDays(day).getTechAvailable().removeAll(sol.getDays(day).getTeams(team).getTechnician());
+        for (int inter : intervs) {
+            int[][] skillsInterv = data.getIntervention()[inter].skills_interv(data);
+            // team t is efficient for intervention i
+            if (sol.getDays(day).getTeams(team).isSufficient(data, skillsInterv)) {
+                sol.treatInterv(data, inter, 0, day, team, false);
+                if (sol.getDays(day).getTeams(team).isFull()) {
+                    break;
+                }
+            }
+        }
+        removeUselessTech(data,sol, team, day);
         if(sol.getDays(day).getTeams(team).getInterv().size()==0){
             sol.getDays(day).getTechAvailable().addAll(sol.getDays(day).getTeams(team).getTechnician());
             sol.getDays(day).getTeams().remove(team);
         }else intervs.removeAll(sol.getDays(day).getTeams(team).getInterv());
-        Collections.sort(intervs);
         return intervs;
-    }
-
-    public static void LastChance(TTSPData data, Solution sol, ArrayList<Integer> intervs){
-        for(int day=0 ; day<sol.getDays().size() ; day++){
-            sol.getDays(day).createTeam(data, sol.getDays(day).getTechAvailable().get(0));
-            int team = sol.getDays(day).getTeams().size() - 1;
-            for(int tech=1 ; tech<sol.getDays(day).getTechAvailable().size() ; tech++){
-                sol.getDays(day).getTeams(team).add_tech(data,sol.getDays(day).getTechAvailable().get(tech));
-            }
-            for (int inter : intervs) {
-                int[][] skillsInterv = data.getIntervention()[inter].skills_interv(data);
-                // team t is efficient for intervention i
-                if (sol.getDays(day).getTeams(team).isSufficient(data, skillsInterv)) {
-                    sol.treatInterv(data, inter, 0, day, team, false);
-                    if (sol.getDays(day).getTeams(team).isFull()) break;
-                }
-            }
-            if(sol.getDays(day).getTeams(team).getInterv().size()==0){
-                sol.getDays(day).getTechAvailable().addAll(sol.getDays(day).getTeams(team).getTechnician());
-                sol.getDays(day).getTeams().remove(team);
-            }
-
-        }
     }
 
     //use to try to complete the calendar of each team on day d (going further)
     public static ArrayList<Integer> completeTeamDday(TTSPData data, Solution sol, ArrayList<Integer> intervs) {
         for(int day=0 ; day<sol.getDays().size() ; day++) {
-            for (int t = 0; t < sol.getDays(day).getTeams().size(); t++) {
-                if (!sol.getDays(day).getTeams(t).isFull()) {
-                    int cpt = intervs.size();
-                    int i = 0;
-                    while (i < cpt) {
-                        int num = data.getInstance().getLevel();
-                        ArrayList<Integer> techs = new ArrayList<>();
-                        int[][] skillsTeam = sol.getDays(day).getTeams(t).getDom_team();
-                        int check = addNtechToTeam(data, sol, day, intervs.get(0), t, techs, skillsTeam, num);
-                        if (check == 0) intervs.add(intervs.get(0));
-                        else if (check ==1 &&(intervs.get(0)==319 || intervs.get(0)==324)) System.out.println("j'enlève effectivement un technicien");
-                        intervs.remove(0);
-                        i++;
+            for (int team = 0; team < sol.getDays(day).getTeams().size(); team++) {
+                if (!sol.getDays(day).getTeams(team).isFull()) {
+                    if(sol.getDays(day).getTechAvailable().size()!=0){
+                        intervs = Chance(data, sol, intervs, day );
                     }
                 }
             }
         }
         intervs.removeAll(sol.getIntervDone());
-        Collections.sort(intervs);
+        intervs=sortByTimeInterv(data, intervs);
         return intervs;
     }
 
+    public static ArrayList<Integer> sortByTimeInterv(TTSPData data, ArrayList<Integer> intervs){
+        int levelMax = data.getInstance().getLevel();
+        ArrayList<int[]> sumSkills = new ArrayList<>();
+        for(int i=0 ; i<intervs.size() ; i++){
+            int[] skills = new int[2];
+            skills[0]= intervs.get(i);
+            int sum=data.getIntervention()[intervs.get(i)].getTime();
+            skills[1]=sum;
+            sumSkills.add(skills);
+        }
+        ArrayList<Integer> interventions = new ArrayList<>();
+        while(sumSkills.size()!=0){
+            int max = 0;
+            int interv = 0;
+            int index = 0;
+            for(int i=0 ; i<sumSkills.size() ; i++){
+                if(sumSkills.get(i)[1]> max) {
+                    max=sumSkills.get(i)[1];
+                    interv = sumSkills.get(i)[0];
+                    index = i;
+                }
+            }
+            interventions.add(interv);
+            sumSkills.remove(index);
+        }
+        return interventions;
+    }
+
+    public static ArrayList<Integer> sortBySkillsTechs(TTSPData data, ArrayList<Integer> techs){
+        ArrayList<int[]> sumSkills = new ArrayList<>();
+        for(int i=0 ; i<techs.size() ; i++){
+            int[] skills = new int[2];
+            skills[0]= techs.get(i);
+            int sum=0;
+            for(int j=0 ; j< data.getInstance().getDomains() ; j++){
+                sum=sum+data.getTechnician()[techs.get(i)].getD()[j];
+            }
+            skills[1]=sum;
+            sumSkills.add(skills);
+        }
+        ArrayList<Integer> technicians = new ArrayList<>();
+        while(sumSkills.size()!=0){
+            int max = 0;
+            int tech = 0;
+            int index = 0;
+            for(int i=0 ; i<sumSkills.size() ; i++){
+                if(sumSkills.get(i)[1]> max) {
+                    max=sumSkills.get(i)[1];
+                    tech = sumSkills.get(i)[0];
+                    index = i;
+                }
+            }
+            technicians.add(tech);
+            sumSkills.remove(index);
+        }
+        return technicians;
+    }
 
     public static ArrayList<ArrayList<Integer>> buildArray(TTSPData data, int priority, Solution sol) {
         // build an ArrayList of 2 array List
@@ -314,23 +384,26 @@ public class algorithm_gb {
         return Interv;
     }
 
-
+    public static void Evaluator(TTSPData ttspData, TTSPSolution ttspSolution) {
+        int[] result = Evaluator.evaluator(ttspData, ttspSolution);
+        System.out.print("-> TOTAL COST = " + result[7]);
+    }
 
 
     public static void checker(TTSPData data, TTSPSolution sol){
-        System.out.print("----------------------------\n");
-        System.out.print("----- CHECK CONSTRAINTS ----\n");
-        System.out.print("----------------------------\n");
-        System.out.print("----------------------------\n");
         int result = Checker.checker(data, sol);
-        System.out.println();
         System.out.print("-> FEASIBLE = " + result + " (0=false/1=true)\n");
     }
 
     public static void main(String[] args) {
-        TTSPData ttspData = InstanceReader.parse("datas/datasetB/data8");
-        TTSPSolution ttspsolution = build(ttspData);
-        System.out.println(ttspsolution.toString());
-        checker(ttspData, ttspsolution);
+        for(int i=1 ; i<10 ; i++) {
+            System.out.println("datas/datasetA/data"+String.valueOf(i) + " :");
+            TTSPData ttspData = InstanceReader.parse("datas/datasetA/data"+String.valueOf(i));
+            TTSPSolution ttspsolution = build(ttspData);
+            //System.out.println(ttspsolution.toString());
+            checker(ttspData, ttspsolution);
+            Evaluator(ttspData, ttspsolution);
+            System.out.println("\n");
+        }
     }
 }

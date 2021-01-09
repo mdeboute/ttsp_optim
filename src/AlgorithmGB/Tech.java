@@ -5,6 +5,7 @@ import src.dataClasses.TTSPData;
 public class Tech {
 
     public static int[][] skills_tech(TTSPData data, int technician){
+        if(technician==0) System.out.println(("ceci est impossible"));
         int nb_domain = data.getInstance().getDomains(); //number of domains
         int nb_level = data.getInstance().getLevel(); //equal to the max level
         int[][] dom_tech = new int[nb_domain][nb_level];
@@ -56,15 +57,4 @@ public class Tech {
         return skills;
     }
 
-    public static boolean isteamMinusTechSufficient(TTSPData data, int[][] skills, int[][] skillsTech, int[][] skillsInterv){
-        int nb_domain = data.getInstance().getDomains();
-        int nb_level = data.getInstance().getLevel();
-        int[][] newSkills = new int[nb_domain][nb_level];
-        for (int j = 0; j < nb_domain; j++) {
-            for (int k = 0; k < nb_level; k++) {
-                newSkills[j][k] = skills[j][k]-skillsTech[j][k];
-            }
-        }
-        return isSufficient(data, skillsInterv, newSkills);
-    }
 }
