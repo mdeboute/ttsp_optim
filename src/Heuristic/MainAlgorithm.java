@@ -84,14 +84,15 @@ public class MainAlgorithm {
                     if (data.getInstance().getInterv() > 10) { // if there is more than 10 interventions in the instance
                         // because we see that the algorithm is less efficient is we call this method with less than
                         // 10 interventions to treat
-                        intervs = completeTeamDday(data, solution, intervs); // a method to complete all the already
                         //existing teams.
+                        intervs = completeTeamDday(data, solution, intervs); // a method to complete all the already
                         intervs = sortByTimeInterv(data, intervs); // sort interventions in terms of time of the interventions
                     }
                     if (solution.getDays(day).getTechAvailable().size() != 0) { //if there are technicians always available this day
                         intervs = Chance(data, solution, intervs, solution.getDays().size() - 1);
                         // we call the main method of treatment of interventions
                     }
+
                 }
                 cpt++;
                 loop++;
@@ -214,15 +215,17 @@ public class MainAlgorithm {
      * @return the list not yet treated after this step.
      */
     public static ArrayList<Integer> completeTeamDday(TTSPData data, Solution sol, ArrayList<Integer> intervs) {
-        for (int day = 0; day < sol.getDays().size(); day++) {
+        for(int day=0 ; day<sol.getDays().size() ; day++) {
             for (int team = 0; team < sol.getDays(day).getTeams().size(); team++) {
-                    if (sol.getDays(day).getTechAvailable().size() != 0) {
-                        intervs = Chance(data, sol, intervs, day);
+                if (!sol.getDays(day).getTeams(team).isFull()) {
+                    if(sol.getDays(day).getTechAvailable().size()!=0){
+                        intervs = Chance(data, sol, intervs, day );
                     }
+                }
             }
         }
         intervs.removeAll(sol.getIntervDone());
-        intervs = sortByTimeInterv(data, intervs);
+        intervs=sortByTimeInterv(data, intervs);
         return intervs;
     }
 
@@ -332,7 +335,7 @@ public class MainAlgorithm {
      * Main method is used only to test the algorithm directly on all the instance of a dataset
      */
     public static void main(String[] args) {
-        for (int i = 5; i < 6; i++) {
+        for (int i = 1; i <11; i++) {
             System.out.println("datas/datasetA/data" + i + " :");
             TTSPData ttspData = InstanceReader.parse("datas/datasetB/data" + i);
             TTSPSolution ttspsolution = build(ttspData);
