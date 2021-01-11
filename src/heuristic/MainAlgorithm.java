@@ -175,12 +175,12 @@ public class MainAlgorithm {
     }
 
 
-
     /**
      * removeUselessTech check if we can remove some technicians from a team
      * (if he is useless for all the intervention made by the team)
+     *
      * @param team is the team where we want to remove technicians
-     * @param day is the day coresponding of the team
+     * @param day  is the day coresponding of the team
      */
     public static void removeUselessTech(TTSPData data, Solution sol, int team, int day) {
         ArrayList<Integer> techs = new ArrayList<>();
@@ -211,34 +211,36 @@ public class MainAlgorithm {
      * completeTeamDday use to try to complete the calendar each day. For each day, if some technicians are always
      * available, the method call the method Chance to try to assign the remaining intervention (completeTeamDday is call
      * at the end of the process)
+     *
      * @param intervs is the list of all interventions not yet treated
      * @return the list not yet treated after this step.
      */
     public static ArrayList<Integer> completeTeamDday(TTSPData data, Solution sol, ArrayList<Integer> intervs) {
-        for(int day=0 ; day<sol.getDays().size() ; day++) {
+        for (int day = 0; day < sol.getDays().size(); day++) {
             for (int team = 0; team < sol.getDays(day).getTeams().size(); team++) {
                 if (!sol.getDays(day).getTeams(team).isFull()) {
-                    if(sol.getDays(day).getTechAvailable().size()!=0){
-                        intervs = Chance(data, sol, intervs, day );
+                    if (sol.getDays(day).getTechAvailable().size() != 0) {
+                        intervs = Chance(data, sol, intervs, day);
                     }
                 }
             }
         }
         intervs.removeAll(sol.getIntervDone());
-        intervs=sortByTimeInterv(data, intervs);
+        intervs = sortByTimeInterv(data, intervs);
         return intervs;
     }
 
     /**
      * sortByTimeInterv sort a list of interventions in according to the duration of each intervention
      * (descending order)
+     *
      * @param intervs the list of interventions that we want to sort
      * @return intervs but sorted
      */
     public static ArrayList<Integer> sortByTimeInterv(TTSPData data, ArrayList<Integer> intervs) {
         ArrayList<int[]> sumSkills = new ArrayList<>();
         for (Integer integer : intervs) { // fill a list of an array of 2 Integer : the first one is the number of the
-                // intervention, the second one is the duration of the intervention
+            // intervention, the second one is the duration of the intervention
             int[] skills = new int[2];
             skills[0] = integer;
             int sum = data.getIntervention()[integer].getTime();
@@ -267,6 +269,7 @@ public class MainAlgorithm {
      * buildArray build an ArrayList of 2 array List : the first one is an arraylist with intervention of priority
      * (parameter priority) without predecessor and intervention who are predecessor of intervention prioritaire,
      * the second one is an arraylist of priority (parameter priority) whith predecessor
+     *
      * @param priority the priority of interventions that we want to treat
      * @return an ArrayList of 2 ArrayList with interventiosn of prirority @priority and their predecessors
      */
@@ -335,66 +338,64 @@ public class MainAlgorithm {
      * Main method is used only to test the algorithm directly on all the instance of a dataset
      */
     public static void main(String[] args) {
-        for (int i = 1; i <11; i++) {
-            System.out.println("datas/datasetA/data" + i + " :");
-            TTSPData ttspData = InstanceReader.parse("datas/datasetB/data" + i);
-            Long begin =  System.currentTimeMillis();
-            TTSPSolution ttspsolution = build(ttspData);
-            Long end =  System.currentTimeMillis();
-            System.out.println("Execution in " + (end-begin) + " ms");
-            checker(ttspData, ttspsolution);
-            Evaluator(ttspData, ttspsolution);
-            System.out.println("\n");
+        System.out.println(args[0] + " :");
+        TTSPData ttspData = InstanceReader.parse(args[0]);
+        Long begin = System.currentTimeMillis();
+        TTSPSolution ttspsolution = build(ttspData);
+        Long end = System.currentTimeMillis();
+        System.out.println("Execution in " + (end - begin) + " ms");
+        checker(ttspData, ttspsolution);
+        Evaluator(ttspData, ttspsolution);
+        System.out.println("\n");
 
-            // --- Creating the solution files ---
-            String filePath = "datas/datasetA/data" + i;
-            String[] dataName = filePath.split("/");
-            String filepathSol = "datas/heuristicSolutions/" + dataName[dataName.length - 1] + "/";
-            copyFullRecursive(new File(filePath), new File("datas/heuristicSolutions/"));
+        // --- Creating the solution files ---
+        String filePath = args[0];
+        String[] dataName = filePath.split("/");
+        String filepathSol = "datas/heuristicSolutions/" + dataName[dataName.length - 1] + "/";
+        copyFullRecursive(new File(filePath), new File("datas/heuristicSolutions/"));
 
-            // First file :
-            try {
-                FileWriter fw = new FileWriter(filepathSol + "interv_dates", false); // create file writer (false to erase the file if it already exists)  -> filePath is a String that represents the path to the file that will be created/written
-                BufferedWriter output = new BufferedWriter(fw); // create buffered writer
-                for (int k = 0; k < ttspsolution.getInterv_dates().length; ++k) {
-                    output.write("" + ttspsolution.getInterv_dates()[k].getInterv()); // writes into the buffer
-                    output.write(" " + ttspsolution.getInterv_dates()[k].getDay());
-                    output.write(" " + Math.round(ttspsolution.getInterv_dates()[k].getTime()));
-                    output.write(" " + ttspsolution.getInterv_dates()[k].getTeam());
-                    output.write("\n"); // to go the next line
-                }
-                output.flush(); // flushes the content of buffer to the file (it writes the content)
-                output.close(); // close the buffer
-                fw.close(); // close the writer
-
-            } catch (IOException e) {
-                e.printStackTrace();
-                throw new IllegalStateException("Error when writing the file\n");
+        // First file :
+        try {
+            FileWriter fw = new FileWriter(filepathSol + "interv_dates", false); // create file writer (false to erase the file if it already exists)  -> filePath is a String that represents the path to the file that will be created/written
+            BufferedWriter output = new BufferedWriter(fw); // create buffered writer
+            for (int k = 0; k < ttspsolution.getInterv_dates().length; ++k) {
+                output.write("" + ttspsolution.getInterv_dates()[k].getInterv()); // writes into the buffer
+                output.write(" " + ttspsolution.getInterv_dates()[k].getDay());
+                output.write(" " + Math.round(ttspsolution.getInterv_dates()[k].getTime()));
+                output.write(" " + ttspsolution.getInterv_dates()[k].getTeam());
+                output.write("\n"); // to go the next line
             }
+            output.flush(); // flushes the content of buffer to the file (it writes the content)
+            output.close(); // close the buffer
+            fw.close(); // close the writer
 
-            //Second file :
-            try {
-                FileWriter fw = new FileWriter(filepathSol + "tech_teams", false);
-                BufferedWriter output = new BufferedWriter(fw);
-                for (int k = 1; k < ttspsolution.getTech_teams().length; ++k) {
-                    output.write("" + k);
-                    output.write(" " + Arrays.deepToString(ttspsolution.getTech_teams()[k].getTeam())
-                            .replace(",", "") //remove the commas
-                            .replace("[[", "[")
-                            .replace("]]", "]")
-                            .replace("  ", " ")
-                            .replace("[", "[ ")
-                            .replace("]", " ]")
-                            .trim());
-                    output.write("\n");
-                }
-                output.flush();
-                output.close();
-                fw.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-                throw new IllegalStateException("Error when writing the file\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new IllegalStateException("Error when writing the file\n");
+        }
+
+        //Second file :
+        try {
+            FileWriter fw = new FileWriter(filepathSol + "tech_teams", false);
+            BufferedWriter output = new BufferedWriter(fw);
+            for (int k = 1; k < ttspsolution.getTech_teams().length; ++k) {
+                output.write("" + k);
+                output.write(" " + Arrays.deepToString(ttspsolution.getTech_teams()[k].getTeam())
+                        .replace(",", "") //remove the commas
+                        .replace("[[", "[")
+                        .replace("]]", "]")
+                        .replace("  ", " ")
+                        .replace("[", "[ ")
+                        .replace("]", " ]")
+                        .trim());
+                output.write("\n");
             }
+            output.flush();
+            output.close();
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new IllegalStateException("Error when writing the file\n");
         }
     }
 }

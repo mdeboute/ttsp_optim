@@ -385,6 +385,8 @@ public class Solver {
                         }
                     }
 
+                    // team 0 is incorrect, there are missing technicians who are not assigned to any team on day k
+
                     for (int k = 0; k < data.getInstance().getInterv(); ++k) {
                         output.write("" + (k + 1));
                         output.write(" " + Arrays.toString(Arrays.stream(team0[k]).filter(num -> num != 0).toArray())
@@ -425,7 +427,10 @@ public class Solver {
     }
 
     public static void main(String[] args) {
-        //solver(args[0], Double.parseDouble(args[1]));
-        solver("./datas/datasetA/data2", 600);
+        Long begin =  System.currentTimeMillis();
+        solver(args[0], Double.parseDouble(args[1]));
+        Long end =  System.currentTimeMillis();
+        System.out.println("Execution in " + (end-begin) + " ms");
+        // the solver is incorrect...
     }
 }

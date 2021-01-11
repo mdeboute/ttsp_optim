@@ -67,8 +67,6 @@ public class Checker {
             }
         }
 
-        int comptage=0;
-        //////////////////////////
         for (int i = 0; i < solution.getInterv_dates().length; i++) {
             int num= solution.getInterv_dates()[i].getInterv();
             int start_day = solution.getInterv_dates()[i].getTime();
@@ -88,7 +86,6 @@ public class Checker {
                         int start_pred = (solution.getInterv_dates()[l].getDay()-1) * 120 + solution.getInterv_dates()[l].getTime();
                         if (data.getIntervention()[pred].getTime() + start_pred > start_i) {
                             System.out.print("[Issue] Intervention " + pred + " is an intervention that precedes " + num + " and ends after " + num + " started.\n");
-                            comptage++;
                             feasible = 0;
                         }
 
