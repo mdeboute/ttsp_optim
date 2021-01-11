@@ -428,7 +428,7 @@ public class Solver {
 
     public static void main(String[] args) {
         Long begin =  System.currentTimeMillis();
-        solver(args[0], Double.parseDouble(args[1]));
+        solver("datas/datasetA/data1", 600);
         Long end =  System.currentTimeMillis();
         System.out.println("Execution in " + (end-begin) + " ms");
         // the solver is incorrect...

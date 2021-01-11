@@ -338,64 +338,66 @@ public class MainAlgorithm {
      * Main method is used only to test the algorithm directly on all the instance of a dataset
      */
     public static void main(String[] args) {
-        System.out.println(args[0] + " :");
-        TTSPData ttspData = InstanceReader.parse(args[0]);
-        Long begin = System.currentTimeMillis();
-        TTSPSolution ttspsolution = build(ttspData);
-        Long end = System.currentTimeMillis();
-        System.out.println("Execution in " + (end - begin) + " ms");
-        checker(ttspData, ttspsolution);
-        Evaluator(ttspData, ttspsolution);
-        System.out.println("\n");
+        for (int i = 1; i <11; i++) {
+            System.out.println("datas/datasetA/data" + i + " :");
+            TTSPData ttspData = InstanceReader.parse("datas/datasetA/data" + i);
+            Long begin =  System.currentTimeMillis();
+            TTSPSolution ttspsolution = build(ttspData);
+            Long end =  System.currentTimeMillis();
+            System.out.println("Execution in " + (end-begin) + " ms");
+            checker(ttspData, ttspsolution);
+            Evaluator(ttspData, ttspsolution);
+            System.out.println("\n");
 
-        // --- Creating the solution files ---
-        String filePath = args[0];
-        String[] dataName = filePath.split("/");
-        String filepathSol = "datas/heuristicSolutions/" + dataName[dataName.length - 1] + "/";
-        copyFullRecursive(new File(filePath), new File("datas/heuristicSolutions/"));
+            // --- Creating the solution files ---
+            String filePath = "datas/datasetA/data" + i;
+            String[] dataName = filePath.split("/");
+            String filepathSol = "datas/heuristicSolutions/" + dataName[dataName.length - 1] + "/";
+            copyFullRecursive(new File(filePath), new File("datas/heuristicSolutions/"));
 
-        // First file :
-        try {
-            FileWriter fw = new FileWriter(filepathSol + "interv_dates", false); // create file writer (false to erase the file if it already exists)  -> filePath is a String that represents the path to the file that will be created/written
-            BufferedWriter output = new BufferedWriter(fw); // create buffered writer
-            for (int k = 0; k < ttspsolution.getInterv_dates().length; ++k) {
-                output.write("" + ttspsolution.getInterv_dates()[k].getInterv()); // writes into the buffer
-                output.write(" " + ttspsolution.getInterv_dates()[k].getDay());
-                output.write(" " + Math.round(ttspsolution.getInterv_dates()[k].getTime()));
-                output.write(" " + ttspsolution.getInterv_dates()[k].getTeam());
-                output.write("\n"); // to go the next line
+            // First file :
+            try {
+                FileWriter fw = new FileWriter(filepathSol + "interv_dates", false); // create file writer (false to erase the file if it already exists)  -> filePath is a String that represents the path to the file that will be created/written
+                BufferedWriter output = new BufferedWriter(fw); // create buffered writer
+                for (int k = 0; k < ttspsolution.getInterv_dates().length; ++k) {
+                    output.write("" + ttspsolution.getInterv_dates()[k].getInterv()); // writes into the buffer
+                    output.write(" " + ttspsolution.getInterv_dates()[k].getDay());
+                    output.write(" " + Math.round(ttspsolution.getInterv_dates()[k].getTime()));
+                    output.write(" " + ttspsolution.getInterv_dates()[k].getTeam());
+                    output.write("\n"); // to go the next line
+                }
+                output.flush(); // flushes the content of buffer to the file (it writes the content)
+                output.close(); // close the buffer
+                fw.close(); // close the writer
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                throw new IllegalStateException("Error when writing the file\n");
             }
-            output.flush(); // flushes the content of buffer to the file (it writes the content)
-            output.close(); // close the buffer
-            fw.close(); // close the writer
 
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new IllegalStateException("Error when writing the file\n");
-        }
-
-        //Second file :
-        try {
-            FileWriter fw = new FileWriter(filepathSol + "tech_teams", false);
-            BufferedWriter output = new BufferedWriter(fw);
-            for (int k = 1; k < ttspsolution.getTech_teams().length; ++k) {
-                output.write("" + k);
-                output.write(" " + Arrays.deepToString(ttspsolution.getTech_teams()[k].getTeam())
-                        .replace(",", "") //remove the commas
-                        .replace("[[", "[")
-                        .replace("]]", "]")
-                        .replace("  ", " ")
-                        .replace("[", "[ ")
-                        .replace("]", " ]")
-                        .trim());
-                output.write("\n");
+            //Second file :
+            try {
+                FileWriter fw = new FileWriter(filepathSol + "tech_teams", false);
+                BufferedWriter output = new BufferedWriter(fw);
+                for (int k = 1; k < ttspsolution.getTech_teams().length; ++k) {
+                    output.write("" + k);
+                    output.write(" " + Arrays.deepToString(ttspsolution.getTech_teams()[k].getTeam())
+                            .replace(",", "") //remove the commas
+                            .replace("[[", "[")
+                            .replace("]]", "]")
+                            .replace("  ", " ")
+                            .replace("[", "[ ")
+                            .replace("]", " ]")
+                            .trim());
+                    output.write("\n");
+                }
+                output.flush();
+                output.close();
+                fw.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+                throw new IllegalStateException("Error when writing the file\n");
             }
-            output.flush();
-            output.close();
-            fw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new IllegalStateException("Error when writing the file\n");
         }
     }
 }
