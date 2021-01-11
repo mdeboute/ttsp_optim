@@ -97,8 +97,6 @@ public class Checker {
             }
         }
 
-        ////////////////////// Check on outsourced interventions
-        //ArrayList<Integer> outsource = new ArrayList<>();
         int nb_ST = data.getIntervention().length - solution.getInterv_dates().length;
         int[] interv_ST = new int[nb_ST];
         int cpt = 0;
