@@ -1,0 +1,161 @@
+
+intervention non traitées :
+data A_5 : 47(priorité 2; d3_2 2)
+data A_6 : 6 (priorité 1;
+data A_10 : 74 (priorité 1; prédécesseur 73(72))
+data B_4 : 1, 100, 210, 230
+
+
+    public static ArrayList<Integer> sortInterv(TTSPData data, ArrayList<Integer> intervs ){
+        ArrayList<IntervList> sort = new ArrayList<>();
+        for(int i=0 ; i<intervs.size() ; i++){
+            sort.add(data.getIntervention()[intervs.get(i)]);
+        }
+        Collections.sort(intervs);
+        intervs.removeAll(intervs);
+        for(int i=0 ; i<intervs.size() ; i++){
+            int num = sort.get()
+            intervs.add()
+        }
+        return intervsSort;
+    }
+
+    ///////////////////////////////////////////////////////team + t
+   for (int j = 0; j < sol.getDays(day).getTechAvailable().size(); j++) {
+                           int[][] skillsTech;
+                           int[][] teamAndJ;
+                           int tech = sol.getDays(day).getTechAvailable().get(j);
+                           skillsTech = Tech.skills_tech(data, tech);
+                           teamAndJ = Tech.teamAndTech(data, skillsTeam, skillsTech);
+                           if (Tech.isSufficient(data, skillsInterv, teamAndJ)) {
+                               if (sol.treatInterv(data, inter, j, day, t, true)) {
+                                   if(inter==2) System.out.println("Je suis traité la : team t+tech");
+                                   intervs.remove(0);
+                                   check = 1;
+                                   break;
+                               }
+                           }
+                       }
+                       if (check == 1) break;
+
+
+   /////////////////////////////////////////////////////// 2 available
+   for (int j = 0; j < sol.getDays(day).getTechAvailable().size(); j++) {
+                   int tech = sol.getDays(day).getTechAvailable().get(j);
+                   int[][] skillsTech = Tech.skills_tech(data, tech);
+                   // 2 available tech are sufficient to do an intervention
+                   for (int k = 1; k < sol.getDays(day).getTechAvailable().size(); k++) {
+                       int techK = sol.getDays(day).getTechAvailable().get(k);
+                       if (tech == techK) continue;
+                       int[][] skillsTechK = Tech.skills_tech(data, techK);
+                       int[][] techAndK = Tech.teamAndTech(data, skillsTech, skillsTechK);
+                       if (Tech.isSufficient(data, skillsInterv, techAndK)) {
+                           sol.getDays(day).createTeam(data, tech);
+                           team = sol.getDays(day).getTeams().size() - 1;
+                           if (sol.treatInterv(data, inter, j, day, team, true)) {
+                               if(inter==2) System.out.println("Je suis traité la : 2 tech " + cpt);
+                               if(j<k) sol.getDays(day).getTechAvailable().remove(k-1);
+                               else sol.getDays(day).getTechAvailable().remove(k);
+                               sol.getDays(day).getTeams(team).add_tech(data, techK);
+                               intervs.remove(0);
+                               check = 1;
+                               break;
+                           }
+                       }
+                   }
+                   if(check== 1) break;
+                   // an available tech is sufficient to do a intervention
+                   if (Tech.isSufficient(data, skillsInterv, skillsTech)) {
+                       sol.getDays(day).createTeam(data, tech);
+                       team = sol.getDays(day).getTeams().size() - 1;
+                       if (sol.treatInterv(data, inter, j, day, team, true)) {
+                           if(inter==2) System.out.println("Je suis traité la : tech" + cpt);
+                           intervs.remove(0);
+                           check = 1;
+                           break;
+                       }
+                   }
+               }
+
+
+                    int[][] skillsTeam = sol.getDays(day).getTeams(t).getDom_team();
+                    for (int j = 0; j < sol.getDays(day).getTechAvailable().size() - 1; j++) {
+                        int techJ = sol.getDays(day).getTechAvailable().get(j);
+                        for (int k = 1; k < sol.getDays(day).getTechAvailable().size(); k++) {
+                            int techK = sol.getDays(day).getTechAvailable().get(k);
+                            if (techJ == techK) continue;
+                            int[][] skillsTech = Tech.skills_tech(data, techJ);
+                            int[][] teamAndJ = Tech.teamAndTech(data, skillsTeam, skillsTech);
+                            skillsTech = Tech.skills_tech(data, techK);
+                            teamAndJ = Tech.teamAndTech(data, teamAndJ, skillsTech);
+                            if (Tech.isSufficient(data, skillsInterv, teamAndJ)) {
+                                if (sol.treatInterv(data, inter, j, day, t, true)) {
+                                    if(inter==2) System.out.println("Je suis traité la : team + 2t " + cpt);
+                                    if (j < k) sol.getDays(day).getTechAvailable().remove(k - 1);
+                                    else sol.getDays(day).getTechAvailable().remove(k);
+                                    sol.getDays(day).getTeams(t).add_tech(data, techK);
+                                    intervs.remove(0);
+                                    check = 1;
+                                    break;
+                                }
+                            } else { // team t + 3 techs available j and k are efficient for intervention i
+                                for (int l = 2; l < sol.getDays(day).getTechAvailable().size(); l++) {
+                                    int techL = sol.getDays(day).getTechAvailable().get(l);
+                                    if (techJ == techL || techK == techL) continue;
+                                    skillsTech = Tech.skills_tech(data, techL);
+                                    teamAndJ = Tech.teamAndTech(data, teamAndJ, skillsTech);
+                                    if (Tech.isSufficient(data, skillsInterv, teamAndJ)) {
+                                        if (sol.treatInterv(data, inter, j, day, t, true)) {
+                                            if (inter == 2) System.out.println("Je suis traité la : team + 3t " + cpt);
+                                            if (j < k) sol.getDays(day).getTechAvailable().remove(k - 1);
+                                            else sol.getDays(day).getTechAvailable().remove(k);
+                                            sol.getDays(day).getTeams(t).add_tech(data, techK);
+                                            if (j < k) {
+                                                if (k < l) sol.getDays(day).getTechAvailable().remove(l - 2);
+                                                else sol.getDays(day).getTechAvailable().remove(l - 1);
+                                            } else sol.getDays(day).getTechAvailable().remove(l);
+                                            sol.getDays(day).getTeams(t).add_tech(data, techL);
+                                            intervs.remove(0);
+                                            check = 1;
+                                            break;
+                                        }
+                                    }else { // team t + 4 techs available j and k are efficient for intervention i
+                                        for (int m = 2; m < sol.getDays(day).getTechAvailable().size(); m++) {
+                                            int techM = sol.getDays(day).getTechAvailable().get(m);
+                                            if (techJ == techM || techK == techM || techL == techM) continue;
+                                            skillsTech = Tech.skills_tech(data, techM);
+                                            teamAndJ = Tech.teamAndTech(data, teamAndJ, skillsTech);
+                                            if (Tech.isSufficient(data, skillsInterv, teamAndJ)) {
+                                                if (sol.treatInterv(data, inter, j, day, t, true)) {
+                                                    if(inter==2) System.out.println("Je suis traité la : team + 4t " + cpt);
+                                                    if (j < k) sol.getDays(day).getTechAvailable().remove(k - 1);
+                                                    else sol.getDays(day).getTechAvailable().remove(k);
+                                                    sol.getDays(day).getTeams(t).add_tech(data, techK);
+                                                    if (j < k) {
+                                                        if (k < l)
+                                                            sol.getDays(day).getTechAvailable().remove(l - 2);
+                                                        else sol.getDays(day).getTechAvailable().remove(l - 1);
+                                                    } else sol.getDays(day).getTechAvailable().remove(l);
+                                                    sol.getDays(day).getTeams(t).add_tech(data, techL);
+                                                    if (j < k) {
+                                                        if (k < l) {
+                                                            if (l < m)
+                                                                sol.getDays(day).getTechAvailable().remove(m - 3);
+                                                            else sol.getDays(day).getTechAvailable().remove(m - 2);
+                                                        } else sol.getDays(day).getTechAvailable().remove(m - 1);
+                                                    } else sol.getDays(day).getTechAvailable().remove(m);
+                                                    sol.getDays(day).getTeams(t).add_tech(data, techM);
+                                                    intervs.remove(0);
+                                                    check = 1;
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    if (check == 1) break;
+                                }
+                            }
+                            if (check == 1) break;
+                        }
+                        if (check == 1) break;
+                    }
