@@ -1,4 +1,4 @@
-package src.Heuristic;
+package src.heuristic;
 
 import src.Checker;
 import src.Evaluator;
@@ -338,7 +338,10 @@ public class MainAlgorithm {
         for (int i = 1; i <11; i++) {
             System.out.println("datas/datasetA/data" + i + " :");
             TTSPData ttspData = InstanceReader.parse("datas/datasetB/data" + i);
+            Long begin =  System.currentTimeMillis();
             TTSPSolution ttspsolution = build(ttspData);
+            Long end =  System.currentTimeMillis();
+            System.out.println("Execution in " + (end-begin) + " ms");
             checker(ttspData, ttspsolution);
             Evaluator(ttspData, ttspsolution);
             System.out.println("\n");

@@ -1,10 +1,10 @@
-package src.Heuristic;
+package src.heuristic;
 
 import src.dataClasses.TTSPData;
 
 import java.util.ArrayList;
 
-import static src.Heuristic.MainAlgorithm.removeUselessTech;
+import static src.heuristic.MainAlgorithm.removeUselessTech;
 
 public class MethodNotUsed {
 

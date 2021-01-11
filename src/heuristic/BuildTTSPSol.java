@@ -1,4 +1,4 @@
-package src.Heuristic;
+package src.heuristic;
 
 import src.dataClasses.TTSPData;
 import src.solClasses.IntervDates;

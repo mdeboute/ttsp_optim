@@ -1,4 +1,4 @@
-package src.Heuristic;
+package src.heuristic;
 
 import src.Checker;
 import src.dataClasses.TTSPData;
