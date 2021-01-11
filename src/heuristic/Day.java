@@ -1,4 +1,4 @@
-package src.AlgorithmGB;
+package src.heuristic;
 
 import src.dataClasses.TTSPData;
 
