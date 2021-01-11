@@ -2,6 +2,7 @@ package src.AlgorithmGB;
 
 import src.Checker;
 import src.dataClasses.TTSPData;
+import src.dataClasses.IntervList;
 
 import java.util.ArrayList;
 

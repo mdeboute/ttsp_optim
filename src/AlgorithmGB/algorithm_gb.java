@@ -297,9 +297,9 @@ public class algorithm_gb {
      * Main method is used only to test the algorithm directly on all the instance of a dataset
      */
     public static void main(String[] args) {
-        for(int i=4 ; i<5 ; i++) {
+        for(int i=1 ; i<11 ; i++) {
             System.out.println("datas/datasetA/data"+ i + " :");
-            TTSPData ttspData = InstanceReader.parse("datas/datasetB/data"+ i);
+            TTSPData ttspData = InstanceReader.parse("datas/datasetA/data"+ i);
             TTSPSolution ttspsolution = build(ttspData);
             //System.out.println(ttspsolution.toString());
             checker(ttspData, ttspsolution);
