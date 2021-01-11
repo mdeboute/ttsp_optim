@@ -173,7 +173,14 @@ public class MainAlgorithm {
         return intervs;
     }
 
-    //we check if we can remove a tech from the team creating (if he is useless for all the intervention made by the team)
+
+
+    /**
+     * removeUselessTech check if we can remove some technicians from a team
+     * (if he is useless for all the intervention made by the team)
+     * @param team is the team where we want to remove technicians
+     * @param day is the day coresponding of the team
+     */
     public static void removeUselessTech(TTSPData data, Solution sol, int team, int day) {
         ArrayList<Integer> techs = new ArrayList<>();
         int[][] skills = sol.getDays(day).getTeams(team).getDom_team();
@@ -199,16 +206,19 @@ public class MainAlgorithm {
         sol.getDays(day).getTechAvailable().addAll(techs);
     }
 
-
-    //use to try to complete the calendar of each team on day d (going further)
+    /**
+     * completeTeamDday use to try to complete the calendar each day. For each day, if some technicians are always
+     * available, the method call the method Chance to try to assign the remaining intervention (completeTeamDday is call
+     * at the end of the process)
+     * @param intervs is the list of all interventions not yet treated
+     * @return the list not yet treated after this step.
+     */
     public static ArrayList<Integer> completeTeamDday(TTSPData data, Solution sol, ArrayList<Integer> intervs) {
         for (int day = 0; day < sol.getDays().size(); day++) {
             for (int team = 0; team < sol.getDays(day).getTeams().size(); team++) {
-                if (!sol.getDays(day).getTeams(team).isFull()) {
                     if (sol.getDays(day).getTechAvailable().size() != 0) {
                         intervs = Chance(data, sol, intervs, day);
                     }
-                }
             }
         }
         intervs.removeAll(sol.getIntervDone());
@@ -216,9 +226,16 @@ public class MainAlgorithm {
         return intervs;
     }
 
+    /**
+     * sortByTimeInterv sort a list of interventions in according to the duration of each intervention
+     * (descending order)
+     * @param intervs the list of interventions that we want to sort
+     * @return intervs but sorted
+     */
     public static ArrayList<Integer> sortByTimeInterv(TTSPData data, ArrayList<Integer> intervs) {
         ArrayList<int[]> sumSkills = new ArrayList<>();
-        for (Integer integer : intervs) {
+        for (Integer integer : intervs) { // fill a list of an array of 2 Integer : the first one is the number of the
+                // intervention, the second one is the duration of the intervention
             int[] skills = new int[2];
             skills[0] = integer;
             int sum = data.getIntervention()[integer].getTime();
@@ -227,9 +244,9 @@ public class MainAlgorithm {
         }
         ArrayList<Integer> interventions = new ArrayList<>();
         while (sumSkills.size() != 0) {
-            int max = 0;
-            int interv = 0;
-            int index = 0;
+            int max = 0; //to search the biger time
+            int interv = 0; // to save the number of the interventiion with the bigger time
+            int index = 0; //to save the index in the list pf the intervention with the bigger time
             for (int i = 0; i < sumSkills.size(); i++) {
                 if (sumSkills.get(i)[1] > max) {
                     max = sumSkills.get(i)[1];
@@ -243,12 +260,14 @@ public class MainAlgorithm {
         return interventions;
     }
 
+    /**
+     * buildArray build an ArrayList of 2 array List : the first one is an arraylist with intervention of priority
+     * (parameter priority) without predecessor and intervention who are predecessor of intervention prioritaire,
+     * the second one is an arraylist of priority (parameter priority) whith predecessor
+     * @param priority the priority of interventions that we want to treat
+     * @return an ArrayList of 2 ArrayList with interventiosn of prirority @priority and their predecessors
+     */
     public static ArrayList<ArrayList<Integer>> buildArray(TTSPData data, int priority, Solution sol) {
-        // build an ArrayList of 2 array List
-        // the first one is an arraylist with intervention of priority (parameter priority) without predecessor and intervention
-        // who are predecessor of intervention prioritaire
-        // the second one is an arraylist of priority (parameter priority) whith predecessor
-
         int nb_interv = data.getInstance().getInterv();
         // create an arrayList with intervention of priority 1
         ArrayList<Integer> Prio = new ArrayList<>();
@@ -313,9 +332,9 @@ public class MainAlgorithm {
      * Main method is used only to test the algorithm directly on all the instance of a dataset
      */
     public static void main(String[] args) {
-        for (int i = 1; i < 11; i++) {
+        for (int i = 5; i < 6; i++) {
             System.out.println("datas/datasetA/data" + i + " :");
-            TTSPData ttspData = InstanceReader.parse("datas/datasetA/data" + i);
+            TTSPData ttspData = InstanceReader.parse("datas/datasetB/data" + i);
             TTSPSolution ttspsolution = build(ttspData);
             checker(ttspData, ttspsolution);
             Evaluator(ttspData, ttspsolution);

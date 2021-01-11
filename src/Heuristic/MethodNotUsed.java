@@ -8,9 +8,10 @@ import static src.Heuristic.MainAlgorithm.removeUselessTech;
 
 public class MethodNotUsed {
 
-    // A class with all method create a fonctionnal but who make the solution less good, so don't used.
-    // There are the first method create
-
+    /**
+     A class with all method create a fonctionnal but who make the solution less good, so don't used.
+     There are the first method create
+     */
     public static ArrayList<Integer> buildTeam(TTSPData data, Solution sol, ArrayList<Integer> intervs) {
         int count = intervs.size();
         int fail = 0;
